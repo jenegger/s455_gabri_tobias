@@ -13,3 +13,7 @@ Upexps unpacker used:
 /u/land/fake_cvmfs/9.13/upexps/202103_s455_jentob/202103_s455
 
 Latest R3BRoot version (dev branch) used, commit 2ca8be537a39b47d265fc3eaed23fc52b006b85c (Thu Sep 9 00:09:26 2021 +0200)
+
+
+
+(macro Philipp used to create mapping file: /u/land/klenze/r3bmap/run/califa/mapping/ucesb_mapping_gen_CALIFA_TOT.py)
