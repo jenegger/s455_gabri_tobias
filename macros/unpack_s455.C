@@ -27,11 +27,11 @@ void unpack_s455()
     const Int_t expId = 455; // select experiment: 444, 455 or 467
 
     // Create input -----------------------------------------
-    TString filename = "../s455_03_273_10_stitched.lmd"; //input lmd file
+    TString filename = "../../s455_03_273_10_stitched.lmd"; //input lmd file
 
 
     // Define output-----------------------------------------
-    TString outputFileName = "thisFile.root";
+    TString outputFileName = "../thisFile.root";
 
     Bool_t Cal_level = true;          // set true if there exists a file with the calibration parameters
     Bool_t NOTstoremappeddata = false; // if true, don't store mapped data in the root file
@@ -39,10 +39,10 @@ void unpack_s455()
     Bool_t NOTstorehitdata = false;    // if true, don't store hit data in the root file
 
     //Mapping and Calibration Files --------------------------
-    TString califamapfilename = "Califa_Mapping_3March2021.par";
+    TString califamapfilename = "../parameters/Califa_Mapping_3March2021.par";
     califamapfilename.ReplaceAll("//", "/");
 
-    TString califacalfilename = "Califa_CalPar_4March2021.par";
+    TString califacalfilename = "../parameters/Califa_CalPar_4March2021.par";
     califacalfilename.ReplaceAll("//", "/");
 
     // UCESB configuration ----------------------------------
