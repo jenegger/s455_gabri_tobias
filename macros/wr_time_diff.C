@@ -285,7 +285,7 @@ Long64_t entries_califa = 0;
 Long64_t entries_califa_hit = 0;
 Int_t entries_wr = 0;
 //Input file
-sprintf(fname,"../thisFile.root");
+sprintf(fname,"../file_src/thisFile.root");
 
 TChain* chain = new TChain("evt");
 chain->Reset();
@@ -511,7 +511,7 @@ for(Long64_t i=0;i< nevents;i++){
 
 
 char f_out_name[500];
-sprintf(f_out_name,"../output_wr_time_diff.root");
+sprintf(f_out_name,"../file_output/output_wr_time_diff.root");
 TFile * f = new TFile(f_out_name,"RECREATE");
 TList *l = new TList();
 gStyle->SetOptStat(1111111);
