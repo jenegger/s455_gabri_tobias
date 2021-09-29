@@ -9,6 +9,7 @@ typedef struct EXT_STR_h101_t
     EXT_STR_h101_CALIFA_t califa;
     EXT_STR_h101_WRMASTER_t wrm;
     EXT_STR_h101_WRCALIFA_t wrcalifa;
+    EXT_STR_h101_SOFTOFW_onion_t tofw;
 
 } EXT_STR_h101;
 
@@ -84,6 +85,8 @@ void unpack_s455()
      
     //R3BWhiterabbitCalifaReader not used, as wr time information already in CALIFA Febex Reader
 
+    R3BSofTofWReader* unpacktofw = new R3BSofTofWReader((EXT_STR_h101_SOFTOFW_t*)&ucesb_struct.tofw, offsetof(EXT_STR_h101, tofw));
+
     // Add readers ------------------------------------------
     source->AddReader(unpackreader);
     source->AddReader(unpacktpat);
@@ -91,6 +94,8 @@ void unpack_s455()
     unpackcalifa->SetOnline(NOTstoremappeddata);
     source->AddReader(unpackWRM);
     unpackWRM->SetOnline(NOTstoremappeddata);
+    source->AddReader(unpacktofw);
+    unpacktofw->SetOnline(NOTstoremappeddata);
 
     // Create online run ------------------------------------
     FairRunOnline* run = new FairRunOnline(source);
