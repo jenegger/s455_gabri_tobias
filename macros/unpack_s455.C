@@ -10,6 +10,7 @@ typedef struct EXT_STR_h101_t
     EXT_STR_h101_WRMASTER_t wrm;
     EXT_STR_h101_WRCALIFA_t wrcalifa;
     EXT_STR_h101_SOFTOFW_onion_t tofw;
+    EXT_STR_h101_SOFTWIM_onion_t twim;
 
 } EXT_STR_h101;
 
@@ -32,7 +33,7 @@ void unpack_s455()
 
 
     // Define output-----------------------------------------
-    TString outputFileName = "../thisFile.root";
+    TString outputFileName = "../file_src/twim_thisFile.root";
 
     Bool_t Cal_level = true;          // set true if there exists a file with the calibration parameters
     Bool_t NOTstoremappeddata = false; // if true, don't store mapped data in the root file
@@ -45,6 +46,10 @@ void unpack_s455()
 
     TString califacalfilename = "../parameters/Califa_CalPar_4March2021.par";
     califacalfilename.ReplaceAll("//", "/");
+
+    //Sofia calibration files, dummy ones ---------------------
+
+    TString sofiacalfilename = "../parameters/dummy_sofia.par";
 
     // UCESB configuration ----------------------------------
     TString ntuple_options = "RAW";
@@ -87,6 +92,9 @@ void unpack_s455()
 
     R3BSofTofWReader* unpacktofw = new R3BSofTofWReader((EXT_STR_h101_SOFTOFW_t*)&ucesb_struct.tofw, offsetof(EXT_STR_h101, tofw));
 
+    // R3BSofTwimReader
+    R3BSofTwimReader* unpacktwim = new R3BSofTwimReader((EXT_STR_h101_SOFTWIM_t*)&ucesb_struct.twim, offsetof(EXT_STR_h101, twim));
+
     // Add readers ------------------------------------------
     source->AddReader(unpackreader);
     source->AddReader(unpacktpat);
@@ -96,6 +104,8 @@ void unpack_s455()
     unpackWRM->SetOnline(NOTstoremappeddata);
     source->AddReader(unpacktofw);
     unpacktofw->SetOnline(NOTstoremappeddata);
+    unpacktwim->SetOnline(NOTstoremappeddata);
+    source->AddReader(unpacktwim);
 
     // Create online run ------------------------------------
     FairRunOnline* run = new FairRunOnline(source);
@@ -114,7 +124,11 @@ void unpack_s455()
     }
     if (Cal_level)
     {
-	parIo1->open(califacalfilename, "in"); //CALIFA mapping and calibration parameters
+	//parIo1->open(califacalfilename, "in"); //CALIFA mapping and calibration parameters
+	TList* parList1 = new TList();
+	parList1->Add(new TObjString(sofiacalfilename));  //SOFIA mapping and calibration parameters
+	parList1->Add(new TObjString(califacalfilename)); //CALIFA mapping and calibration parameters
+	parIo1->open(parList1);
 	rtdb->setFirstInput(parIo1);
 	rtdb->print();
 
@@ -125,9 +139,21 @@ void unpack_s455()
 
         // R3BCalifaCrystalCal2Hit ---
         R3BCalifaCrystalCal2Hit* Cal2Hit = new R3BCalifaCrystalCal2Hit();
+	Cal2Hit->SetCrystalThreshold(100.); // 100keV
         Cal2Hit->SelectGeometryVersion(2021);
        	Cal2Hit->SetOnline(NOTstorehitdata);
         run->AddTask(Cal2Hit);
+
+	// R3BSofTwimMapped2Cal ---
+	R3BSofTwimMapped2Cal* TwimMap2Cal = new R3BSofTwimMapped2Cal();
+	TwimMap2Cal->SetOnline(NOTstorecaldata);
+	TwimMap2Cal->SetExpId(expId);
+	run->AddTask(TwimMap2Cal);
+	
+	//R3BSofTwimCal2Hit ---
+	R3BSofTwimCal2Hit* TwimCal2Hit = new R3BSofTwimCal2Hit();
+	TwimCal2Hit->SetOnline(NOTstorehitdata);
+	run->AddTask(TwimCal2Hit);	
     }
 
     run->SetSource(source);
