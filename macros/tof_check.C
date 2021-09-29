@@ -14,8 +14,8 @@
 using namespace std;
 
 char hist_name[500];
-
-void wr_time_diff(){
+//similar code to wr_time_diff.C, here with restriction that I expect at least one hit and at most 2two hits in tofw
+void tof_check(){
 
 
 TH1D* h1_wr_ts_califa_diff_WRM_messel_rand;
@@ -180,28 +180,30 @@ h1_trigger->GetYaxis()->SetTitleSize(0.04);
 h1_trigger->SetFillColor(kBlue + 2);
 
 fstream fin;
-fin.open("crystal_mapping_s455_03.csv", ios::in); //FIXME:change to right .csv file
-vector<vector<string> > row;
-string line, word, temp;
-while (!fin.eof()) {
+fin.open("../parameters/crystal_mapping_s455_03.csv", ios::in); //FIXME:change to right .csv file
 
-    getline(fin, line);
-    //cout << "" << line << "\n" ;
-    stringstream s(line);
-    vector<string> temp_vec;
-    while (getline(s, word, ',')) {
-        temp_vec.push_back(word);
-    }
-    row.push_back(temp_vec);
-    temp_vec.clear();
+//new functionality, using map
+map<int,int> map_id_califa_side;
+string line, word, temp;
+while(fin.peek()!=EOF) {
+	getline(fin, line);
+	stringstream s(line);
+	vector<string> temp_vec;
+	while (getline(s, word, ',')) {
+		temp_vec.push_back(word);
+	}
+	map_id_califa_side[stoi(temp_vec[10])] = stoi(temp_vec[0]);
+	temp_vec.clear();
 }
+
 
 char fname[500];
 Long64_t entries_califa = 0;
 Long64_t entries_califa_hit = 0;
+Long64_t entries_tof = 0;
 Int_t entries_wr = 0;
 //Input file
-sprintf(fname,"thisFile.root");
+sprintf(fname,"../thisFile.root");
 
 TChain* chain = new TChain("evt");
 chain->Reset();
@@ -229,12 +231,18 @@ branchCalifaHitData->SetAddress(&CalifaHitData);
 R3BEventHeader* DataCA = new R3BEventHeader();
 TBranch* branchData = chain->GetBranch("EventHeader.");
 branchData->SetAddress(&DataCA);
+
+TClonesArray* SofToFWMappedData = new TClonesArray("R3BSofTofWMappedData",2);
+R3BSofTofWMappedData** softofwmappeddata;
+TBranch *branchSofToFWMappedData = chain->GetBranch("SofTofWMappedData");
+branchSofToFWMappedData->SetAddress(&SofToFWMappedData);
 //
 const Double_t PI = 3.14159265358979323846;
 uint64_t wr_Master_ts;
 Long64_t events_califa_no_master = 0;
 Long64_t events_califa_with_master = 0;
 Long64_t events_total_califa = 0;
+
 for(Long64_t i=0;i< nevents;i++){
     Long64_t evtnr = i;
     if (i%100000==0)
@@ -253,8 +261,9 @@ for(Long64_t i=0;i< nevents;i++){
     entries_califa = CalifaMappedData->GetEntries();
     entries_califa_hit = CalifaHitData->GetEntries();
     entries_wr = WRMasterData->GetEntries();
+    entries_tof = SofToFWMappedData->GetEntries();
 
-	if (entries_califa >= 1){
+	if (entries_califa >= 1 && entries_tof >= 2 && entries_tof <= 4){
 		events_total_califa +=1;
 		califamappeddata = new R3BCalifaMappedData*[entries_califa];
 		wrmasterdata = new R3BWRMasterData*[entries_wr];
@@ -287,9 +296,7 @@ for(Long64_t i=0;i< nevents;i++){
 			if (crystal_ID == 1 || crystal_ID == 2){
 				cout << "these are pulser events"<< endl;
 				}
-			for (Int_t k = 0; k < (row.size()-1);++k){
-				if (stoi(row[k][10]) == crystal_ID && crystal_ID != 1 && crystal_ID != 2){
-						if(stoi(row[k][0])==1){ // ---> WIXHAUSEN
+					if(map_id_califa_side[crystal_ID] == 1 && crystal_ID != 1 && crystal_ID != 2){ //-->Wixhausen
 						califa_wixhausen_ts.push_back(califamappeddata[m]->GetWrts());
 						califa_both_sides_ts.push_back(califamappeddata[m]->GetWrts());
 						if (entries_wr == 1){
@@ -307,7 +314,7 @@ for(Long64_t i=0;i< nevents;i++){
 								}
 							}
 						}
-					else if (stoi(row[k][0]) ==2){ 	// --->MESSEL
+					else if ( map_id_califa_side[crystal_ID] ==2 && crystal_ID != 1 && crystal_ID != 2){ 	// --->MESSEL
 						califa_messel_ts.push_back(califamappeddata[m]->GetWrts());
 						califa_both_sides_ts.push_back(califamappeddata[m]->GetWrts());
 						if (entries_wr == 1){
@@ -326,11 +333,9 @@ for(Long64_t i=0;i< nevents;i++){
 							}
 						}
 
-					}
 				else
 					continue;
 
-				}
 			}
 		if (entries_wr == 1){
 			h1_mult_e_high->Fill(e_high);
@@ -385,7 +390,7 @@ for(Long64_t i=0;i< nevents;i++){
 	}
 
 char f_out_name[500];
-sprintf(f_out_name,"output_wr_time_diff.root");
+sprintf(f_out_name,"../tofw_output_wr_time_diff.root");
 TFile * f = new TFile(f_out_name,"RECREATE");
 TList *l = new TList();
 gStyle->SetOptStat(1111111);
@@ -406,8 +411,8 @@ l->Add(h1_trigger);
 l->Write("histlist", TObject::kSingleKey);
 
 cout << "----SUMMARY---------------------" << endl;
-cout << "Califa events with master trigger:\t" << events_califa_with_master <<  " " << events_califa_with_master/events_total_califa << " % " << endl;
-cout << "Califa events no master trigger:\t" << events_califa_no_master << " " << events_califa_no_master/events_total_califa << " % " << endl;
+cout << "Califa events with master trigger:\t" << events_califa_with_master <<  " " << double(events_califa_with_master)/double(events_total_califa) << " % " << endl;
+cout << "Califa events no master trigger:\t" << events_califa_no_master << " " << double(events_califa_no_master)/double(events_total_califa) << " % " << endl;
 cout << "Total number of Califa events:\t" << events_total_califa << endl;
 cout << "--------------------------------" << endl;
 
