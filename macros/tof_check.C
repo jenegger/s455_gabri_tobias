@@ -165,6 +165,19 @@ h2_energy_vs_mult_with_M->GetYaxis()->CenterTitle(true);
 h2_energy_vs_mult_with_M->GetYaxis()->SetLabelSize(0.045);
 h2_energy_vs_mult_with_M->GetYaxis()->SetTitleSize(0.045);
 
+
+//charge analysis
+
+TH2D* h2_charge1_charge_2;
+sprintf(hist_name, "Charge 1 vs Charge 2 (TWIM Music)");
+h2_charge1_charge_2 = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+h2_charge1_charge_2->GetXaxis()->SetTitle("Charge 1");
+h2_charge1_charge_2->GetYaxis()->SetTitle("Charge 2");
+h2_charge1_charge_2->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2->GetYaxis()->SetTitleSize(0.045);
+
 //Histo with trigger info:
 TH1F* h1_trigger = new TH1F("h1_trigger", "Trigger information: Tpat", 17, -0.5, 16.5);
 h1_trigger->GetXaxis()->SetTitle("Trigger number (tpat)");
@@ -201,9 +214,10 @@ char fname[500];
 Long64_t entries_califa = 0;
 Long64_t entries_califa_hit = 0;
 Long64_t entries_tof = 0;
+Long64_t entries_twim = 0;
 Int_t entries_wr = 0;
 //Input file
-sprintf(fname,"../file_src/thisFile.root");
+sprintf(fname,"../file_src/twim_thisFile.root");
 
 TChain* chain = new TChain("evt");
 chain->Reset();
@@ -236,6 +250,11 @@ TClonesArray* SofToFWMappedData = new TClonesArray("R3BSofTofWMappedData",2);
 R3BSofTofWMappedData** softofwmappeddata;
 TBranch *branchSofToFWMappedData = chain->GetBranch("SofTofWMappedData");
 branchSofToFWMappedData->SetAddress(&SofToFWMappedData);
+
+TClonesArray* SofTwimHitData = new TClonesArray("R3BSofTwimHitData",2);
+R3BSofTwimHitData** softwimhitdata;
+TBranch *branchSofTwimHitData = chain->GetBranch("TwimHitData");
+branchSofTwimHitData->SetAddress(&SofTwimHitData);
 //
 const Double_t PI = 3.14159265358979323846;
 uint64_t wr_Master_ts;
@@ -262,8 +281,20 @@ for(Long64_t i=0;i< nevents;i++){
     entries_califa_hit = CalifaHitData->GetEntries();
     entries_wr = WRMasterData->GetEntries();
     entries_tof = SofToFWMappedData->GetEntries();
+    entries_twim = SofTwimHitData->GetEntries();
 
-	if (entries_califa >= 1 && entries_tof >= 2 && entries_tof <= 4){
+	if (entries_califa >= 1 && entries_tof >= 2 && entries_tof <= 4 && entries_twim == 2){
+		//check twim data
+		softwimhitdata = new R3BSofTwimHitData*[2];
+		softwimhitdata[0] = (R3BSofTwimHitData*)SofTwimHitData->At(0);
+		softwimhitdata[1] = (R3BSofTwimHitData*)SofTwimHitData->At(1);
+		Double_t charge_1 = softwimhitdata[0]->GetZcharge();
+		Double_t charge_2 = softwimhitdata[1]->GetZcharge();
+		
+		h2_charge1_charge_2->Fill(charge_1,charge_2);
+		//cut  on charge of twim
+		if (30 < charge_1 && charge_1 < 60 && 30 < charge_2 && charge_2 < 60 && (charge_1+charge_2) > 89 && (charge_1+charge_2) < 95 ){
+	
 		events_total_califa +=1;
 		califamappeddata = new R3BCalifaMappedData*[entries_califa];
 		wrmasterdata = new R3BWRMasterData*[entries_wr];
@@ -388,6 +419,8 @@ for(Long64_t i=0;i< nevents;i++){
 		califa_both_sides_ts.clear();
 		}
 	}
+	
+	}
 
 char f_out_name[500];
 sprintf(f_out_name,"../file_output/tofw_output_wr_time_diff.root");
@@ -407,6 +440,7 @@ l->Add(h2_energy_vs_theta);
 l->Add(h2_phi_vs_theta);
 l->Add(h2_energy_vs_mult_no_M);
 l->Add(h2_energy_vs_mult_with_M);
+l->Add(h2_charge1_charge_2);
 l->Add(h1_trigger);
 l->Write("histlist", TObject::kSingleKey);
 
