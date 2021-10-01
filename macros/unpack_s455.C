@@ -153,6 +153,7 @@ void unpack_s455()
 	//R3BSofTwimCal2Hit ---
 	R3BSofTwimCal2Hit* TwimCal2Hit = new R3BSofTwimCal2Hit();
 	TwimCal2Hit->SetOnline(NOTstorehitdata);
+	TwimCal2Hit->SetExpId(expId);
 	run->AddTask(TwimCal2Hit);	
     }
 

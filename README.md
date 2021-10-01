@@ -17,3 +17,6 @@ Latest R3BRoot version (dev branch) used, commit 2ca8be537a39b47d265fc3eaed23fc5
 
 
 (macro Philipp used to create mapping file: /u/land/klenze/r3bmap/run/califa/mapping/ucesb_mapping_gen_CALIFA_TOT.py)
+
+
+The calibration file dummy_sofia.par is the same as /u/land/r3broot/202106_testing/R3BRoot_20210726/sofia/macros/s455Up2p/parameters/CalibParam.par
