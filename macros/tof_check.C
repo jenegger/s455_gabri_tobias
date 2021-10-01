@@ -180,6 +180,8 @@ h2_charge1_charge_2->GetYaxis()->SetTitleSize(0.045);
 
 //check 3d plot for energy distribution for p2p reactions
 Int_t p2p_check = 20;
+Int_t p2p_check_one = 20;
+Int_t p2p_check_two = 20;
 TH2D* h2_energy_angular_dist[p2p_check];
 for (Int_t i = 0; i < p2p_check ; i++){
 sprintf(hist_name,"Energy distribution over theta_phi for p2p eventnr %i",i);
@@ -191,6 +193,75 @@ h2_energy_angular_dist[i]->GetYaxis()->CenterTitle(true);
 h2_energy_angular_dist[i]->GetXaxis()->SetLabelSize(0.045);
 h2_energy_angular_dist[i]->GetYaxis()->SetLabelSize(0.045);
 }
+
+
+TH2D* h2_energy_angular_dist_one[p2p_check_one];
+for (Int_t i = 0; i < p2p_check ; i++){
+	sprintf(hist_name,"Energy distribution over theta_phi for p2p eventnr  %i with one hit > 100 MeV",i);
+	h2_energy_angular_dist_one[i] = new TH2D(hist_name,hist_name,52,22.15,152.15,60,-180,180);
+	h2_energy_angular_dist_one[i]->GetXaxis()->SetTitle("Theta [degr]");
+	h2_energy_angular_dist_one[i]->GetYaxis()->SetTitle("Phi [degr]");
+	h2_energy_angular_dist_one[i]->GetXaxis()->CenterTitle(true);
+	h2_energy_angular_dist_one[i]->GetYaxis()->CenterTitle(true);
+	h2_energy_angular_dist_one[i]->GetXaxis()->SetLabelSize(0.045);
+	h2_energy_angular_dist_one[i]->GetYaxis()->SetLabelSize(0.045);
+}
+
+TH2D* h2_energy_angular_dist_two[p2p_check_two];
+for (Int_t i = 0; i < p2p_check ; i++){
+	sprintf(hist_name,"Energy distribution over theta_phi for p2p eventnr %i with two hits > 100 MeV",i);
+	h2_energy_angular_dist_two[i] = new TH2D(hist_name,hist_name,52,22.15,152.15,60,-180,180);
+	h2_energy_angular_dist_two[i]->GetXaxis()->SetTitle("Theta [degr]");
+	h2_energy_angular_dist_two[i]->GetYaxis()->SetTitle("Phi [degr]");
+	h2_energy_angular_dist_two[i]->GetXaxis()->CenterTitle(true);
+	h2_energy_angular_dist_two[i]->GetYaxis()->CenterTitle(true);
+	h2_energy_angular_dist_two[i]->GetXaxis()->SetLabelSize(0.045);
+	h2_energy_angular_dist_two[i]->GetYaxis()->SetLabelSize(0.045);
+}
+
+
+TH1D* h1_mult_100mev;
+sprintf(hist_name, "Multiplicity of events with one hit > 100 MeV ");
+h1_mult_100mev = new TH1D(hist_name,hist_name,2500,0,2500);
+h1_mult_100mev->GetXaxis()->SetTitle("Multiplicity");
+h1_mult_100mev->GetYaxis()->SetTitle("Counts");
+h1_mult_100mev->GetXaxis()->CenterTitle(true);
+h1_mult_100mev->GetYaxis()->CenterTitle(true);
+h1_mult_100mev->GetYaxis()->SetLabelSize(0.045);
+h1_mult_100mev->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_mult_100mev_two;
+sprintf(hist_name, "Multiplicity of events with two hits > 100 MeV ");
+h1_mult_100mev_two = new TH1D(hist_name,hist_name,2500,0,2500);
+h1_mult_100mev_two->GetXaxis()->SetTitle("Multiplicity");
+h1_mult_100mev_two->GetYaxis()->SetTitle("Counts");
+h1_mult_100mev_two->GetXaxis()->CenterTitle(true);
+h1_mult_100mev_two->GetYaxis()->CenterTitle(true);
+h1_mult_100mev_two->GetYaxis()->SetLabelSize(0.045);
+h1_mult_100mev_two->GetYaxis()->SetTitleSize(0.045);
+
+
+TH1D* h1_theta_sum_p2p;
+sprintf(hist_name, "Theta1 +  Theta 2 for the two hits > 100 MeV ");
+h1_theta_sum_p2p = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_p2p->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_p2p->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_p2p->GetXaxis()->CenterTitle(true);
+h1_theta_sum_p2p->GetYaxis()->CenterTitle(true);
+h1_theta_sum_p2p->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_p2p->GetYaxis()->SetTitleSize(0.045);
+
+
+TH2D* h2_theta1_vs_theta2;
+sprintf(hist_name, "Theta 1 vs Theta 2 for the two hits > 100 MeV");
+h2_theta1_vs_theta2 = new TH2D(hist_name,hist_name,25,22.15,84.65,25,22.15,84.65);
+h2_theta1_vs_theta2->GetXaxis()->SetTitle("Theta1 [degr]");
+h2_theta1_vs_theta2->GetYaxis()->SetTitle("Theta2 [degr]");
+h2_theta1_vs_theta2->GetXaxis()->CenterTitle(true);
+h2_theta1_vs_theta2->GetYaxis()->CenterTitle(true);
+h2_theta1_vs_theta2->GetYaxis()->SetLabelSize(0.045);
+h2_theta1_vs_theta2->GetYaxis()->SetTitleSize(0.045);
+
 
 //Histo with trigger info:
 TH1F* h1_trigger = new TH1F("h1_trigger", "Trigger information: Tpat", 17, -0.5, 16.5);
@@ -276,6 +347,8 @@ Long64_t events_califa_no_master = 0;
 Long64_t events_califa_with_master = 0;
 Long64_t events_total_califa = 0;
 Long64_t events_with_cut = 0;
+Long64_t events_one_proton = 0;
+Long64_t events_two_proton = 0;
 for(Long64_t i=0;i< nevents;i++){
     Long64_t evtnr = i;
     if (i%100000==0)
@@ -323,11 +396,14 @@ for(Long64_t i=0;i< nevents;i++){
 			h1_mult_with_M->Fill(entries_califa);
 			if (entries_califa_hit){
 				califahitdata = new R3BCalifaHitData*[entries_califa_hit];
-
+			Int_t califa_100mev_hits = 0;
 			for (Int_t m = 0; m < entries_califa_hit; m++){
 				califahitdata[m] = (R3BCalifaHitData*)CalifaHitData->At(m);
 				h2_energy_vs_theta->Fill((califahitdata[m]->GetEnergy())/1000,((califahitdata[m]->GetTheta())/PI)*180);
 				h2_phi_vs_theta->Fill(((califahitdata[m]->GetTheta())/PI)*180,((califahitdata[m]->GetPhi())/PI)*180);
+				if (((califahitdata[m]->GetEnergy())/1000) > 100){
+					califa_100mev_hits++;
+				}
 
 				//fill 3D plot
 				if(events_with_cut < 20){
@@ -336,6 +412,50 @@ for(Long64_t i=0;i< nevents;i++){
 					}
 				}
 				}
+			if (califa_100mev_hits ==1){
+				h1_mult_100mev->Fill(entries_califa_hit);
+				}
+			if (califa_100mev_hits == 2){
+				h1_mult_100mev_two->Fill(entries_califa_hit);
+				Double_t sum_degree = 0;
+				Int_t theta_count = 0;
+				Double_t theta1_high;
+				Double_t theta2_high;
+				for (Int_t m = 0; m < entries_califa_hit; m++){
+					if(((califahitdata[m]->GetEnergy())/1000) > 100){
+						sum_degree += ((califahitdata[m]->GetTheta())/ PI)*180;
+						theta_count++;
+						if (theta_count == 1){
+							theta1_high = ((califahitdata[m]->GetTheta())/ PI)*180;
+							}
+						if (theta_count == 2){
+							theta2_high = ((califahitdata[m]->GetTheta())/ PI)*180;
+							}
+
+
+						}
+					}
+				h1_theta_sum_p2p->Fill(sum_degree);
+				h2_theta1_vs_theta2->Fill(theta1_high,theta2_high);
+				}
+			if (califa_100mev_hits ==1 && events_one_proton < 20){
+				for (Int_t m = 0; m < entries_califa_hit; m++){
+					for (Int_t j = 0; j < round((califahitdata[m]->GetEnergy()));j++){
+						h2_energy_angular_dist_one[events_one_proton]->Fill(((califahitdata[m]->GetTheta())/PI)*180,               ((califahitdata[m]->GetPhi())/PI)*180);
+						}
+					}
+				events_one_proton++;
+				}
+			if (califa_100mev_hits == 2 && events_two_proton < 20){
+				for (Int_t m = 0; m < entries_califa_hit; m++){
+					for (Int_t j = 0; j < round((califahitdata[m]->GetEnergy()));j++){
+						h2_energy_angular_dist_two[events_two_proton]->Fill(((califahitdata[m]->GetTheta())/ PI)*180,               ((califahitdata[m]->GetPhi())/PI)*180);
+						}
+
+					}
+				events_two_proton++;
+				}
+
 			}
 			}
 		else if(entries_wr == 0){
@@ -466,8 +586,15 @@ l->Add(h2_charge1_charge_2);
 l->Add(h1_trigger);
 for(Int_t i = 0; i < 20; i++){
 l->Add(h2_energy_angular_dist[i]);
+l->Add(h2_energy_angular_dist_one[i]);
+l->Add(h2_energy_angular_dist_two[i]);
 }
+l->Add(h1_mult_100mev);
+l->Add(h1_mult_100mev_two);
+l->Add(h1_theta_sum_p2p);
+l->Add(h2_theta1_vs_theta2);
 l->Write("histlist", TObject::kSingleKey);
+
 
 
 cout << "----SUMMARY---------------------" << endl;
