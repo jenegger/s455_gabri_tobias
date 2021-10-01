@@ -178,6 +178,20 @@ h2_charge1_charge_2->GetYaxis()->CenterTitle(true);
 h2_charge1_charge_2->GetYaxis()->SetLabelSize(0.045);
 h2_charge1_charge_2->GetYaxis()->SetTitleSize(0.045);
 
+//check 3d plot for energy distribution for p2p reactions
+Int_t p2p_check = 20;
+TH2D* h2_energy_angular_dist[p2p_check];
+for (Int_t i = 0; i < p2p_check ; i++){
+sprintf(hist_name,"Energy distribution over theta_phi for p2p eventnr %i",i);
+h2_energy_angular_dist[i] = new TH2D(hist_name,hist_name,52,22.15,152.15,60,-180,180);
+h2_energy_angular_dist[i]->GetXaxis()->SetTitle("Theta [degr]");
+h2_energy_angular_dist[i]->GetYaxis()->SetTitle("Phi [degr]");
+h2_energy_angular_dist[i]->GetXaxis()->CenterTitle(true);
+h2_energy_angular_dist[i]->GetYaxis()->CenterTitle(true);
+h2_energy_angular_dist[i]->GetXaxis()->SetLabelSize(0.045);
+h2_energy_angular_dist[i]->GetYaxis()->SetLabelSize(0.045);
+}
+
 //Histo with trigger info:
 TH1F* h1_trigger = new TH1F("h1_trigger", "Trigger information: Tpat", 17, -0.5, 16.5);
 h1_trigger->GetXaxis()->SetTitle("Trigger number (tpat)");
@@ -261,7 +275,7 @@ uint64_t wr_Master_ts;
 Long64_t events_califa_no_master = 0;
 Long64_t events_califa_with_master = 0;
 Long64_t events_total_califa = 0;
-
+Long64_t events_with_cut = 0;
 for(Long64_t i=0;i< nevents;i++){
     Long64_t evtnr = i;
     if (i%100000==0)
@@ -293,7 +307,7 @@ for(Long64_t i=0;i< nevents;i++){
 		
 		h2_charge1_charge_2->Fill(charge_1,charge_2);
 		//cut  on charge of twim
-		if (30 < charge_1 && charge_1 < 60 && 30 < charge_2 && charge_2 < 60 && (charge_1+charge_2) > 89 && (charge_1+charge_2) < 95 ){
+		if (30 < charge_1 && charge_1 < 60 && 30 < charge_2 && charge_2 < 60 && (charge_1+charge_2) > 89 && (charge_1+charge_2) < 93 ){
 	
 		events_total_califa +=1;
 		califamappeddata = new R3BCalifaMappedData*[entries_califa];
@@ -314,6 +328,13 @@ for(Long64_t i=0;i< nevents;i++){
 				califahitdata[m] = (R3BCalifaHitData*)CalifaHitData->At(m);
 				h2_energy_vs_theta->Fill((califahitdata[m]->GetEnergy())/1000,((califahitdata[m]->GetTheta())/PI)*180);
 				h2_phi_vs_theta->Fill(((califahitdata[m]->GetTheta())/PI)*180,((califahitdata[m]->GetPhi())/PI)*180);
+
+				//fill 3D plot
+				if(events_with_cut < 20){
+					for (Int_t j = 0; j < round((califahitdata[m]->GetEnergy()));j++){
+				h2_energy_angular_dist[events_with_cut]->Fill(((califahitdata[m]->GetTheta())/PI)*180,((califahitdata[m]->GetPhi())/PI)*180);
+					}
+				}
 				}
 			}
 			}
@@ -417,6 +438,7 @@ for(Long64_t i=0;i< nevents;i++){
 		califa_messel_ts.clear();
 		califa_wixhausen_ts.clear();
 		califa_both_sides_ts.clear();
+		events_with_cut++;
 		}
 	}
 	
@@ -442,7 +464,11 @@ l->Add(h2_energy_vs_mult_no_M);
 l->Add(h2_energy_vs_mult_with_M);
 l->Add(h2_charge1_charge_2);
 l->Add(h1_trigger);
+for(Int_t i = 0; i < 20; i++){
+l->Add(h2_energy_angular_dist[i]);
+}
 l->Write("histlist", TObject::kSingleKey);
+
 
 cout << "----SUMMARY---------------------" << endl;
 cout << "Califa events with master trigger:\t" << events_califa_with_master <<  " " << double(events_califa_with_master)/double(events_total_califa) << " % " << endl;
