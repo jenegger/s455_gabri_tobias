@@ -20,3 +20,8 @@ Latest R3BRoot version (dev branch) used, commit 2ca8be537a39b47d265fc3eaed23fc5
 
 
 The calibration file dummy_sofia.par is the same as /u/land/r3broot/202106_testing/R3BRoot_20210726/sofia/macros/s455Up2p/parameters/CalibParam.par
+
+
+For further data checking we look at following lmd files:
+-> main0208_0008.lmd (as it is one of the beginnings)
+-> main0220_0004.lmd (this was after the lxana01 crash, do we see some shifts in WRTS?? this has to be investigated....) 

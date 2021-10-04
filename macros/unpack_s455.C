@@ -29,11 +29,11 @@ void unpack_s455()
     const Int_t expId = 455; // select experiment: 444, 455 or 467
 
     // Create input -----------------------------------------
-    TString filename = "../../s455_03_273_10_stitched.lmd"; //input lmd file
+    TString filename = "../../s455_03_220_0004_stitched.lmd"; //input lmd file
 
 
     // Define output-----------------------------------------
-    TString outputFileName = "../file_src/twim_thisFile.root";
+    TString outputFileName = "../file_src/s455_03_220_0004.root";
 
     Bool_t Cal_level = true;          // set true if there exists a file with the calibration parameters
     Bool_t NOTstoremappeddata = false; // if true, don't store mapped data in the root file
