@@ -23,17 +23,18 @@
 	TRIG_LMU_OUT(13) = not BEAM_GATE_AUX and in_CALIFA_OR;
 	TRIG_LMU_OUT(14) = not BEAM_GATE_AUX and in_NEULAND;
 */
-void p2p_maybe()
+void p2p_study()
 {
 
   TStopwatch timer;
   timer.Start();
 
   // Put here the root file
-  TString fileList = "calibrated_main0273.root";
+  TString fileList = "/home/gabri/Analysis/Califa_tests/files/rootfiles/calibrated_main0273_HT.root";
 
   TFile *eventFile;
   TTree* eventTree;
+
 
   eventFile = TFile::Open(fileList);
   eventTree = (TTree*)eventFile->Get("evt");
@@ -64,21 +65,25 @@ void p2p_maybe()
 
 
 
+  // ------------ Histograms for Correlations --------------
+  TCanvas *myFirstCanvas = new TCanvas("myFirstCanvas","myFirstCanvas",2000,2000);
+  myFirstCanvas->Divide(3,1);
 
-  TCanvas *myCanvas = new TCanvas("myCanvas","myCanvas",2000,2000);
-
-  myCanvas->Divide(3,1);
-
-
-  TH2F *energyMultHisto = new TH2F("energyMultHisto","P2P Like: Energy Vs Multiplicity",600,0,700,300,0,300);
+  TCanvas *mySecondCanvas = new TCanvas("mySecondCanvas","mySecondCanvas",2000,2000);
 
   TH2F *phiVsPhiHisto = new TH2F("phiVsPhiHisto","P2P : Phi Vs Phi ",300,-190,190,300,-190,190);
-  TH2F *thetaVsThetaHisto = new TH2F("thetaVsThetaHisto","P2P : Theta Vs Theta ",300,0,90,300,0,90);
+  TH2F *energyCorrHisto = new TH2F("energyCorrHisto","P2P : Energy Vs Energy ",400,0,700,400,0,700);
   TH1F *openingAngleHisto = new TH1F("openingAngleHisto","P2P : Opening Angle",300,0,100);
+
+  TH1F *multHisto = new TH1F("multHisto","Crystal Multiplicity",300,0,100);
+
   Int_t nEvents = eventTree->GetEntries();
 
 
-  Int_t nCalifaHits,nCalifaCalHits,nTwimHits,fValidHits,fCrystalId,tpatbin,fTPat,fUncorrelatedEvents=0,fUncorrelatedEventsFission=0;
+
+
+  Int_t nCalifaHits,nCalifaCalHits,nTwimHits,fValidHits,fCrystalId,tpatbin;
+  Int_t fTPat,fUncorrelatedEvents=0;
   Int_t goodEvent;
 
   Float_t fEnergy,fCharge,fTheta2,fTheta1,fPhi1,fPhi2,fEnergy1,fEnergy2;
@@ -91,6 +96,7 @@ void p2p_maybe()
     calCA->Clear();
 
     eventTree->GetEvent(j);
+
     nCalifaHits = hitCA->GetEntries();
     nCalifaCalHits=calCA->GetEntries();
     nTwimHits = twimCA->GetEntries();
@@ -111,15 +117,15 @@ void p2p_maybe()
              tpatbin = (fEventHeader->GetTpat() & (1 << i));
              if (tpatbin != 0){
                  fTPat=i+1;
-}
-         }
+                }
+             }
+          }
+
+
+     else {
+      fTPat=0;
+      fUncorrelatedEvents++;
      }
-
-     else{
-
-     fTPat=0;
-     fUncorrelatedEvents++;
- }
 
 
      for(Int_t s=0;s<nTwimHits;s++)
@@ -137,7 +143,7 @@ void p2p_maybe()
 
 
 
-     if(nCalifaHits == 2 && fCharge > 80 && fCharge < 100 && nTwimHits ==2 && goodEvent>=2){
+     if(nCalifaHits >= 2 && fCharge > 85 && fCharge < 98 && nTwimHits ==2 &&  goodEvent>=2 /*&& (fTPat == 4 || fTPat == 10)*/){
 
          fPhi1 = TMath::RadToDeg()*((R3BCalifaHitData*)hitCA->At(0))->GetPhi();
          fPhi2 = TMath::RadToDeg()*((R3BCalifaHitData*)hitCA->At(1))->GetPhi();
@@ -148,33 +154,32 @@ void p2p_maybe()
          fEnergy1 = 0.001*((R3BCalifaHitData*)hitCA->At(0))->GetEnergy();
          fEnergy2 = 0.001*((R3BCalifaHitData*)hitCA->At(1))->GetEnergy();
 
-         openingAngleHisto->Fill(fTheta1+fTheta2);
-         thetaVsThetaHisto->Fill(fTheta1,fTheta2);
-         phiVsPhiHisto->Fill(fPhi1,fPhi2);
+         multHisto->Fill(nCalifaCalHits);
 
-     }
+         if(( (TMath::Abs(fPhi1) + TMath::Abs(fPhi2)) > 160 && (TMath::Abs(fPhi1) + TMath::Abs(fPhi2) < 200))){
+
+           openingAngleHisto->Fill(fTheta1+fTheta2);
+           energyCorrHisto->Fill(fEnergy1,fEnergy2);
+           phiVsPhiHisto->Fill(fPhi1,fPhi2);
+
+        }
+      }
+    }
 
 
+   myFirstCanvas->cd(1);
+   openingAngleHisto->Draw();
 
+   myFirstCanvas->cd(2);
+   phiVsPhiHisto->Draw("colz");
 
+   myFirstCanvas->cd(3);
+   energyCorrHisto->Draw("colz");
 
-
-}
-
-  myCanvas->cd(1);
-  openingAngleHisto->Draw();
-
-  myCanvas->cd(2);
-  phiVsPhiHisto->Draw("colz");
-
-  myCanvas->cd(3);
-  thetaVsThetaHisto->Draw("colz");
+   mySecondCanvas->cd();
+   multHisto->Draw();
 
   cout<<"Uncorrelated Events: "<<fUncorrelatedEvents<<"( "<<100*Float_t(fUncorrelatedEvents)/Float_t(nEvents)<<" )"<<endl;
-  cout<<"Uncorrelated Events (FISSION): "<<fUncorrelatedEventsFission<<"( "<<100*Float_t(fUncorrelatedEventsFission)/Float_t(nEvents)<<" )"<<endl;
-
-
-
 
 
 
