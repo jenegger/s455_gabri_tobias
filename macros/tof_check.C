@@ -13,6 +13,19 @@
 #include <stdlib.h>
 using namespace std;
 
+bool sortcol( const vector<double>& v1,const vector<double>& v2 ) {
+	                                    return v1[0] > v2[0];
+					}
+bool sort_min( const vector<double>& vec1,const vector<double>& vec2 ) {
+	                                            return vec1[2] < vec2[2];
+					}
+
+double array_for_cuts_theta[6][3] = {};
+double array_for_cuts_phi[6][3] = {};
+double array_for_cuts_energy[6][3] = {};
+
+
+
 char hist_name[500];
 //similar code to wr_time_diff.C, here with restriction that I expect at least one hit and at most 2two hits in tofw
 void tof_check(){
@@ -178,6 +191,27 @@ h2_charge1_charge_2->GetYaxis()->CenterTitle(true);
 h2_charge1_charge_2->GetYaxis()->SetLabelSize(0.045);
 h2_charge1_charge_2->GetYaxis()->SetTitleSize(0.045);
 
+
+TH2D* h2_charge1_charge_2_after;
+sprintf(hist_name, "Charge 1 vs Charge 2 (TWIM Music) after the minimal CALIFA cuts");
+h2_charge1_charge_2_after = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+h2_charge1_charge_2_after->GetXaxis()->SetTitle("Charge 1");
+h2_charge1_charge_2_after->GetYaxis()->SetTitle("Charge 2");
+h2_charge1_charge_2_after->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_after->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_after->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_after->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_charge_sum_after;
+sprintf(hist_name, "Charge Sum (TWIM Music) after the minimal CALIFA cuts");
+h1_charge_sum_after = new TH1D(hist_name,hist_name,500,0,100);
+h1_charge_sum_after->GetXaxis()->SetTitle("Charge 1");
+h1_charge_sum_after->GetYaxis()->SetTitle("Charge 2");
+h1_charge_sum_after->GetXaxis()->CenterTitle(true);
+h1_charge_sum_after->GetYaxis()->CenterTitle(true);
+h1_charge_sum_after->GetYaxis()->SetLabelSize(0.045);
+h1_charge_sum_after->GetYaxis()->SetTitleSize(0.045);
+
 //check 3d plot for energy distribution for p2p reactions
 Int_t p2p_check = 20;
 Int_t p2p_check_one = 20;
@@ -219,6 +253,42 @@ for (Int_t i = 0; i < p2p_check ; i++){
 	h2_energy_angular_dist_two[i]->GetYaxis()->SetLabelSize(0.045);
 }
 
+TH2D* h2_charge1_vs_charge2_energy_cut[6];
+for (Int_t i = 0; i < 6;i++){
+	sprintf(hist_name, "Charge1 vs Charge 2 for Energy cut: %i < E_sum < %i ",i*50+50, 900-i*50);
+	h2_charge1_vs_charge2_energy_cut[i] = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+	h2_charge1_vs_charge2_energy_cut[i]->GetXaxis()->SetTitle("Charge 1 ");
+	h2_charge1_vs_charge2_energy_cut[i]->GetYaxis()->SetTitle("Charge 2 ");
+	h2_charge1_vs_charge2_energy_cut[i]->GetXaxis()->CenterTitle(true);
+	h2_charge1_vs_charge2_energy_cut[i]->GetYaxis()->CenterTitle(true);
+	h2_charge1_vs_charge2_energy_cut[i]->GetYaxis()->SetLabelSize(0.045);
+	h2_charge1_vs_charge2_energy_cut[i]->GetYaxis()->SetTitleSize(0.045);
+	}
+
+
+TH2D* h2_charge1_vs_charge2_theta_cut[6];
+for (Int_t i = 0; i < 6;i++){
+	sprintf(hist_name, "Charge1 vs Charge 2 for theta cut: %i < Theta1+Theta2 < %i ",70+i, 90-i);
+	h2_charge1_vs_charge2_theta_cut[i] = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+	h2_charge1_vs_charge2_theta_cut[i]->GetXaxis()->SetTitle("Charge 1 ");
+	h2_charge1_vs_charge2_theta_cut[i]->GetYaxis()->SetTitle("Charge 2");
+	h2_charge1_vs_charge2_theta_cut[i]->GetXaxis()->CenterTitle(true);
+	h2_charge1_vs_charge2_theta_cut[i]->GetYaxis()->CenterTitle(true);
+	h2_charge1_vs_charge2_theta_cut[i]->GetYaxis()->SetLabelSize(0.045);
+	h2_charge1_vs_charge2_theta_cut[i]->GetYaxis()->SetTitleSize(0.045);
+	}
+
+TH2D* h2_charge1_vs_charge2_phi_cut[6];
+for (Int_t i = 0; i < 6;i++){
+	sprintf(hist_name, "Charge1 vs Charge 2 for phi cut: %i < delta_phi < %i ",150+i*5, 210-i*5);
+	h2_charge1_vs_charge2_phi_cut[i] = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+	h2_charge1_vs_charge2_phi_cut[i]->GetXaxis()->SetTitle("Charge 1 ");
+	h2_charge1_vs_charge2_phi_cut[i]->GetYaxis()->SetTitle("Charge 2");
+	h2_charge1_vs_charge2_phi_cut[i]->GetXaxis()->CenterTitle(true);
+	h2_charge1_vs_charge2_phi_cut[i]->GetYaxis()->CenterTitle(true);
+	h2_charge1_vs_charge2_phi_cut[i]->GetYaxis()->SetLabelSize(0.045);
+	h2_charge1_vs_charge2_phi_cut[i]->GetYaxis()->SetTitleSize(0.045);
+	}
 
 TH1D* h1_mult_100mev;
 sprintf(hist_name, "Multiplicity of events with one hit > 100 MeV ");
@@ -262,6 +332,165 @@ h2_theta1_vs_theta2->GetYaxis()->CenterTitle(true);
 h2_theta1_vs_theta2->GetYaxis()->SetLabelSize(0.045);
 h2_theta1_vs_theta2->GetYaxis()->SetTitleSize(0.045);
 
+TH2D* h2_theta1_vs_theta2_cluster;
+sprintf(hist_name, "Theta 1 vs Theta 2 for the two hits with highest energy");
+h2_theta1_vs_theta2_cluster = new TH2D(hist_name,hist_name,70,20,90,70,20,90);
+h2_theta1_vs_theta2_cluster->GetXaxis()->SetTitle("Theta1 [degr]");
+h2_theta1_vs_theta2_cluster->GetYaxis()->SetTitle("Theta2 [degr]");
+h2_theta1_vs_theta2_cluster->GetXaxis()->CenterTitle(true);
+h2_theta1_vs_theta2_cluster->GetYaxis()->CenterTitle(true);
+h2_theta1_vs_theta2_cluster->GetYaxis()->SetLabelSize(0.045);
+h2_theta1_vs_theta2_cluster->GetYaxis()->SetTitleSize(0.045);
+
+TH2D* h2_theta1_vs_theta2_cluster_best_dphi;
+sprintf(hist_name, "Theta 1 vs Theta 2 for the two hits with highest energy (> 30MeV) and best dphi");
+h2_theta1_vs_theta2_cluster_best_dphi = new TH2D(hist_name,hist_name,70,20,90,70,20,90);
+h2_theta1_vs_theta2_cluster_best_dphi->GetXaxis()->SetTitle("Theta1 [degr]");
+h2_theta1_vs_theta2_cluster_best_dphi->GetYaxis()->SetTitle("Theta2 [degr]");
+h2_theta1_vs_theta2_cluster_best_dphi->GetXaxis()->CenterTitle(true);
+h2_theta1_vs_theta2_cluster_best_dphi->GetYaxis()->CenterTitle(true);
+h2_theta1_vs_theta2_cluster_best_dphi->GetYaxis()->SetLabelSize(0.045);
+h2_theta1_vs_theta2_cluster_best_dphi->GetYaxis()->SetTitleSize(0.045);
+
+
+TH2D* h2_e1_vs_e2_cluster;
+sprintf(hist_name, "Energy 1 vs Energy 2 for the two hits with highest energy");
+h2_e1_vs_e2_cluster = new TH2D(hist_name,hist_name,500,0,1000,500,0,1000);
+h2_e1_vs_e2_cluster->GetXaxis()->SetTitle("Energy1 [MeV]");
+h2_e1_vs_e2_cluster->GetYaxis()->SetTitle("Energy2 [MeV]");
+h2_e1_vs_e2_cluster->GetXaxis()->CenterTitle(true);
+h2_e1_vs_e2_cluster->GetYaxis()->CenterTitle(true);
+h2_e1_vs_e2_cluster->GetYaxis()->SetLabelSize(0.045);
+h2_e1_vs_e2_cluster->GetYaxis()->SetTitleSize(0.045);
+
+
+TH2D* h2_e1_vs_e2_cluster_best_dphi;
+sprintf(hist_name, "Energy 1 vs Energy 2 for the two hits with highest energy (> 30MeV) and best dphi");
+h2_e1_vs_e2_cluster_best_dphi = new TH2D(hist_name,hist_name,500,0,1000,500,0,1000);
+h2_e1_vs_e2_cluster_best_dphi->GetXaxis()->SetTitle("Energy1 [MeV]");
+h2_e1_vs_e2_cluster_best_dphi->GetYaxis()->SetTitle("Energy2 [MeV]");
+h2_e1_vs_e2_cluster_best_dphi->GetXaxis()->CenterTitle(true);
+h2_e1_vs_e2_cluster_best_dphi->GetYaxis()->CenterTitle(true);
+h2_e1_vs_e2_cluster_best_dphi->GetYaxis()->SetLabelSize(0.045);
+h2_e1_vs_e2_cluster_best_dphi->GetYaxis()->SetTitleSize(0.045);
+
+TH2D* h2_e1_vs_e2_cluster_two_highest;
+sprintf(hist_name, "Energy 1 vs Energy 2 for the two hits with highest energy (> 30MeV) and dphi = 180 +-15");
+h2_e1_vs_e2_cluster_two_highest = new TH2D(hist_name,hist_name,500,0,1000,500,0,1000);
+h2_e1_vs_e2_cluster_two_highest->GetXaxis()->SetTitle("Energy1 [MeV]");
+h2_e1_vs_e2_cluster_two_highest->GetYaxis()->SetTitle("Energy2 [MeV]");
+h2_e1_vs_e2_cluster_two_highest->GetXaxis()->CenterTitle(true);
+h2_e1_vs_e2_cluster_two_highest->GetYaxis()->CenterTitle(true);
+h2_e1_vs_e2_cluster_two_highest->GetYaxis()->SetLabelSize(0.045);
+h2_e1_vs_e2_cluster_two_highest->GetYaxis()->SetTitleSize(0.045);
+
+
+
+
+TH1D* h1_theta_sum_p2p_best_dphi;
+sprintf(hist_name, "Theta1 +  Theta 2 for two hits (> 30 MeV) and best dphi");
+h1_theta_sum_p2p_best_dphi = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_p2p_best_dphi->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_p2p_best_dphi->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_p2p_best_dphi->GetXaxis()->CenterTitle(true);
+h1_theta_sum_p2p_best_dphi->GetYaxis()->CenterTitle(true);
+h1_theta_sum_p2p_best_dphi->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_p2p_best_dphi->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_opening_angle;
+sprintf(hist_name, "Opening Angle for two hits (> 30 MeV) and best dphi");
+h1_opening_angle = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_opening_angle->GetXaxis()->SetTitle("Opening Angle [degr]");
+h1_opening_angle->GetYaxis()->SetTitle("Counts");
+h1_opening_angle->GetXaxis()->CenterTitle(true);
+h1_opening_angle->GetYaxis()->CenterTitle(true);
+h1_opening_angle->GetYaxis()->SetLabelSize(0.045);
+h1_opening_angle->GetYaxis()->SetTitleSize(0.045);
+
+
+TH1D* h1_opening_angle_first_two;
+sprintf(hist_name, "Opening Angle for the first two high energetic hits (> 30 MeV) and best dphi");
+h1_opening_angle_first_two = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_opening_angle_first_two->GetXaxis()->SetTitle("Opening Angle [degr]");
+h1_opening_angle_first_two->GetYaxis()->SetTitle("Counts");
+h1_opening_angle_first_two->GetXaxis()->CenterTitle(true);
+h1_opening_angle_first_two->GetYaxis()->CenterTitle(true);
+h1_opening_angle_first_two->GetYaxis()->SetLabelSize(0.045);
+h1_opening_angle_first_two->GetYaxis()->SetTitleSize(0.045);
+
+
+TH1D* h1_opening_angle_one_other;
+sprintf(hist_name, "Opening Angle for the first and other (not second) energetic hits (> 30 MeV) and best dphi");
+h1_opening_angle_one_other = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_opening_angle_one_other->GetXaxis()->SetTitle("Opening Angle [degr]");
+h1_opening_angle_one_other->GetYaxis()->SetTitle("Counts");
+h1_opening_angle_one_other->GetXaxis()->CenterTitle(true);
+h1_opening_angle_one_other->GetYaxis()->CenterTitle(true);
+h1_opening_angle_one_other->GetYaxis()->SetLabelSize(0.045);
+h1_opening_angle_one_other->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_opening_angle_two_other;
+sprintf(hist_name, "Opening Angle for the second and other (not first) energetic hits (> 30 MeV) and best dphi");
+h1_opening_angle_two_other = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_opening_angle_two_other->GetXaxis()->SetTitle("Opening Angle [degr]");
+h1_opening_angle_two_other->GetYaxis()->SetTitle("Counts");
+h1_opening_angle_two_other->GetXaxis()->CenterTitle(true);
+h1_opening_angle_two_other->GetYaxis()->CenterTitle(true);
+h1_opening_angle_two_other->GetYaxis()->SetLabelSize(0.045);
+h1_opening_angle_two_other->GetYaxis()->SetTitleSize(0.045);
+
+
+TH1D* h1_opening_angle_proton;
+sprintf(hist_name, "Opening Angle for two hits (> 30 MeV) and best dphi only in proton range");
+h1_opening_angle_proton = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_opening_angle_proton->GetXaxis()->SetTitle("Opening Angle [degr]");
+h1_opening_angle_proton->GetYaxis()->SetTitle("Counts");
+h1_opening_angle_proton->GetXaxis()->CenterTitle(true);
+h1_opening_angle_proton->GetYaxis()->CenterTitle(true);
+h1_opening_angle_proton->GetYaxis()->SetLabelSize(0.045);
+h1_opening_angle_proton->GetYaxis()->SetTitleSize(0.045);
+
+TH2D* h2_opening_angle_vs_esum;
+sprintf(hist_name, "Opening Angle for two hits (> 30 MeV) and best dphi vs E1+E2");
+h2_opening_angle_vs_esum = new TH2D(hist_name,hist_name,52,22.15,152.15,100,0,1000);
+h2_opening_angle_vs_esum->GetXaxis()->SetTitle("Opening Angle [degr]");
+h2_opening_angle_vs_esum->GetYaxis()->SetTitle("E1+E2 [MeV]");
+h2_opening_angle_vs_esum->GetXaxis()->CenterTitle(true);
+h2_opening_angle_vs_esum->GetYaxis()->CenterTitle(true);
+h2_opening_angle_vs_esum->GetYaxis()->SetLabelSize(0.045);
+h2_opening_angle_vs_esum->GetYaxis()->SetTitleSize(0.045);
+
+
+TH2D* h2_e_vs_phi;
+sprintf(hist_name, "E1 or E2 vs angular distribution");
+h2_e_vs_phi = new TH2D(hist_name,hist_name,52,22.15,152.15,60,-180,180);
+h2_e_vs_phi->GetXaxis()->SetTitle("Theta [degr]");
+h2_e_vs_phi->GetYaxis()->SetTitle("Phi [degr]");
+h2_e_vs_phi->GetXaxis()->CenterTitle(true);
+h2_e_vs_phi->GetYaxis()->CenterTitle(true);
+h2_e_vs_phi->GetYaxis()->SetLabelSize(0.045);
+h2_e_vs_phi->GetYaxis()->SetTitleSize(0.045);
+
+
+TH1D* h1_angle_check;
+sprintf(hist_name, "angle check ");
+h1_angle_check = new TH1D(hist_name,hist_name,3500,0,3.5);
+h1_angle_check->GetXaxis()->SetTitle("Polar angle");
+h1_angle_check->GetYaxis()->SetTitle("Counts");
+h1_angle_check->GetXaxis()->CenterTitle(true);
+h1_angle_check->GetYaxis()->CenterTitle(true);
+h1_angle_check->GetYaxis()->SetLabelSize(0.045);
+h1_angle_check->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_angle_check_arzi;
+sprintf(hist_name, "angle check arzimuthal ");
+h1_angle_check_arzi = new TH1D(hist_name,hist_name,7000,-3.5,3.5);
+h1_angle_check_arzi->GetXaxis()->SetTitle("Arzimuthal angle");
+h1_angle_check_arzi->GetYaxis()->SetTitle("Counts");
+h1_angle_check_arzi->GetXaxis()->CenterTitle(true);
+h1_angle_check_arzi->GetYaxis()->CenterTitle(true);
+h1_angle_check_arzi->GetYaxis()->SetLabelSize(0.045);
+h1_angle_check_arzi->GetYaxis()->SetTitleSize(0.045);
 
 //Histo with trigger info:
 TH1F* h1_trigger = new TH1F("h1_trigger", "Trigger information: Tpat", 17, -0.5, 16.5);
@@ -302,7 +531,7 @@ Long64_t entries_tof = 0;
 Long64_t entries_twim = 0;
 Int_t entries_wr = 0;
 //Input file
-sprintf(fname,"../file_src/twim_thisFile.root");
+sprintf(fname,"../file_src/s455_03_273_10_sq_w_cl.root");
 
 TChain* chain = new TChain("evt");
 chain->Reset();
@@ -349,6 +578,8 @@ Long64_t events_total_califa = 0;
 Long64_t events_with_cut = 0;
 Long64_t events_one_proton = 0;
 Long64_t events_two_proton = 0;
+vector<vector<double> > v_califa_energy_theta;
+vector<vector<double> > v_califa_energy_theta_phi;
 for(Long64_t i=0;i< nevents;i++){
     Long64_t evtnr = i;
     if (i%100000==0)
@@ -380,7 +611,8 @@ for(Long64_t i=0;i< nevents;i++){
 		
 		h2_charge1_charge_2->Fill(charge_1,charge_2);
 		//cut  on charge of twim
-		if (30 < charge_1 && charge_1 < 60 && 30 < charge_2 && charge_2 < 60 && (charge_1+charge_2) > 89 && (charge_1+charge_2) < 93 ){
+		//if (30 < charge_1 && charge_1 < 60 && 30 < charge_2 && charge_2 < 60 && (charge_1+charge_2) > 89 && (charge_1+charge_2) < 93 ){
+		if ((charge_1+charge_2) < 100){
 	
 		events_total_califa +=1;
 		califamappeddata = new R3BCalifaMappedData*[entries_califa];
@@ -398,13 +630,46 @@ for(Long64_t i=0;i< nevents;i++){
 				califahitdata = new R3BCalifaHitData*[entries_califa_hit];
 			Int_t califa_100mev_hits = 0;
 			for (Int_t m = 0; m < entries_califa_hit; m++){
+				vector<double> v_temp_califa(2);
 				califahitdata[m] = (R3BCalifaHitData*)CalifaHitData->At(m);
 				h2_energy_vs_theta->Fill((califahitdata[m]->GetEnergy())/1000,((califahitdata[m]->GetTheta())/PI)*180);
 				h2_phi_vs_theta->Fill(((califahitdata[m]->GetTheta())/PI)*180,((califahitdata[m]->GetPhi())/PI)*180);
+				h1_angle_check->Fill(califahitdata[m]->GetTheta());
+				h1_angle_check_arzi->Fill(califahitdata[m]->GetPhi());
+				v_temp_califa[0] = (califahitdata[m]->GetEnergy())/1000.;
+				//randomize angles to remove artifacts...
+				if (califahitdata[m]->GetTheta() > 0.45){
+					Int_t rand_angl = rand() % 4500 + 1;
+					v_temp_califa[1] = ((califahitdata[m]->GetTheta() - 0.0225 + 0.00001*rand_angl)/PI)*180.;
+					}
+				else {
+					v_temp_califa[1] = ((califahitdata[m]->GetTheta())/PI)*180.;
+					}
+				////v_temp_califa[1] =  ((califahitdata[m]->GetTheta())/PI)*180.;
+				v_califa_energy_theta.push_back(v_temp_califa);
+				v_temp_califa.clear();
 				if (((califahitdata[m]->GetEnergy())/1000) > 100){
 					califa_100mev_hits++;
 				}
+				//section to fill 2d vector for califa hits > 30 mev and choose the best ones with diff_phi = 180+-30-------------------
+				vector<double> v_temp_califa_ext(3);
+				if (((califahitdata[m]->GetEnergy())/1000) > 30){
+					v_temp_califa_ext[0] = (califahitdata[m]->GetEnergy())/1000.;
+					
+					if (califahitdata[m]->GetTheta() > 0.45){
+						Int_t rand_angl = rand() % 4500 + 1;
+						v_temp_califa_ext[1] = ((califahitdata[m]->GetTheta() - 0.0225 + 0.00001*rand_angl)/PI)*180.;
+						}
+					else {
+						v_temp_califa_ext[1] = ((califahitdata[m]->GetTheta())/PI)*180.;
+						}
+					
+					v_temp_califa_ext[2] = ((califahitdata[m]->GetPhi())/PI)*180;
+					v_califa_energy_theta_phi.push_back(v_temp_califa_ext);
+					v_temp_califa_ext.clear();
+					}
 
+				//-----------------------------------------------------------------------------------------------------------------------
 				//fill 3D plot
 				if(events_with_cut < 20){
 					for (Int_t j = 0; j < round((califahitdata[m]->GetEnergy()));j++){
@@ -412,6 +677,358 @@ for(Long64_t i=0;i< nevents;i++){
 					}
 				}
 				}
+			vector<double> v_special;
+			//here I select the best califa hits with diff_phi = 180+-30---------
+			//------Algorithm begin------------" << endl;
+			if (v_califa_energy_theta_phi.size() > 2){
+				sort(v_califa_energy_theta_phi.begin(),v_califa_energy_theta_phi.end(),sortcol);
+				vector<vector<double> > v_phi_diff;
+				for(Int_t v1 = 0; v1 < 2; v1++){
+					for (Int_t v2 = v1+1; v2 < v_califa_energy_theta_phi.size();v2++){
+						vector<double> v_temp_phi_diff(3);
+						v_temp_phi_diff[0] = v1;
+						v_temp_phi_diff[1] = v2;
+						if (v_califa_energy_theta_phi[v1][2] > v_califa_energy_theta_phi[v2][2]){
+							Double_t angular_value1 = 360 + v_califa_energy_theta_phi[v2][2] - v_califa_energy_theta_phi[v1][2];
+							Double_t angular_value2 = v_califa_energy_theta_phi[v1][2] - v_califa_energy_theta_phi[v2][2];
+								if (angular_value1 < angular_value2){
+									 v_temp_phi_diff[2] = 180 - angular_value1;
+									}
+								else {
+									v_temp_phi_diff[2] = 180 - angular_value2;
+									}
+							}
+						if ( v_califa_energy_theta_phi[v2][2] > v_califa_energy_theta_phi[v1][2]){
+							Double_t angular_value1 = 360 + v_califa_energy_theta_phi[v1][2] - v_califa_energy_theta_phi[v2][2];
+							Double_t angular_value2 = v_califa_energy_theta_phi[v2][2] - v_califa_energy_theta_phi[v1][2];	
+								if (angular_value1 < angular_value2){
+									v_temp_phi_diff[2] = 180 - angular_value1;
+									}
+								else {
+									v_temp_phi_diff[2] = 180 - angular_value2;
+									}
+
+							}
+
+
+						v_phi_diff.push_back(v_temp_phi_diff);
+						v_temp_phi_diff.clear();
+						}
+					}
+				Double_t phi_diff_one_two = v_phi_diff[0][2];
+				//-----------Algorithm end -------------------------------
+				
+				//select the two hits with highest energy if phi_diff = 180+-30
+				if ( phi_diff_one_two < 30){
+					v_special.push_back(v_califa_energy_theta_phi[0][0]+v_califa_energy_theta_phi[1][0]);
+					v_special.push_back(v_califa_energy_theta_phi[0][1]+v_califa_energy_theta_phi[1][1]);
+					v_special.push_back(phi_diff_one_two);
+					int rand_num;
+					rand_num = rand() % 2;
+					h2_charge1_charge_2_after->Fill(charge_1,charge_2);
+					h1_charge_sum_after->Fill(charge_1+charge_2);
+					//if ((v_califa_energy_theta_phi[0][0]+v_califa_energy_theta_phi[1][0]) < 650 && (v_califa_energy_theta_phi[0][0]+v_califa_energy_theta_phi[1][0]) > 300 && (v_califa_energy_theta_phi[0][1]+v_califa_energy_theta_phi[1][1]) < 90 && (v_califa_energy_theta_phi[0][1]+v_califa_energy_theta_phi[1][1]) > 70 ){
+					//	h2_charge1_charge_2_after->Fill(charge_1,charge_2);	
+					//	h1_charge_sum_after->Fill(charge_1+charge_2);
+					//	}
+					h2_theta1_vs_theta2_cluster_best_dphi->Fill(v_califa_energy_theta_phi[rand_num][1],v_califa_energy_theta_phi[1-rand_num][1]);
+					h2_e1_vs_e2_cluster_best_dphi->Fill(v_califa_energy_theta_phi[rand_num][0],v_califa_energy_theta_phi[1-rand_num][0]);
+					h1_theta_sum_p2p_best_dphi->Fill(v_califa_energy_theta_phi[0][1]+v_califa_energy_theta_phi[1][1]);
+					h2_e1_vs_e2_cluster_two_highest->Fill(v_califa_energy_theta_phi[rand_num][0],v_califa_energy_theta_phi[1-rand_num][0]);
+					h2_e_vs_phi->Fill(v_califa_energy_theta_phi[0][1],v_califa_energy_theta_phi[0][2]);
+					h2_e_vs_phi->Fill(v_califa_energy_theta_phi[1][1],v_califa_energy_theta_phi[1][2]);
+					TVector3 sel_vector_1 (v_califa_energy_theta_phi[0][0]*sin(v_califa_energy_theta_phi[0][1]*PI/180.)*cos(v_califa_energy_theta_phi[0][2]*PI/180.),v_califa_energy_theta_phi[0][0]*sin(v_califa_energy_theta_phi[0][1]*PI/180.)*sin(v_califa_energy_theta_phi[0][2]*PI/180.),v_califa_energy_theta_phi[0][0]*cos(v_califa_energy_theta_phi[0][1]*PI/180.));
+
+					TVector3 sel_vector_2 (v_califa_energy_theta_phi[1][0]*sin(v_califa_energy_theta_phi[1][1]*PI/180.)*cos(v_califa_energy_theta_phi[1][2]*PI/180.),v_califa_energy_theta_phi[1][0]*   sin(v_califa_energy_theta_phi[1][1]*PI/180.)*sin(v_califa_energy_theta_phi[1][2]*PI/180.),v_califa_energy_theta_phi[1][0]*cos(v_califa_energy_theta_phi[1][1]*PI/180.));
+					Double_t angle_two_vecs = sel_vector_1.Angle(sel_vector_2);
+					h1_opening_angle->Fill(angle_two_vecs*180/PI);
+					h1_opening_angle_first_two->Fill(angle_two_vecs*180/PI);
+					if (angle_two_vecs*180/PI < 60){
+					cout << "event to study:\t" << evtnr << endl;
+					}
+					//now I select only hits in the PROTON RANGE region
+					if( v_califa_energy_theta_phi[0][1] < 43){
+						if (v_califa_energy_theta_phi[1][1] < 43){
+							h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+							}
+						else {
+							if (((v_califa_energy_theta_phi[1][2] > -22.5 && v_califa_energy_theta_phi[1][2] < 22.5) || v_califa_energy_theta_phi[1][2] > 157 || v_califa_energy_theta_phi[1][2] < -   157)){
+								h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+								}
+								}
+								}
+					else{
+						if(v_califa_energy_theta_phi[1][1] < 43){
+							if(((v_califa_energy_theta_phi[0][2] > -22.5 && v_califa_energy_theta_phi[0][2] < 22.5) || v_califa_energy_theta_phi[0][2] > 157 || v_califa_energy_theta_phi[0][2] < -   157)){
+								h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+							}
+							}
+						else if(((v_califa_energy_theta_phi[0][2] > -22.5 && v_califa_energy_theta_phi[0][2] < 22.5) || v_califa_energy_theta_phi[0][2] > 157 || v_califa_energy_theta_phi[0][2] < -   157) && ((v_califa_energy_theta_phi[1][2] > -22.5 && v_califa_energy_theta_phi[1][2] < 22.5) || v_califa_energy_theta_phi[1][2] > 157 || v_califa_energy_theta_phi[1][2] < -   157)){
+							h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+							}
+					}
+
+					//----END proton range-------------------------------------
+						
+
+					if (angle_two_vecs*180/PI < 30){
+						cout << "this is the eventnumber with small opening angle:" << evtnr << endl;
+						cout << "magnitude of first vector:\t" << sel_vector_1.Mag() << endl;;
+						cout << "magnitude of second vector:\t" << sel_vector_2.Mag() << endl;
+						cout << "Energy one of v_califa_energy_theta_phi:\t" << v_califa_energy_theta_phi[0][0] << endl;
+						cout << "Energy two of v_califa_energy_theta_phi:\t" << v_califa_energy_theta_phi[1][0] << endl;
+						cout << "and the according opening angle:\t" << angle_two_vecs*180/PI << endl;
+						}
+					h2_opening_angle_vs_esum->Fill(angle_two_vecs*180/PI,v_califa_energy_theta_phi[0][0]+v_califa_energy_theta_phi[1][0]);
+
+					}
+				sort(v_phi_diff.begin(),v_phi_diff.end(),sort_min);
+
+				//the hits with highest energy do not have phi_diff = 180+-, therefore use result from algorithm above ....
+				if (phi_diff_one_two > 30 &&  v_phi_diff[0][2] < 30){
+					v_special.push_back(v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][0]+v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][0]);
+					v_special.push_back(v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][1]+v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][1]);
+					v_special.push_back(v_phi_diff[0][2]);
+					h2_charge1_charge_2_after->Fill(charge_1,charge_2);
+					h1_charge_sum_after->Fill(charge_1+charge_2);
+					//if ((v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][0]+v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][0]) < 650 && (v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][0]+v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][0]) > 300 &&                  (v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][1]+v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][1]) < 90 && (v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][1]+v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][1]) > 70 ){
+					//h2_charge1_charge_2_after->Fill(charge_1,charge_2);	
+					//h1_charge_sum_after->Fill(charge_1+charge_2);
+					//}
+					TVector3 sel_vector_1 (v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][0]*sin(v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][1]*PI/180.)*cos(v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][2]*PI/180.),v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][0]*sin(v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][1]*PI/180.)*sin(v_califa_energy_theta_phi[(int)   v_phi_diff[0][0]][2]*PI/180.),v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][0]*cos(v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][1]*PI/180.));
+
+					TVector3 sel_vector_2 (v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][0]*sin(v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][1]*PI/180.)*cos(v_califa_energy_theta_phi[(int)   v_phi_diff[0][1]][2]*PI/180.),v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][0]*sin(v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][1]*PI/180.)*sin(v_califa_energy_theta_phi[(int)   v_phi_diff[0][1]][2]*PI/180.),v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][0]*cos(v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][1]*PI/180.));
+					
+					h2_e_vs_phi->Fill(v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][1],v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][2]);
+					h2_e_vs_phi->Fill(v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][1],v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][2]);
+					
+					Double_t angle_two_vecs = sel_vector_1.Angle(sel_vector_2);
+					h1_opening_angle->Fill(angle_two_vecs*180/PI);
+					
+					if (v_phi_diff[0][0] == 0 ){
+						h1_opening_angle_one_other->Fill(angle_two_vecs*180/PI);
+						}
+					if (v_phi_diff[0][0] == 1){
+						h1_opening_angle_two_other->Fill(angle_two_vecs*180/PI);
+						}
+					
+					//now I select only hits in the PROTON RANGE region
+					if (v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][1] < 43){
+						if (v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][1] < 43){
+							h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+							}
+						else{
+							if(((v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][2] > -22.5 && v_califa_energy_theta_phi[(int)                    v_phi_diff[0][1]][2] < 22.5) || v_califa_energy_theta_phi[(int)       v_phi_diff[0][1]][2] > 157 || v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][2] < -157)){
+								h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+								}
+							}
+						}
+					else {
+						if (v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][1] < 43){
+							if (((v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][2] > -22.5 && v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][2] < 22.5) || v_califa_energy_theta_phi[(int)       v_phi_diff[0][0]][2] > 157 || v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][2] < -157)){
+								h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+								}
+
+							}
+						else if (((v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][2] > -22.5 && v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][2] < 22.5) || v_califa_energy_theta_phi[(int)       v_phi_diff[0][0]][2] > 157 || v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][2] < -157) && ((v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][2] > -22.5 && v_califa_energy_theta_phi[(int)                    v_phi_diff[0][1]][2] < 22.5) || v_califa_energy_theta_phi[(int)       v_phi_diff[0][1]][2] > 157 || v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][2] < -157)){
+							h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+							}
+						}
+
+
+
+
+					//----END of proton region-------------------------
+
+					if (angle_two_vecs*180/PI < 30){
+						cout << "this is the eventnumber with small opening angle:" << evtnr << endl;
+						cout << "and the according opening angle:\t" << angle_two_vecs*180/PI << endl;
+						}
+					h2_opening_angle_vs_esum->Fill(angle_two_vecs*180/PI,v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][0]+v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][0]);
+
+					//fill histo
+					int rand_num;
+					rand_num = rand() % 2;
+					h2_theta1_vs_theta2_cluster_best_dphi->Fill(v_califa_energy_theta_phi[(int) v_phi_diff[0][rand_num]][1],v_califa_energy_theta_phi[(int) v_phi_diff[0][1-rand_num]][1]);
+					h2_e1_vs_e2_cluster_best_dphi->Fill(v_califa_energy_theta_phi[(int) v_phi_diff[0][rand_num]][0],v_califa_energy_theta_phi[(int) v_phi_diff[0][1-rand_num]][0]);
+					h1_theta_sum_p2p_best_dphi->Fill(v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][1]+v_califa_energy_theta_phi[(int) v_phi_diff[0][1]][1]);
+					//cout << "Chosen energies: \t" << v_califa_energy_theta_phi[(int) v_phi_diff[0][0]][0] << " , " << 
+					v_califa_energy_theta_phi.clear();
+					}	
+				else{
+					v_califa_energy_theta_phi.clear();
+					//continue;
+				}
+				}
+			//if we have exactly two hits with E > 30 MeV
+			else if (v_califa_energy_theta_phi.size() == 2){
+				sort(v_califa_energy_theta_phi.begin(),v_califa_energy_theta_phi.end(),sortcol);
+				
+				Double_t abs_phi_diff;
+
+				if (v_califa_energy_theta_phi[0][2] > v_califa_energy_theta_phi[1][2]){
+					Double_t angular_value1 = 360 + v_califa_energy_theta_phi[1][2] - v_califa_energy_theta_phi[0][2];
+					Double_t angular_value2 = v_califa_energy_theta_phi[0][2] - v_califa_energy_theta_phi[1][2];
+						if (angular_value1 < angular_value2){
+							 abs_phi_diff = 180 - angular_value1;
+							}
+						else {
+							abs_phi_diff = 180 - angular_value2;
+							}
+					}
+				if ( v_califa_energy_theta_phi[1][2] > v_califa_energy_theta_phi[0][2]){
+					Double_t angular_value1 = 360 + v_califa_energy_theta_phi[0][2] - v_califa_energy_theta_phi[1][2];
+					Double_t angular_value2 = v_califa_energy_theta_phi[1][2] - v_califa_energy_theta_phi[0][2];	
+						if (angular_value1 < angular_value2){
+							abs_phi_diff = 180 - angular_value1;
+							}
+						else {
+							abs_phi_diff = 180 - angular_value2;
+							}
+
+					}
+
+				if (abs_phi_diff < 30){
+					
+					v_special.push_back(v_califa_energy_theta_phi[0][0]+v_califa_energy_theta_phi[1][0]);
+					v_special.push_back(v_califa_energy_theta_phi[0][1]+v_califa_energy_theta_phi[1][1]);
+					v_special.push_back(abs_phi_diff);
+					//fill histo
+					int rand_num;
+					rand_num = rand() % 2;
+					h2_charge1_charge_2_after->Fill(charge_1,charge_2);
+					h1_charge_sum_after->Fill(charge_1+charge_2);
+					//if ((v_califa_energy_theta_phi[0][0]+v_califa_energy_theta_phi[1][0]) < 650 && (v_califa_energy_theta_phi[0][0]+v_califa_energy_theta_phi[1][0]) > 300 && (v_califa_energy_theta_phi[0][1]+v_califa_energy_theta_phi[1][1]) < 90 && (v_califa_energy_theta_phi[0][1]+v_califa_energy_theta_phi[1][1]) > 70 ){
+					//	h2_charge1_charge_2_after->Fill(charge_1,charge_2);	
+					//	h1_charge_sum_after->Fill(charge_1+charge_2);
+					//	}
+					h2_theta1_vs_theta2_cluster_best_dphi->Fill(v_califa_energy_theta_phi[rand_num][1],v_califa_energy_theta_phi[1-rand_num][1]);
+					h2_e1_vs_e2_cluster_best_dphi->Fill(v_califa_energy_theta_phi[rand_num][0],v_califa_energy_theta_phi[1-rand_num][0]);
+					h1_theta_sum_p2p_best_dphi->Fill(v_califa_energy_theta_phi[0][1]+v_califa_energy_theta_phi[1][1]);
+					h2_e_vs_phi->Fill(v_califa_energy_theta_phi[0][1],v_califa_energy_theta_phi[0][2]);
+					h2_e_vs_phi->Fill(v_califa_energy_theta_phi[1][1],v_califa_energy_theta_phi[1][2]);
+
+					
+					TVector3 sel_vector_1 (v_califa_energy_theta_phi[0][0]*sin(v_califa_energy_theta_phi[0][1]*PI/180.)*cos(v_califa_energy_theta_phi[0][2]*PI/180.),v_califa_energy_theta_phi[0][0]*sin(v_califa_energy_theta_phi[0][1]*PI/180.)*sin(v_califa_energy_theta_phi[0][2]*PI/180.),v_califa_energy_theta_phi[0][0]*cos(v_califa_energy_theta_phi[0][1]*PI/180.));
+
+					TVector3 sel_vector_2 (v_califa_energy_theta_phi[1][0]*sin(v_califa_energy_theta_phi[1][1]*PI/180.)*cos(v_califa_energy_theta_phi[1][2]*PI/180.),v_califa_energy_theta_phi[1][0]*   sin(v_califa_energy_theta_phi[1][1]*PI/180.)*sin(v_califa_energy_theta_phi[1][2]*PI/180.),v_califa_energy_theta_phi[1][0]*cos(v_califa_energy_theta_phi[1][1]*PI/180.));
+
+					Double_t angle_two_vecs = sel_vector_1.Angle(sel_vector_2);
+					h1_opening_angle->Fill(angle_two_vecs*180/PI);
+					h1_opening_angle_first_two->Fill(angle_two_vecs*180/PI);
+					
+			
+
+
+					//now I select only hits in the PROTON RANGE region
+					if( v_califa_energy_theta_phi[0][1] < 43){
+						if (v_califa_energy_theta_phi[1][1] < 43){
+							h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+							}
+						else {
+							if (((v_califa_energy_theta_phi[1][2] > -22.5 && v_califa_energy_theta_phi[1][2] < 22.5) || v_califa_energy_theta_phi[1][2] > 157 || v_califa_energy_theta_phi[1][2] < -   157)){
+								h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+								}
+								}
+								}
+					else{
+						if(v_califa_energy_theta_phi[1][1] < 43){
+							if(((v_califa_energy_theta_phi[0][2] > -22.5 && v_califa_energy_theta_phi[0][2] < 22.5) || v_califa_energy_theta_phi[0][2] > 157 || v_califa_energy_theta_phi[0][2] < -   157)){
+								h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+							}
+							}
+						else if(((v_califa_energy_theta_phi[0][2] > -22.5 && v_califa_energy_theta_phi[0][2] < 22.5) || v_califa_energy_theta_phi[0][2] > 157 || v_califa_energy_theta_phi[0][2] < -   157) && ((v_califa_energy_theta_phi[1][2] > -22.5 && v_califa_energy_theta_phi[1][2] < 22.5) || v_califa_energy_theta_phi[1][2] > 157 || v_califa_energy_theta_phi[1][2] < -   157)){
+							h1_opening_angle_proton->Fill(angle_two_vecs*180/PI);
+							}
+					}
+
+					//----END proton range-------------------------------------
+
+
+
+					if (angle_two_vecs*180/PI < 30){
+						cout << "--Begin, just two entries-----------" << endl;
+						cout << "this is the eventnumber with small opening angle:" << evtnr << endl;
+						cout << "magnitude of first vector:\t" << sel_vector_1.Mag() << endl;;
+						cout << "magnitude of second vector:\t" << sel_vector_2.Mag() << endl;
+						cout << "Energy one of v_califa_energy_theta_phi:\t" << v_califa_energy_theta_phi[0][0] << endl;
+						cout << "Energy two of v_califa_energy_theta_phi:\t" << v_califa_energy_theta_phi[1][0] << endl;
+						cout << "and the according opening angle:\t" << angle_two_vecs*180/PI << endl;
+						cout << "---END-------------------------------" << endl;
+						}
+
+					h2_opening_angle_vs_esum->Fill(angle_two_vecs*180/PI,v_califa_energy_theta_phi[0][0]+v_califa_energy_theta_phi[1][0]);
+					v_califa_energy_theta_phi.clear();
+					}
+				else{
+					v_califa_energy_theta_phi.clear();
+					//continue;
+					}
+				}
+			else{
+				v_califa_energy_theta_phi.clear();
+				//continue;
+				}
+			if (v_special.size() == 3){
+			for (Int_t q = 0; q < 6; q++){
+			if (v_special[0] > (50+50*q) && v_special[0] < (900-50*q)){
+				h2_charge1_vs_charge2_energy_cut[q]->Fill(charge_1,charge_2);
+				if ((charge_1+charge_2) > 93.2){
+					array_for_cuts_energy[q][2] +=1;
+					}
+				if ((charge_1+charge_2) < 93.2 && (charge_1+charge_2) > 92){
+					array_for_cuts_energy[q][1] +=1;
+					}
+				if ((charge_1+charge_2) < 92){
+					array_for_cuts_energy[q][0] +=1;
+					}
+
+				}
+
+			if (v_special[1] > (70+q*1) && v_special[1] < (90-q*1)){
+				h2_charge1_vs_charge2_theta_cut[q]->Fill(charge_1,charge_2);
+
+				if ((charge_1+charge_2) > 93.2){
+					array_for_cuts_theta[q][2] +=1;
+					}
+				if ((charge_1+charge_2) < 93.2 && (charge_1+charge_2) > 92){
+					array_for_cuts_theta[q][1] +=1;
+					}
+				if ((charge_1+charge_2) < 92){
+					array_for_cuts_theta[q][0] +=1;
+					}
+			}
+			if (v_special[2] < (30-q*5)){
+				h2_charge1_vs_charge2_phi_cut[q]->Fill(charge_1,charge_2);
+
+				if ((charge_1+charge_2) > 93.2){
+					array_for_cuts_phi[q][2] +=1;
+					}
+				if ((charge_1+charge_2) < 93.2 && (charge_1+charge_2) > 92){
+					array_for_cuts_phi[q][1] +=1;
+					}
+				if ((charge_1+charge_2) < 92){
+					array_for_cuts_phi[q][0] +=1;
+					}
+					}
+			}
+			}
+			v_special.clear();
+
+
+			//-------------------------------------------------------------------
+			
+
+			if (v_califa_energy_theta.size() >= 2){
+				sort(v_califa_energy_theta.begin(),v_califa_energy_theta.end(),sortcol);
+				//fill Cluster histogramm
+				h2_theta1_vs_theta2_cluster->Fill(v_califa_energy_theta[0][1],v_califa_energy_theta[1][1]);
+				h2_e1_vs_e2_cluster->Fill(v_califa_energy_theta[0][0],v_califa_energy_theta[1][0]);
+
+
+				}
+			v_califa_energy_theta.clear();
+			v_califa_energy_theta_phi.clear();
 			if (califa_100mev_hits ==1){
 				h1_mult_100mev->Fill(entries_califa_hit);
 				}
@@ -565,7 +1182,7 @@ for(Long64_t i=0;i< nevents;i++){
 	}
 
 char f_out_name[500];
-sprintf(f_out_name,"../file_output/tofw_output_wr_time_diff.root");
+sprintf(f_out_name,"../file_output/tofw_output_s455_03_273_10_cluster.root");
 TFile * f = new TFile(f_out_name,"RECREATE");
 TList *l = new TList();
 gStyle->SetOptStat(1111111);
@@ -593,6 +1210,40 @@ l->Add(h1_mult_100mev);
 l->Add(h1_mult_100mev_two);
 l->Add(h1_theta_sum_p2p);
 l->Add(h2_theta1_vs_theta2);
+l->Add(h1_angle_check);
+l->Add(h1_angle_check_arzi);
+l->Add(h2_theta1_vs_theta2_cluster);
+l->Add(h2_e1_vs_e2_cluster);
+l->Add(h2_theta1_vs_theta2_cluster_best_dphi);
+l->Add(h2_e1_vs_e2_cluster_best_dphi);
+l->Add(h1_theta_sum_p2p_best_dphi);
+l->Add(h2_e1_vs_e2_cluster_two_highest);
+l->Add(h1_opening_angle);
+l->Add(h1_opening_angle_proton);
+l->Add(h2_opening_angle_vs_esum);
+l->Add(h2_e_vs_phi);
+l->Add(h1_opening_angle_first_two);
+l->Add(h1_opening_angle_one_other);
+l->Add(h1_opening_angle_two_other);
+l->Add(h2_charge1_charge_2_after);
+l->Add(h1_charge_sum_after);
+char pic_name[500];
+
+for (Int_t i=0; i< 6; i++){
+l->Add(h2_charge1_vs_charge2_energy_cut[i]);
+sprintf(pic_name,"step_energy%i.pdf",i);
+h2_charge1_vs_charge2_energy_cut[i]->SaveAs(pic_name,"pdf");
+}
+for (Int_t i=0; i< 6; i++){
+l->Add(h2_charge1_vs_charge2_theta_cut[i]);
+sprintf(pic_name,"step_theta%i.pdf",i);
+h2_charge1_vs_charge2_theta_cut[i]->SaveAs(pic_name,"pdf");
+}
+for (Int_t i=0; i< 6; i++){
+l->Add(h2_charge1_vs_charge2_phi_cut[i]);
+sprintf(pic_name,"step_phi%i.pdf",i);
+h2_charge1_vs_charge2_phi_cut[i]->SaveAs(pic_name,"pdf");
+}
 l->Write("histlist", TObject::kSingleKey);
 
 
@@ -602,5 +1253,109 @@ cout << "Califa events with master trigger:\t" << events_califa_with_master <<  
 cout << "Califa events no master trigger:\t" << events_califa_no_master << " " << double(events_califa_no_master)/double(events_total_califa) << " % " << endl;
 cout << "Total number of Califa events:\t" << events_total_califa << endl;
 cout << "--------------------------------" << endl;
+
+cout << "Array values for Energy parameter change: --------------" << endl;
+cout<< "under the line\t" << "line\t" << "over the line\t" << endl;
+Double_t x[5] = {1,2,3,4,5};
+Double_t y_energy[5];
+Double_t y_theta[5];
+Double_t y_phi[5];
+Double_t y_rel_energy[5];
+Double_t y_rel_theta[5];
+Double_t y_rel_phi[5];
+
+for (Int_t i = 0; i< 6; i++){
+if (i+1 < 6){
+y_energy[i] = array_for_cuts_energy[i+1][0]-array_for_cuts_energy[i][0];
+y_rel_energy[i] = (array_for_cuts_energy[i+1][0]/array_for_cuts_energy[i][0])/(array_for_cuts_energy[i+1][1]/array_for_cuts_energy[i][1] );
+}
+cout << array_for_cuts_energy[i][0] << "\t" << array_for_cuts_energy[i][1] << "\t" << array_for_cuts_energy[i][2] << endl; 
+}
+cout << "Array values for theta parameter change: --------------" << endl;
+cout<< "under the line\t" << "line\t" << "over the line\t" << endl;
+for (Int_t i = 0; i< 6; i++){
+if (i+1 < 6){
+y_theta[i] = array_for_cuts_theta[i+1][0]-array_for_cuts_theta[i][0];
+y_rel_theta[i] = (array_for_cuts_theta[i+1][0]/array_for_cuts_theta[i][0])/(array_for_cuts_theta[i+1][1]/array_for_cuts_theta[i][1]);
+}
+cout << array_for_cuts_theta[i][0] << "\t" << array_for_cuts_theta[i][1] << "\t" << array_for_cuts_theta[i][2] << endl; 
+}
+
+cout << "Array values for phi parameter change: --------------" << endl;
+cout<< "under the line\t" << "line\t" << "over the line\t" << endl;
+for (Int_t i = 0; i< 6; i++){
+if (i+1 < 6){
+y_phi[i] = array_for_cuts_phi[i+1][0]-array_for_cuts_phi[i][0];
+y_rel_phi[i] = (array_for_cuts_phi[i+1][0]/array_for_cuts_phi[i][0])/(array_for_cuts_phi[i+1][1]/array_for_cuts_phi[i][1]);
+}
+cout << array_for_cuts_phi[i][0] << "\t" << array_for_cuts_phi[i][1] << "\t" << array_for_cuts_phi[i][2] << endl; 
+}
+auto c3 = new TCanvas("c3","c3",2400, 1600);
+TGraph* gr_energy = new TGraph(5,x,y_energy);
+gr_energy->SetTitle("Stepwise energy cuts from 50 < E_sum < 900 to 300 < E_sum < 650");
+gr_energy->SetLineColor(kBlue);
+gr_energy->SetLineWidth(3);
+gr_energy->SetMarkerStyle(21);
+
+TGraph* gr_theta = new TGraph(5,x,y_theta);
+gr_theta->SetTitle("Stepwise theta cus from 70 < Theta_sum < 90 to 75 < Theta_sum < 85");
+gr_theta->SetLineColor(kRed);
+gr_theta->SetLineWidth(3);
+gr_theta->SetMarkerStyle(22);
+
+TGraph* gr_phi = new TGraph(5,x,y_phi);
+gr_phi->SetTitle("Stepwise phi cuts from delta_phi = 180+-30 to 180+-5");
+gr_phi->SetLineColor(kGreen);
+gr_phi->SetLineWidth(3);
+gr_phi->SetMarkerStyle(23);
+
+auto mg = new TMultiGraph();
+mg->SetTitle("Parameter cut analysis in region Z_sum < 92; Stepnumber; Decrease of events after cut-step");
+mg->Add(gr_energy,"PL");
+mg->Add(gr_theta,"PL");
+//gr_phi->Draw("ALP");
+mg->Add(gr_phi,"PL");
+mg->Draw("A pmc plc");
+
+c3->BuildLegend();
+c3->Print("step_approach.png");
+
+TList *l1 = new TList();
+l1->Add(mg);
+l1->Write("cut_steps", TObject::kSingleKey);
+
+
+auto c4 = new TCanvas("c3","c3",2400, 1600);
+TGraph* gr_rel_energy = new TGraph(5,x,y_rel_energy);
+gr_rel_energy->SetTitle("Stepwise energy cuts from 50 < E_sum < 900 to 300 < E_sum < 650 relative decr.");
+gr_rel_energy->SetLineColor(kBlue);
+gr_rel_energy->SetLineWidth(3);
+gr_rel_energy->SetMarkerStyle(21);
+
+TGraph* gr_rel_theta = new TGraph(5,x,y_rel_theta);
+gr_rel_theta->SetTitle("Stepwise theta cus from 70 < Theta_sum < 90 to 75 < Theta_sum < 85 relative decr.");
+gr_rel_theta->SetLineColor(kRed);
+gr_rel_theta->SetLineWidth(3);
+gr_rel_theta->SetMarkerStyle(22);
+
+TGraph* gr_rel_phi = new TGraph(5,x,y_rel_phi);
+gr_rel_phi->SetTitle("Stepwise phi cuts from delta_phi = 180+-30 to 180+-5 relative decr.");
+gr_rel_phi->SetLineColor(kGreen);
+gr_rel_phi->SetLineWidth(3);
+gr_rel_phi->SetMarkerStyle(23);
+
+auto mg2 = new TMultiGraph();
+mg2->SetTitle("Relative decrease of events (lower triangle/correlation line) between step-cuts; Stepnumber; relative decrease lower triangle vs correlation line");
+mg2->Add(gr_rel_energy,"PL");
+mg2->Add(gr_rel_theta,"PL");
+mg2->Add(gr_rel_phi,"PL2");
+mg2->Draw("A pmc plc");
+
+c4->BuildLegend();
+c4->Print("rel_step_approach.png");
+
+TList* l2 = new TList();
+l2->Add(mg2);
+l2->Write("rel_step_numbers",TObject::kSingleKey);
 
 }
