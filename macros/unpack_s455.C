@@ -33,7 +33,7 @@ void unpack_s455()
 
 
     // Define output-----------------------------------------
-    TString outputFileName = "../file_src/s455_03_273_10_sq_w_cl.root";
+    TString outputFileName = "../file_src/s455_03_273_10_sq_w_cl_antia.root";
 
     Bool_t Cal_level = true;          // set true if there exists a file with the calibration parameters
     Bool_t NOTstoremappeddata = false; // if true, don't store mapped data in the root file
@@ -49,7 +49,9 @@ void unpack_s455()
 
     //Sofia calibration files, dummy ones ---------------------
 
-    TString sofiacalfilename = "../parameters/dummy_sofia.par";
+    //TString sofiacalfilename = "../parameters/dummy_sofia.par";
+    //Sofia calibration files, use the one Antia gave me------
+    TString sofiacalfilename = "../parameters/CalibParam_antia.par";
 
     // UCESB configuration ----------------------------------
     TString ntuple_options = "RAW";
