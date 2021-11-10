@@ -16,7 +16,7 @@ typedef struct EXT_STR_h101_t
 
 } EXT_STR_h101;
 
-void unpack_s455()
+void unpack_s455_antia()
 {
     TStopwatch timer;
     timer.Start();
@@ -35,13 +35,13 @@ void unpack_s455()
 
     // Create input -----------------------------------------
 //    TString filename = "../../s455_03_273_10_stitched.lmd"; //input lmd file
-    TString filename = "../../s455_03_273_0001_stitched.lmd"; //input lmd file subrun 1
+    TString filename = "../../s455_03_273_10_stitched.lmd"; //input lmd file subrun 1
 
 
     // Define output-----------------------------------------
 //      TString outputFileName = "../file_src/s455_03_273_10_sq_w_cl_antia.root";
 //    TString outputFileName = "../file_src/s455_03_273_1_sq_w_cl_antia.root";
-      TString outputFileName = "../file_src/s455_03_273_1_sq_w_cl_antia.root";
+      TString outputFileName = "../file_src/s455_03_273_10_sq_w_cl_antia_newest_parameters.root";
 
     Bool_t Cal_level = true;          // set true if there exists a file with the calibration parameters
     Bool_t NOTstoremappeddata = false; // if true, don't store mapped data in the root file
@@ -61,7 +61,7 @@ void unpack_s455()
     //Sofia calibration files, use the one Antia gave me------
     //TString sofiacalfilename = "../parameters/CalibParam_antia.par";
     //now use params from experiment online
-    TString sofiacalfilename = "/u/land/r3broot/202103_s455/r3broot/sofia/macros/s455/parameters/CalibParam_jlrs.par";
+    TString sofiacalfilename = "/u/land/tobias_jenegger/s455_gabri_tobias/parameters/CalibParam_antia.par";
 
     // UCESB configuration ----------------------------------
     TString ntuple_options = "RAW";
@@ -202,7 +202,7 @@ void unpack_s455()
 	// --- SingleTcal 2 Hit for SofSci
         R3BSofSciSingleTcal2Hit* SofSciSTcal2Hit = new R3BSofSciSingleTcal2Hit();
         SofSciSTcal2Hit->SetOnline(NOTstorehitdata);
-        SofSciSTcal2Hit->SetCalParams(540.,-1609.);//ToF calibration at Cave-C  tof and offset from spectra
+        SofSciSTcal2Hit->SetCalParams(675., -1922.);//ToF calibration at Cave-C  tof and offset from spectra
         run->AddTask(SofSciSTcal2Hit);
 
 
@@ -221,7 +221,7 @@ void unpack_s455()
 	R3BSofTofWSingleTCal2Hit* SofTofWSingleTcal2Hit = new R3BSofTofWSingleTCal2Hit();
 	SofTofWSingleTcal2Hit->SetOnline(NOTstorehitdata);
 	SofTofWSingleTcal2Hit->SetExpId(expId);
-	SofTofWSingleTcal2Hit->SetTofLISE(33.);
+	SofTofWSingleTcal2Hit->SetTofLISE(37.48);
 	run->AddTask(SofTofWSingleTcal2Hit);
     }
 
