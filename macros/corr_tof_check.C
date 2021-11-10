@@ -28,7 +28,7 @@ double array_for_cuts_energy[6][3] = {};
 
 char hist_name[500];
 //similar code to wr_time_diff.C, here with restriction that I expect at least one hit and at most 2two hits in tofw
-void tof_check(){
+void corr_tof_check(){
 
 
 TH1D* h1_wr_ts_califa_diff_WRM_messel_rand;
@@ -192,6 +192,18 @@ h2_charge1_charge_2->GetYaxis()->SetLabelSize(0.045);
 h2_charge1_charge_2->GetYaxis()->SetTitleSize(0.045);
 
 
+TH1D* h1_charge1_plus_charge2;
+sprintf(hist_name, "Charge 1 + Charge 2  (TWIM Music)");
+h1_charge1_plus_charge2 = new TH1D(hist_name,hist_name,500,0,100);
+h1_charge1_plus_charge2->GetXaxis()->SetTitle("Charge Sum");
+h1_charge1_plus_charge2->GetYaxis()->SetTitle("Counts");
+h1_charge1_plus_charge2->GetXaxis()->CenterTitle(true);
+h1_charge1_plus_charge2->GetYaxis()->CenterTitle(true);
+h1_charge1_plus_charge2->GetYaxis()->SetLabelSize(0.045);
+h1_charge1_plus_charge2->GetYaxis()->SetTitleSize(0.045);
+
+
+
 TH2D* h2_charge1_charge_2_diff_vs_z_sum;
 sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music)");
 h2_charge1_charge_2_diff_vs_z_sum = new TH2D(hist_name,hist_name,1400,-70,70,1000,0,100);
@@ -234,6 +246,228 @@ h1_charge_sum_after->GetXaxis()->CenterTitle(true);
 h1_charge_sum_after->GetYaxis()->CenterTitle(true);
 h1_charge_sum_after->GetYaxis()->SetLabelSize(0.045);
 h1_charge_sum_after->GetYaxis()->SetTitleSize(0.045);
+
+
+//make charge analysis for different trigger patterns
+
+TH2D* h2_charge1_charge_2_tpat1;
+sprintf(hist_name, "Charge 1 vs Charge 2 (TWIM Music) for TPat = SofStart");
+h2_charge1_charge_2_tpat1 = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+h2_charge1_charge_2_tpat1->GetXaxis()->SetTitle("Charge 1");
+h2_charge1_charge_2_tpat1->GetYaxis()->SetTitle("Charge 2");
+h2_charge1_charge_2_tpat1->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_tpat1->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_tpat1->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_tpat1->GetYaxis()->SetTitleSize(0.045);
+
+TH2D* h2_charge1_charge_2_tpat2;
+sprintf(hist_name, "Charge 1 vs Charge 2 (TWIM Music) for TPat =  Fission");
+h2_charge1_charge_2_tpat2 = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+h2_charge1_charge_2_tpat2->GetXaxis()->SetTitle("Charge 1");
+h2_charge1_charge_2_tpat2->GetYaxis()->SetTitle("Charge 2");
+h2_charge1_charge_2_tpat2->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_tpat2->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_tpat2->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_tpat2->GetYaxis()->SetTitleSize(0.045);
+
+
+TH2D* h2_charge1_charge_2_tpat3;
+sprintf(hist_name, "Charge 1 vs Charge 2 (TWIM Music) for TPat =  CalifOR (= S+C&&)");
+h2_charge1_charge_2_tpat3 = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+h2_charge1_charge_2_tpat3->GetXaxis()->SetTitle("Charge 1");
+h2_charge1_charge_2_tpat3->GetYaxis()->SetTitle("Charge 2");
+h2_charge1_charge_2_tpat3->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_tpat3->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_tpat3->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_tpat3->GetYaxis()->SetTitleSize(0.045);
+
+
+TH2D* h2_charge1_charge_2_tpat4;
+sprintf(hist_name, "Charge 1 vs Charge 2 (TWIM Music) for TPat =  CalifAND (= S+F+C&&)");
+h2_charge1_charge_2_tpat4 = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+h2_charge1_charge_2_tpat4->GetXaxis()->SetTitle("Charge 1");
+h2_charge1_charge_2_tpat4->GetYaxis()->SetTitle("Charge 2");
+h2_charge1_charge_2_tpat4->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_tpat4->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_tpat4->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_tpat4->GetYaxis()->SetTitleSize(0.045);
+
+
+TH2D* h2_charge1_charge_2_one_CALIFA;
+sprintf(hist_name, "Charge 1 vs Charge 2 (TWIM Music) for one hit > 200 MeV in CALIFA");
+h2_charge1_charge_2_one_CALIFA = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+h2_charge1_charge_2_one_CALIFA->GetXaxis()->SetTitle("Charge 1");
+h2_charge1_charge_2_one_CALIFA->GetYaxis()->SetTitle("Charge 2");
+h2_charge1_charge_2_one_CALIFA->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_one_CALIFA->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_one_CALIFA->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_one_CALIFA->GetYaxis()->SetTitleSize(0.045);
+
+TH2D* h2_charge1_charge_2_two_CALIFA;
+sprintf(hist_name, "Charge 1 vs Charge 2 (TWIM Music) for two hits > 200 MeV in CALIFA");
+h2_charge1_charge_2_two_CALIFA = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+h2_charge1_charge_2_two_CALIFA->GetXaxis()->SetTitle("Charge 1");
+h2_charge1_charge_2_two_CALIFA->GetYaxis()->SetTitle("Charge 2");
+h2_charge1_charge_2_two_CALIFA->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_two_CALIFA->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_two_CALIFA->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_two_CALIFA->GetYaxis()->SetTitleSize(0.045);
+
+
+TH2D* h2_charge1_charge_2_three_CALIFA;
+sprintf(hist_name, "Charge 1 vs Charge 2 (TWIM Music) for three hits > 200 MeV in CALIFA");
+h2_charge1_charge_2_three_CALIFA = new TH2D(hist_name,hist_name,500,0,100,500,0,100);
+h2_charge1_charge_2_three_CALIFA->GetXaxis()->SetTitle("Charge 1");
+h2_charge1_charge_2_three_CALIFA->GetYaxis()->SetTitle("Charge 2");
+h2_charge1_charge_2_three_CALIFA->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_three_CALIFA->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_three_CALIFA->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_three_CALIFA->GetYaxis()->SetTitleSize(0.045);
+
+
+TH2D* h2_charge1_charge_2_diff_vs_z_sum_tpat1;
+sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for TPat = SofStart");
+h2_charge1_charge_2_diff_vs_z_sum_tpat1 = new TH2D(hist_name,hist_name,1400,-70,70,1000,0,100);
+h2_charge1_charge_2_diff_vs_z_sum_tpat1->GetXaxis()->SetTitle("Charge 1 - Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_tpat1->GetYaxis()->SetTitle("Charge 1 + Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_tpat1->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_tpat1->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_tpat1->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_diff_vs_z_sum_tpat1->GetYaxis()->SetTitleSize(0.045);
+
+TH2D* h2_charge1_charge_2_diff_vs_z_sum_tpat2;
+sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for TPat =  Fission");
+h2_charge1_charge_2_diff_vs_z_sum_tpat2 = new TH2D(hist_name,hist_name,1400,-70,70,1000,0,100);
+h2_charge1_charge_2_diff_vs_z_sum_tpat2->GetXaxis()->SetTitle("Charge 1 - Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_tpat2->GetYaxis()->SetTitle("Charge 1 + Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_tpat2->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_tpat2->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_tpat2->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_diff_vs_z_sum_tpat2->GetYaxis()->SetTitleSize(0.045);
+
+TH2D* h2_charge1_charge_2_diff_vs_z_sum_tpat3;
+sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for TPat =  CalifOR (= S+C&&)");
+h2_charge1_charge_2_diff_vs_z_sum_tpat3 = new TH2D(hist_name,hist_name,1400,-70,70,1000,0,100);
+h2_charge1_charge_2_diff_vs_z_sum_tpat3->GetXaxis()->SetTitle("Charge 1 - Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_tpat3->GetYaxis()->SetTitle("Charge 1 + Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_tpat3->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_tpat3->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_tpat3->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_diff_vs_z_sum_tpat3->GetYaxis()->SetTitleSize(0.045);
+
+
+TH2D* h2_charge1_charge_2_diff_vs_z_sum_tpat4;
+sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for TPat =  CalifAND (= S+F+C&&)");
+h2_charge1_charge_2_diff_vs_z_sum_tpat4 = new TH2D(hist_name,hist_name,1400,-70,70,1000,0,100);
+h2_charge1_charge_2_diff_vs_z_sum_tpat4->GetXaxis()->SetTitle("Charge 1 - Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_tpat4->GetYaxis()->SetTitle("Charge 1 + Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_tpat4->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_tpat4->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_tpat4->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_diff_vs_z_sum_tpat4->GetYaxis()->SetTitleSize(0.045);
+
+TH2D* h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA;
+sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for one hit > 200MeV in CALIFA");
+h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA = new TH2D(hist_name,hist_name,1400,-70,70,1000,0,100);
+h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->GetXaxis()->SetTitle("Charge 1 - Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->GetYaxis()->SetTitle("Charge 1 + Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->GetYaxis()->SetTitleSize(0.045);
+
+TH2D* h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA;
+sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for two hits > 200MeV in CALIFA");
+h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA = new TH2D(hist_name,hist_name,1400,-70,70,1000,0,100);
+h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->GetXaxis()->SetTitle("Charge 1 - Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->GetYaxis()->SetTitle("Charge 1 + Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->GetYaxis()->SetTitleSize(0.045);
+
+TH2D* h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA;
+sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for three hits > 200MeV in CALIFA");
+h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA = new TH2D(hist_name,hist_name,1400,-70,70,1000,0,100);
+h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA->GetXaxis()->SetTitle("Charge 1 - Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA->GetYaxis()->SetTitle("Charge 1 + Charge 2");
+h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA->GetXaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA->GetYaxis()->CenterTitle(true);
+h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA->GetYaxis()->SetLabelSize(0.045);
+h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA->GetYaxis()->SetTitleSize(0.045);
+
+
+TH1D* h1_charge1_plus_charge2_tpat1;
+sprintf(hist_name, "Charge 1 + Charge 2  (TWIM Music) for TPat = SofStart");
+h1_charge1_plus_charge2_tpat1 = new TH1D(hist_name,hist_name,500,0,100);
+h1_charge1_plus_charge2_tpat1->GetXaxis()->SetTitle("Charge Sum");
+h1_charge1_plus_charge2_tpat1->GetYaxis()->SetTitle("Counts");
+h1_charge1_plus_charge2_tpat1->GetXaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_tpat1->GetYaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_tpat1->GetYaxis()->SetLabelSize(0.045);
+h1_charge1_plus_charge2_tpat1->GetYaxis()->SetTitleSize(0.045);
+
+
+TH1D* h1_charge1_plus_charge2_tpat2;
+sprintf(hist_name, "Charge 1 + Charge 2  (TWIM Music) for TPat = Fission");
+h1_charge1_plus_charge2_tpat2 = new TH1D(hist_name,hist_name,500,0,100);
+h1_charge1_plus_charge2_tpat2->GetXaxis()->SetTitle("Charge Sum");
+h1_charge1_plus_charge2_tpat2->GetYaxis()->SetTitle("Counts");
+h1_charge1_plus_charge2_tpat2->GetXaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_tpat2->GetYaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_tpat2->GetYaxis()->SetLabelSize(0.045);
+h1_charge1_plus_charge2_tpat2->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_charge1_plus_charge2_tpat3;
+sprintf(hist_name, "Charge 1 + Charge 2  (TWIM Music) for TPat =  CalifOR (= S+C&&)");
+h1_charge1_plus_charge2_tpat3 = new TH1D(hist_name,hist_name,500,0,100);
+h1_charge1_plus_charge2_tpat3->GetXaxis()->SetTitle("Charge Sum");
+h1_charge1_plus_charge2_tpat3->GetYaxis()->SetTitle("Counts");
+h1_charge1_plus_charge2_tpat3->GetXaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_tpat3->GetYaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_tpat3->GetYaxis()->SetLabelSize(0.045);
+h1_charge1_plus_charge2_tpat3->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_charge1_plus_charge2_tpat4;
+sprintf(hist_name, "Charge 1 + Charge 2  (TWIM Music) for TPat =  CalifAND (= S+F+C&&)");
+h1_charge1_plus_charge2_tpat4 = new TH1D(hist_name,hist_name,500,0,100);
+h1_charge1_plus_charge2_tpat4->GetXaxis()->SetTitle("Charge Sum");
+h1_charge1_plus_charge2_tpat4->GetYaxis()->SetTitle("Counts");
+h1_charge1_plus_charge2_tpat4->GetXaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_tpat4->GetYaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_tpat4->GetYaxis()->SetLabelSize(0.045);
+h1_charge1_plus_charge2_tpat4->GetYaxis()->SetTitleSize(0.045);
+
+
+TH1D* h1_charge1_plus_charge2_one_CALIFA;
+sprintf(hist_name, "Charge 1 + Charge 2  (TWIM Music) for one hit > 200 MeV in CALIFA");
+h1_charge1_plus_charge2_one_CALIFA = new TH1D(hist_name,hist_name,500,0,100);
+h1_charge1_plus_charge2_one_CALIFA->GetXaxis()->SetTitle("Charge Sum");
+h1_charge1_plus_charge2_one_CALIFA->GetYaxis()->SetTitle("Counts");
+h1_charge1_plus_charge2_one_CALIFA->GetXaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_one_CALIFA->GetYaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_one_CALIFA->GetYaxis()->SetLabelSize(0.045);
+h1_charge1_plus_charge2_one_CALIFA->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_charge1_plus_charge2_two_CALIFA;
+sprintf(hist_name, "Charge 1 + Charge 2  (TWIM Music) for two hits > 200 MeV in CALIFA");
+h1_charge1_plus_charge2_two_CALIFA = new TH1D(hist_name,hist_name,500,0,100);
+h1_charge1_plus_charge2_two_CALIFA->GetXaxis()->SetTitle("Charge Sum");
+h1_charge1_plus_charge2_two_CALIFA->GetYaxis()->SetTitle("Counts");
+h1_charge1_plus_charge2_two_CALIFA->GetXaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_two_CALIFA->GetYaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_two_CALIFA->GetYaxis()->SetLabelSize(0.045);
+h1_charge1_plus_charge2_two_CALIFA->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_charge1_plus_charge2_three_CALIFA;
+sprintf(hist_name, "Charge 1 + Charge 2  (TWIM Music) for three hits > 200 MeV in CALIFA");
+h1_charge1_plus_charge2_three_CALIFA = new TH1D(hist_name,hist_name,500,0,100);
+h1_charge1_plus_charge2_three_CALIFA->GetXaxis()->SetTitle("Charge Sum");
+h1_charge1_plus_charge2_three_CALIFA->GetYaxis()->SetTitle("Counts");
+h1_charge1_plus_charge2_three_CALIFA->GetXaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_three_CALIFA->GetYaxis()->CenterTitle(true);
+h1_charge1_plus_charge2_three_CALIFA->GetYaxis()->SetLabelSize(0.045);
+h1_charge1_plus_charge2_three_CALIFA->GetYaxis()->SetTitleSize(0.045);
 
 //check 3d plot for energy distribution for p2p reactions
 Int_t p2p_check = 20;
@@ -347,162 +581,162 @@ h1_theta_sum_p2p->GetYaxis()->SetTitleSize(0.045);
 
 //analysis of theta_sum with Z_sum cuts
 
-TH1D* h1_theta_sum_z_sum_932_942;
-sprintf(hist_name, "Theta1 +  Theta 2 for 93.2 < Z_sum < 94.2");
-h1_theta_sum_z_sum_932_942 = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_932_942->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_932_942->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_932_942->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_932_942->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_932_942->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_932_942->GetYaxis()->SetTitleSize(0.045);
+TH1D* h1_theta_sum_z_sum_915_925;
+sprintf(hist_name, "Theta1 +  Theta 2 for 91.5 < Z_sum < 92.5");
+h1_theta_sum_z_sum_915_925 = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_915_925->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_915_925->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_915_925->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_915_925->GetYaxis()->SetTitleSize(0.045);
 
 
-TH1D* h1_theta_sum_z_sum_932_942_phi_cut;
-sprintf(hist_name, "Theta1 +  Theta 2 for 93.2 < Z_sum < 94.2 and delta_phi = 180+-15");
-h1_theta_sum_z_sum_932_942_phi_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_932_942_phi_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_932_942_phi_cut->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_932_942_phi_cut->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_932_942_phi_cut->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_932_942_phi_cut->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_932_942_phi_cut->GetYaxis()->SetTitleSize(0.045);
+TH1D* h1_theta_sum_z_sum_915_925_phi_cut;
+sprintf(hist_name, "Theta1 +  Theta 2 for 91.5 < Z_sum < 92.5 and delta_phi = 180+-15");
+h1_theta_sum_z_sum_915_925_phi_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_915_925_phi_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_915_925_phi_cut->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_915_925_phi_cut->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_phi_cut->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_phi_cut->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_915_925_phi_cut->GetYaxis()->SetTitleSize(0.045);
 
 
-TH1D* h1_theta_sum_z_sum_932_942_phi_ener_cut;
-sprintf(hist_name, "Theta1 +  Theta 2 for 93.2 < Z_sum < 94.2 and delta_phi = 180+-15 and  200 < E_sum < 700");
-h1_theta_sum_z_sum_932_942_phi_ener_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_932_942_phi_ener_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_932_942_phi_ener_cut->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_932_942_phi_ener_cut->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_932_942_phi_ener_cut->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_932_942_phi_ener_cut->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_932_942_phi_ener_cut->GetYaxis()->SetTitleSize(0.045);
+TH1D* h1_theta_sum_z_sum_915_925_phi_ener_cut;
+sprintf(hist_name, "Theta1 +  Theta 2 for 91.5 < Z_sum < 92.5 and delta_phi = 180+-15 and  200 < E_sum < 700");
+h1_theta_sum_z_sum_915_925_phi_ener_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_915_925_phi_ener_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_915_925_phi_ener_cut->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_915_925_phi_ener_cut->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_phi_ener_cut->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_phi_ener_cut->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_915_925_phi_ener_cut->GetYaxis()->SetTitleSize(0.045);
 
 
-TH1D* h1_theta_sum_z_sum_921_93;
-sprintf(hist_name, "Theta1 +  Theta 2 for 92.1 < Z_sum < 93");
-h1_theta_sum_z_sum_921_93 = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_921_93->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_921_93->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_921_93->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_921_93->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_921_93->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_921_93->GetYaxis()->SetTitleSize(0.045);
+TH1D* h1_theta_sum_z_sum_902_914;
+sprintf(hist_name, "Theta1 +  Theta 2 for 90.2 < Z_sum < 91.4");
+h1_theta_sum_z_sum_902_914 = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_902_914->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_902_914->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_902_914->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_902_914->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_902_914->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_902_914->GetYaxis()->SetTitleSize(0.045);
 
-TH1D* h1_theta_sum_z_sum_921_93_phi_cut;
-sprintf(hist_name, "Theta1 +  Theta 2 for 92.1 < Z_sum < 93 and delta_phi = 180+-15");
-h1_theta_sum_z_sum_921_93_phi_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_921_93_phi_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_921_93_phi_cut->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_921_93_phi_cut->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_921_93_phi_cut->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_921_93_phi_cut->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_921_93_phi_cut->GetYaxis()->SetTitleSize(0.045);
+TH1D* h1_theta_sum_z_sum_902_914_phi_cut;
+sprintf(hist_name, "Theta1 +  Theta 2 for 90.2 < Z_sum < 91.4 and delta_phi = 180+-15");
+h1_theta_sum_z_sum_902_914_phi_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_902_914_phi_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_902_914_phi_cut->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_902_914_phi_cut->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_902_914_phi_cut->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_902_914_phi_cut->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_902_914_phi_cut->GetYaxis()->SetTitleSize(0.045);
 
-TH1D* h1_theta_sum_z_sum_921_93_phi_ener_cut;
-sprintf(hist_name, "Theta1 +  Theta 2 for 92.1 < Z_sum < 93 and delta_phi = 180+-15 and 200 < E_sum < 700");
-h1_theta_sum_z_sum_921_93_phi_ener_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_921_93_phi_ener_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_921_93_phi_ener_cut->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_921_93_phi_ener_cut->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_921_93_phi_ener_cut->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_921_93_phi_ener_cut->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_921_93_phi_ener_cut->GetYaxis()->SetTitleSize(0.045);
-
-
-
-TH1D* h1_theta_sum_z_sum_907_92;
-sprintf(hist_name, "Theta1 +  Theta 2 for 90.7 < Z_sum < 92");
-h1_theta_sum_z_sum_907_92 = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_907_92->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_907_92->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_907_92->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_907_92->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_907_92->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_907_92->GetYaxis()->SetTitleSize(0.045);
-
-TH1D* h1_theta_sum_z_sum_907_92_phi_cut;
-sprintf(hist_name, "Theta1 +  Theta 2 for 90.7 < Z_sum < 92 and delta_phi = 180+-15");
-h1_theta_sum_z_sum_907_92_phi_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_907_92_phi_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_907_92_phi_cut->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_907_92_phi_cut->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_907_92_phi_cut->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_907_92_phi_cut->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_907_92_phi_cut->GetYaxis()->SetTitleSize(0.045);
-
-TH1D* h1_theta_sum_z_sum_907_92_phi_ener_cut;
-sprintf(hist_name, "Theta1 +  Theta 2 for 90.7 < Z_sum < 92 and delta_phi = 180+-15 and 200 < E_sum < 700");
-h1_theta_sum_z_sum_907_92_phi_ener_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_907_92_phi_ener_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_907_92_phi_ener_cut->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_907_92_phi_ener_cut->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_907_92_phi_ener_cut->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_907_92_phi_ener_cut->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_907_92_phi_ener_cut->GetYaxis()->SetTitleSize(0.045);
+TH1D* h1_theta_sum_z_sum_902_914_phi_ener_cut;
+sprintf(hist_name, "Theta1 +  Theta 2 for 90.2 < Z_sum < 91.4 and delta_phi = 180+-15 and 200 < E_sum < 700");
+h1_theta_sum_z_sum_902_914_phi_ener_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_902_914_phi_ener_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_902_914_phi_ener_cut->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_902_914_phi_ener_cut->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_902_914_phi_ener_cut->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_902_914_phi_ener_cut->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_902_914_phi_ener_cut->GetYaxis()->SetTitleSize(0.045);
 
 
-TH1D* h1_theta_sum_z_sum_895_906;
-sprintf(hist_name, "Theta1 +  Theta 2 for 89.5 < Z_sum < 90.6");
-h1_theta_sum_z_sum_895_906 = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_895_906->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_895_906->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_895_906->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_895_906->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_895_906->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_895_906->GetYaxis()->SetTitleSize(0.045);
 
-TH1D* h1_theta_sum_z_sum_895_906_phi_cut;
-sprintf(hist_name, "Theta1 +  Theta 2 for 89.5 < Z_sum < 90.6 and delta_phi = 180+-15");
-h1_theta_sum_z_sum_895_906_phi_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_895_906_phi_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_895_906_phi_cut->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_895_906_phi_cut->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_895_906_phi_cut->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_895_906_phi_cut->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_895_906_phi_cut->GetYaxis()->SetTitleSize(0.045);
+TH1D* h1_theta_sum_z_sum_891_901;
+sprintf(hist_name, "Theta1 +  Theta 2 for 89.1 < Z_sum < 90.1");
+h1_theta_sum_z_sum_891_901 = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_891_901->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_891_901->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_891_901->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_891_901->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_891_901->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_891_901->GetYaxis()->SetTitleSize(0.045);
 
-TH1D* h1_theta_sum_z_sum_895_906_phi_ener_cut;
-sprintf(hist_name, "Theta1 +  Theta 2 for 89.5 < Z_sum < 90.6 and delta_phi = 180+-15 and 200 < E_sum < 700");
-h1_theta_sum_z_sum_895_906_phi_ener_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_895_906_phi_ener_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_895_906_phi_ener_cut->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_895_906_phi_ener_cut->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_895_906_phi_ener_cut->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_895_906_phi_ener_cut->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_895_906_phi_ener_cut->GetYaxis()->SetTitleSize(0.045);
+TH1D* h1_theta_sum_z_sum_891_901_phi_cut;
+sprintf(hist_name, "Theta1 +  Theta 2 for 89.1 < Z_sum < 90.1 and delta_phi = 180+-15");
+h1_theta_sum_z_sum_891_901_phi_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_891_901_phi_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_891_901_phi_cut->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_891_901_phi_cut->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_891_901_phi_cut->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_891_901_phi_cut->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_891_901_phi_cut->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_theta_sum_z_sum_891_901_phi_ener_cut;
+sprintf(hist_name, "Theta1 +  Theta 2 for 89.1 < Z_sum < 90.1 and delta_phi = 180+-15 and 200 < E_sum < 700");
+h1_theta_sum_z_sum_891_901_phi_ener_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_891_901_phi_ener_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_891_901_phi_ener_cut->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_891_901_phi_ener_cut->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_891_901_phi_ener_cut->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_891_901_phi_ener_cut->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_891_901_phi_ener_cut->GetYaxis()->SetTitleSize(0.045);
 
 
-TH1D* h1_theta_sum_z_sum_885_894;
-sprintf(hist_name, "Theta1 +  Theta 2 for 88.5 < Z_sum < 89.4");
-h1_theta_sum_z_sum_885_894 = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_885_894->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_885_894->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_885_894->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_885_894->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_885_894->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_885_894->GetYaxis()->SetTitleSize(0.045);
+TH1D* h1_theta_sum_z_sum_879_89;
+sprintf(hist_name, "Theta1 +  Theta 2 for 87.9 < Z_sum < 89");
+h1_theta_sum_z_sum_879_89 = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_879_89->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_879_89->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_879_89->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_879_89->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_879_89->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_879_89->GetYaxis()->SetTitleSize(0.045);
 
-TH1D* h1_theta_sum_z_sum_885_894_phi_cut;
-sprintf(hist_name, "Theta1 +  Theta 2 for 88.5 < Z_sum < 89.4 and delta_phi = 180+-15");
-h1_theta_sum_z_sum_885_894_phi_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_885_894_phi_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_885_894_phi_cut->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_885_894_phi_cut->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_885_894_phi_cut->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_885_894_phi_cut->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_885_894_phi_cut->GetYaxis()->SetTitleSize(0.045);
+TH1D* h1_theta_sum_z_sum_879_89_phi_cut;
+sprintf(hist_name, "Theta1 +  Theta 2 for 87.9 < Z_sum < 89 and delta_phi = 180+-15");
+h1_theta_sum_z_sum_879_89_phi_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_879_89_phi_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_879_89_phi_cut->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_879_89_phi_cut->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_879_89_phi_cut->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_879_89_phi_cut->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_879_89_phi_cut->GetYaxis()->SetTitleSize(0.045);
 
-TH1D* h1_theta_sum_z_sum_885_894_phi_ener_cut;
-sprintf(hist_name, "Theta1 +  Theta 2 for 88.5 < Z_sum < 89.4 and delta_phi = 180+-15 and 200 < E_sum < 700");
-h1_theta_sum_z_sum_885_894_phi_ener_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
-h1_theta_sum_z_sum_885_894_phi_ener_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
-h1_theta_sum_z_sum_885_894_phi_ener_cut->GetYaxis()->SetTitle("Counts");
-h1_theta_sum_z_sum_885_894_phi_ener_cut->GetXaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_885_894_phi_ener_cut->GetYaxis()->CenterTitle(true);
-h1_theta_sum_z_sum_885_894_phi_ener_cut->GetYaxis()->SetLabelSize(0.045);
-h1_theta_sum_z_sum_885_894_phi_ener_cut->GetYaxis()->SetTitleSize(0.045);
+TH1D* h1_theta_sum_z_sum_879_89_phi_ener_cut;
+sprintf(hist_name, "Theta1 +  Theta 2 for 87.9 < Z_sum < 89 and delta_phi = 180+-15 and 200 < E_sum < 700");
+h1_theta_sum_z_sum_879_89_phi_ener_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_879_89_phi_ener_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_879_89_phi_ener_cut->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_879_89_phi_ener_cut->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_879_89_phi_ener_cut->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_879_89_phi_ener_cut->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_879_89_phi_ener_cut->GetYaxis()->SetTitleSize(0.045);
+
+
+TH1D* h1_theta_sum_z_sum_868_879;
+sprintf(hist_name, "Theta1 +  Theta 2 for 86.8 < Z_sum < 87.9");
+h1_theta_sum_z_sum_868_879 = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_868_879->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_868_879->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_868_879->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_868_879->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_868_879->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_868_879->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_theta_sum_z_sum_868_879_phi_cut;
+sprintf(hist_name, "Theta1 +  Theta 2 for 86.8 < Z_sum < 87.9 and delta_phi = 180+-15");
+h1_theta_sum_z_sum_868_879_phi_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_868_879_phi_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_868_879_phi_cut->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_868_879_phi_cut->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_868_879_phi_cut->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_868_879_phi_cut->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_868_879_phi_cut->GetYaxis()->SetTitleSize(0.045);
+
+TH1D* h1_theta_sum_z_sum_868_879_phi_ener_cut;
+sprintf(hist_name, "Theta1 +  Theta 2 for 86.8 < Z_sum < 87.9 and delta_phi = 180+-15 and 200 < E_sum < 700");
+h1_theta_sum_z_sum_868_879_phi_ener_cut = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_868_879_phi_ener_cut->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_868_879_phi_ener_cut->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_868_879_phi_ener_cut->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_868_879_phi_ener_cut->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_868_879_phi_ener_cut->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_868_879_phi_ener_cut->GetYaxis()->SetTitleSize(0.045);
 
 //-------------------------------------
 
@@ -798,8 +1032,7 @@ Long64_t entries_tof = 0;
 Long64_t entries_twim = 0;
 Int_t entries_wr = 0;
 //Input file
-sprintf(fname,"../file_src/s455_03_273_10_sq_w_cl_antia_newest_parameters.root");
-
+sprintf(fname,"../file_src/s455_03_273_10_sq_w_cl_antia.root");
 TChain* chain = new TChain("evt");
 chain->Reset();
 chain->Add(fname);
@@ -836,6 +1069,11 @@ TClonesArray* SofTwimHitData = new TClonesArray("R3BSofTwimHitData",2);
 R3BSofTwimHitData** softwimhitdata;
 TBranch *branchSofTwimHitData = chain->GetBranch("TwimHitData");
 branchSofTwimHitData->SetAddress(&SofTwimHitData);
+
+TClonesArray* SofToFWHitData = new TClonesArray("R3BSofTofWHitData",2);
+R3BSofTofWHitData** softofwhitdata;
+TBranch *branchSofToFWHitData = chain->GetBranch("TofWHitData");
+branchSofToFWHitData->SetAddress(&SofToFWHitData);
 //
 const Double_t PI = 3.14159265358979323846;
 uint64_t wr_Master_ts;
@@ -849,6 +1087,7 @@ vector<vector<double> > v_califa_energy_theta;
 vector<vector<double> > v_califa_energy_theta_phi;
 for(Long64_t i=0;i< nevents;i++){
     Long64_t evtnr = i;
+    Int_t trigger_pattern = 0;
     if (i%100000==0)
         cout<<"Processing event for charge analysis "<<i<<endl;
     chain->GetEvent(i);
@@ -858,14 +1097,15 @@ for(Long64_t i=0;i< nevents;i++){
             for (Int_t i = 0; i < 16; i++){
         	    tpatbin = (DataCA->GetTpat() & (1 << i));
         	    if (tpatbin != 0){
-        		    h1_trigger->Fill(i + 1);
+			    trigger_pattern = i + 1;
+        		    h1_trigger->Fill(trigger_pattern);
         	    }
             }
     }
     entries_califa = CalifaMappedData->GetEntries();
     entries_califa_hit = CalifaHitData->GetEntries();
     entries_wr = WRMasterData->GetEntries();
-    entries_tof = SofToFWMappedData->GetEntries();
+    entries_tof = SofToFWHitData->GetEntries();
     entries_twim = SofTwimHitData->GetEntries();
 	if (entries_twim == 1){
 		softwimhitdata = new R3BSofTwimHitData*[1];
@@ -878,25 +1118,80 @@ for(Long64_t i=0;i< nevents;i++){
 		delete [] softwimhitdata;
 		}
 	//before I had: if (entries_califa >= 1 && entries_tof >= 2 && entries_tof <= 4 && entries_twim == 2){
-	if (entries_califa >= 1 && entries_twim == 2){
+	if (entries_califa >= 1 && entries_twim == 2 && entries_tof==2){
 		//check twim data
 		softwimhitdata = new R3BSofTwimHitData*[2];
-		softwimhitdata[0] = (R3BSofTwimHitData*)SofTwimHitData->At(0);
-		softwimhitdata[1] = (R3BSofTwimHitData*)SofTwimHitData->At(1);
-		Double_t charge_1 = softwimhitdata[0]->GetZcharge();
-		Double_t charge_2 = softwimhitdata[1]->GetZcharge();
-		//new part- selecting only twim hits ul && br or bl && ur
-		Int_t fSection1 = softwimhitdata[0]->GetSecID();
-		Int_t fSection2 = softwimhitdata[1]->GetSecID();
-		if ((fSection1 == 1 && fSection2 == 3) || (fSection1 == 3 && fSection2 == 1)){	
+		softofwhitdata = new R3BSofTofWHitData*[2];
+
+		//insert logic from TOFW online...
+		Double_t tof[2] = { 0., 0. };
+		int padid[2] = { 0, 0 };
+		for (Int_t ihit = 0; ihit < entries_tof; ihit++){
+			softofwhitdata[ihit] = (R3BSofTofWHitData*)SofToFWHitData->At(ihit);
+			if (padid[0] == 0){
+				padid[0] = softofwhitdata[ihit]->GetPaddle();
+				tof[0] = softofwhitdata[ihit]->GetTof();
+				}
+			else {
+				if (softofwhitdata[ihit]->GetPaddle() > padid[0] && softofwhitdata[ihit]->GetPaddle() - padid[0] > 1){
+					padid[1] = softofwhitdata[ihit]->GetPaddle();
+					tof[1] = softofwhitdata[ihit]->GetTof(); // right
+					}	
+				else if (softofwhitdata[ihit]->GetPaddle() - padid[0] < -1){
+					tof[1] = tof[0]; // right
+					padid[1] = padid[0];
+					tof[0] = softofwhitdata[ihit]->GetTof(); // new left
+					padid[0] = softofwhitdata[ihit]->GetPaddle();
+					}
+				}
+			}
+
+		//insert logic from TWIM online...
+		Float_t zr = 0., zl = 0.;
+		for (Int_t ihit = 0.; ihit < entries_twim; ihit++){
+			softwimhitdata[ihit] = (R3BSofTwimHitData*)SofTwimHitData->At(ihit);
+			if (softwimhitdata[ihit]->GetSecID() == 0){
+				zl = softwimhitdata[ihit]->GetZcharge();
+				}
+			else if (softwimhitdata[ihit]->GetSecID() == 2){
+				zr = softwimhitdata[ihit]->GetZcharge();
+				}
+			}
+		//end of logic from TWIM online...
+		if (zr > 0. && zl > 0. && tof[0] > 0. && tof[1] > 0.){	
+		Double_t charge_1 = zl+52.55-(147.39-6.568844*tof[0]+0.1109114*tof[0]*tof[0])-8.82;
+		Double_t charge_2 = zr+52.55-(147.39-6.568844*tof[1]+0.1109114*tof[1]*tof[1])-8.35-0.9;
 		h2_charge1_charge_2->Fill(charge_1,charge_2);
 		h2_charge1_charge_2_diff_vs_z_sum->Fill(charge_1-charge_2,charge_1+charge_2);
+		h1_charge1_plus_charge2->Fill(charge_1+charge_2);
 		h1_daughter_nuclei_charge->Fill(charge_1);
 		h1_daughter_nuclei_charge->Fill(charge_2);
-		}
+
+		//Check Z-pattern for different tpats...
+		if (trigger_pattern == 1 || trigger_pattern == 7){
+			h2_charge1_charge_2_tpat1->Fill(charge_1,charge_2);
+			h2_charge1_charge_2_diff_vs_z_sum_tpat1->Fill(charge_1-charge_2,charge_1+charge_2);
+			h1_charge1_plus_charge2_tpat1->Fill(charge_1+charge_2);
+			}
+		if (trigger_pattern == 2 || trigger_pattern == 8){
+			h2_charge1_charge_2_tpat2->Fill(charge_1,charge_2);
+			h2_charge1_charge_2_diff_vs_z_sum_tpat2->Fill(charge_1-charge_2,charge_1+charge_2);
+			h1_charge1_plus_charge2_tpat2->Fill(charge_1+charge_2);
+			}
+		if (trigger_pattern == 3 || trigger_pattern == 9){
+			h2_charge1_charge_2_tpat3->Fill(charge_1,charge_2);
+			h2_charge1_charge_2_diff_vs_z_sum_tpat3->Fill(charge_1-charge_2,charge_1+charge_2);
+			h1_charge1_plus_charge2_tpat3->Fill(charge_1+charge_2);
+			}
+		if (trigger_pattern == 4 || trigger_pattern == 10){
+			h2_charge1_charge_2_tpat4->Fill(charge_1,charge_2);
+			h2_charge1_charge_2_diff_vs_z_sum_tpat4->Fill(charge_1-charge_2,charge_1+charge_2);
+			h1_charge1_plus_charge2_tpat4->Fill(charge_1+charge_2);
+			}
+
 		//cut  on charge of twim
 		//if (30 < charge_1 && charge_1 < 60 && 30 < charge_2 && charge_2 < 60 && (charge_1+charge_2) > 89 && (charge_1+charge_2) < 93 ){
-		if ((charge_1+charge_2) < 100 &&((fSection1 == 1 && fSection2 == 3) || (fSection1 == 3 && fSection2 == 1) ) ){
+		if ((charge_1+charge_2) < 100){
 	
 		events_total_califa +=1;
 		califamappeddata = new R3BCalifaMappedData*[entries_califa];
@@ -913,6 +1208,7 @@ for(Long64_t i=0;i< nevents;i++){
 			if (entries_califa_hit){
 				califahitdata = new R3BCalifaHitData*[entries_califa_hit];
 			Int_t califa_100mev_hits = 0;
+			Int_t califa_200mev_hits = 0;
 			for (Int_t m = 0; m < entries_califa_hit; m++){
 				vector<double> v_temp_califa(2);
 				califahitdata[m] = (R3BCalifaHitData*)CalifaHitData->At(m);
@@ -935,6 +1231,9 @@ for(Long64_t i=0;i< nevents;i++){
 				if (((califahitdata[m]->GetEnergy())/1000) > 100){
 					califa_100mev_hits++;
 				}
+				if(((califahitdata[m]->GetEnergy())/1000) > 200){
+					califa_200mev_hits++;
+					}
 				//section to fill 2d vector for califa hits > 30 mev and choose the best ones with diff_phi = 180+-30-------------------
 				vector<double> v_temp_califa_ext(3);
 				if (((califahitdata[m]->GetEnergy())/1000) > 30){
@@ -1298,51 +1597,51 @@ for(Long64_t i=0;i< nevents;i++){
 			}
 			//systematically check theta1+theta2 for different Z_sums -------------
 			Double_t charge_sum = charge_1+charge_2;
-			if (charge_sum > 93.2 && charge_sum < 94.2){
-				h1_theta_sum_z_sum_932_942->Fill(v_special[1]);	
+			if (charge_sum > 91.5 && charge_sum < 92.5){
+				h1_theta_sum_z_sum_915_925->Fill(v_special[1]);	
 				//this should be the p2p channel, furter steps and cuts...
 				if ( v_special[2] < 15){
-				h1_theta_sum_z_sum_932_942_phi_cut->Fill(v_special[1]);
+				h1_theta_sum_z_sum_915_925_phi_cut->Fill(v_special[1]);
 				if (v_special[0] > 200 && v_special[0] < 700){
-					h1_theta_sum_z_sum_932_942_phi_ener_cut->Fill(v_special[1]);	
+					h1_theta_sum_z_sum_915_925_phi_ener_cut->Fill(v_special[1]);	
 					}
 				}
 
 
 				}
-			if (charge_sum > 92.1 && charge_sum < 93){
-				h1_theta_sum_z_sum_921_93->Fill(v_special[1]);
+			if (charge_sum > 90.2 && charge_sum < 91.4){
+				h1_theta_sum_z_sum_902_914->Fill(v_special[1]);
 				if (v_special[2] < 15){
-					h1_theta_sum_z_sum_921_93_phi_cut->Fill(v_special[1]);
+					h1_theta_sum_z_sum_902_914_phi_cut->Fill(v_special[1]);
 					if (v_special[0] > 200 && v_special[0] < 700){
-						h1_theta_sum_z_sum_921_93_phi_ener_cut->Fill(v_special[1]);
+						h1_theta_sum_z_sum_902_914_phi_ener_cut->Fill(v_special[1]);
 						}
 					}
 				}
-			if (charge_sum > 90.7 && charge_sum < 92){
-				h1_theta_sum_z_sum_907_92->Fill(v_special[1]);
+			if (charge_sum > 89.1 && charge_sum < 90.1){
+				h1_theta_sum_z_sum_891_901->Fill(v_special[1]);
 				if (v_special[2] < 15){
-					h1_theta_sum_z_sum_907_92_phi_cut->Fill(v_special[1]);
+					h1_theta_sum_z_sum_891_901_phi_cut->Fill(v_special[1]);
 					if (v_special[0] > 200 && v_special[0] < 700){
-						h1_theta_sum_z_sum_907_92_phi_ener_cut->Fill(v_special[1]);
+						h1_theta_sum_z_sum_891_901_phi_ener_cut->Fill(v_special[1]);
 						}
 					}
 				}
-			if (charge_sum > 89.5 && charge_sum < 90.6){
-				h1_theta_sum_z_sum_895_906->Fill(v_special[1]);	
+			if (charge_sum > 87.9 && charge_sum < 89){
+				h1_theta_sum_z_sum_879_89->Fill(v_special[1]);	
 				if (v_special[2] < 15){
-					h1_theta_sum_z_sum_895_906_phi_cut->Fill(v_special[1]);
+					h1_theta_sum_z_sum_879_89_phi_cut->Fill(v_special[1]);
 					if (v_special[0] > 200 && v_special[0] < 700){
-						h1_theta_sum_z_sum_895_906_phi_ener_cut->Fill(v_special[1]);
+						h1_theta_sum_z_sum_879_89_phi_ener_cut->Fill(v_special[1]);
 						}
 					}
 				}
-			if (charge_sum > 88.5 && charge_sum < 89.4){
-				h1_theta_sum_z_sum_885_894->Fill(v_special[1]);
+			if (charge_sum > 86.8 && charge_sum < 87.9){
+				h1_theta_sum_z_sum_868_879->Fill(v_special[1]);
 				if (v_special[2] < 15){
-					h1_theta_sum_z_sum_885_894_phi_cut->Fill(v_special[1]);
+					h1_theta_sum_z_sum_868_879_phi_cut->Fill(v_special[1]);
 					if (v_special[0] > 200 && v_special[0] < 700){
-						h1_theta_sum_z_sum_885_894_phi_ener_cut->Fill(v_special[1]);
+						h1_theta_sum_z_sum_868_879_phi_ener_cut->Fill(v_special[1]);
 						}
 					}
 				}
@@ -1399,6 +1698,21 @@ for(Long64_t i=0;i< nevents;i++){
 				}
 			v_califa_energy_theta.clear();
 			v_califa_energy_theta_phi.clear();
+			if (califa_200mev_hits == 1){
+				h2_charge1_charge_2_one_CALIFA->Fill(charge_1,charge_2);
+				h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->Fill(charge_1-charge_2,charge_1+charge_2);
+				h1_charge1_plus_charge2_one_CALIFA->Fill(charge_1+charge_2);
+				}
+			if (califa_200mev_hits == 2){
+				h2_charge1_charge_2_two_CALIFA->Fill(charge_1,charge_2);
+				h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->Fill(charge_1-charge_2,charge_1+charge_2);
+				h1_charge1_plus_charge2_two_CALIFA->Fill(charge_1+charge_2);
+				}
+			if (califa_200mev_hits == 3){
+				h2_charge1_charge_2_three_CALIFA->Fill(charge_1,charge_2);
+				h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA->Fill(charge_1-charge_2,charge_1+charge_2);
+				h1_charge1_plus_charge2_three_CALIFA->Fill(charge_1+charge_2);
+				}
 			if (califa_100mev_hits ==1){
 				h1_mult_100mev->Fill(entries_califa_hit);
 				}
@@ -1547,12 +1861,13 @@ for(Long64_t i=0;i< nevents;i++){
 		califa_both_sides_ts.clear();
 		events_with_cut++;
 		}
+		}
 	}
 	
 	}
 
 char f_out_name[500];
-sprintf(f_out_name,"../file_output/tofw_output_s455_03_273_10_cluster_new_par.root");
+sprintf(f_out_name,"../file_output/output_corr_tof_273_10.root");
 TFile * f = new TFile(f_out_name,"RECREATE");
 TList *l = new TList();
 gStyle->SetOptStat(1111111);
@@ -1570,6 +1885,7 @@ l->Add(h2_phi_vs_theta);
 l->Add(h2_energy_vs_mult_no_M);
 l->Add(h2_energy_vs_mult_with_M);
 l->Add(h2_charge1_charge_2);
+l->Add(h1_charge1_plus_charge2);
 l->Add(h1_daughter_nuclei_charge);
 l->Add(h1_trigger);
 for(Int_t i = 0; i < 20; i++){
@@ -1598,21 +1914,21 @@ l->Add(h1_opening_angle_one_other);
 l->Add(h1_opening_angle_two_other);
 l->Add(h2_charge1_charge_2_after);
 l->Add(h1_charge_sum_after);
-l->Add(h1_theta_sum_z_sum_932_942);
-l->Add(h1_theta_sum_z_sum_932_942_phi_cut);
-l->Add(h1_theta_sum_z_sum_932_942_phi_ener_cut);
-l->Add(h1_theta_sum_z_sum_921_93);
-l->Add(h1_theta_sum_z_sum_921_93_phi_cut);
-l->Add(h1_theta_sum_z_sum_921_93_phi_ener_cut);
-l->Add(h1_theta_sum_z_sum_907_92);
-l->Add(h1_theta_sum_z_sum_907_92_phi_cut);
-l->Add(h1_theta_sum_z_sum_907_92_phi_ener_cut);
-l->Add(h1_theta_sum_z_sum_895_906);
-l->Add(h1_theta_sum_z_sum_895_906_phi_cut);
-l->Add(h1_theta_sum_z_sum_895_906_phi_ener_cut);
-l->Add(h1_theta_sum_z_sum_885_894);
-l->Add(h1_theta_sum_z_sum_885_894_phi_cut);
-l->Add(h1_theta_sum_z_sum_885_894_phi_ener_cut);
+l->Add(h1_theta_sum_z_sum_915_925);
+l->Add(h1_theta_sum_z_sum_915_925_phi_cut);
+l->Add(h1_theta_sum_z_sum_915_925_phi_ener_cut);
+l->Add(h1_theta_sum_z_sum_902_914);
+l->Add(h1_theta_sum_z_sum_902_914_phi_cut);
+l->Add(h1_theta_sum_z_sum_902_914_phi_ener_cut);
+l->Add(h1_theta_sum_z_sum_891_901);
+l->Add(h1_theta_sum_z_sum_891_901_phi_cut);
+l->Add(h1_theta_sum_z_sum_891_901_phi_ener_cut);
+l->Add(h1_theta_sum_z_sum_879_89);
+l->Add(h1_theta_sum_z_sum_879_89_phi_cut);
+l->Add(h1_theta_sum_z_sum_879_89_phi_ener_cut);
+l->Add(h1_theta_sum_z_sum_868_879);
+l->Add(h1_theta_sum_z_sum_868_879_phi_cut);
+l->Add(h1_theta_sum_z_sum_868_879_phi_ener_cut);
 l->Add(h1_theta_sum_z_1_2_cut1);
 l->Add(h1_theta_sum_z_1_2_cut2);
 l->Add(h1_theta_sum_z_1_2_cut3);
@@ -1622,24 +1938,47 @@ l->Add(h1_theta_sum_z_1_2_cut5);
 l->Add(h1_one_hit_twim_charge);
 l->Add(h1_one_hit_twim_charge_tpat1);
 l->Add(h2_charge1_charge_2_diff_vs_z_sum);
+l->Add(h2_charge1_charge_2_tpat1);
+l->Add(h2_charge1_charge_2_tpat2);
+l->Add(h2_charge1_charge_2_tpat3);
+l->Add(h2_charge1_charge_2_tpat4);
+l->Add(h2_charge1_charge_2_diff_vs_z_sum_tpat1);
+l->Add(h2_charge1_charge_2_diff_vs_z_sum_tpat2);
+l->Add(h2_charge1_charge_2_diff_vs_z_sum_tpat3);
+l->Add(h2_charge1_charge_2_diff_vs_z_sum_tpat4);
+l->Add(h1_charge1_plus_charge2_tpat1);
+l->Add(h1_charge1_plus_charge2_tpat2);
+l->Add(h1_charge1_plus_charge2_tpat3);
+l->Add(h1_charge1_plus_charge2_tpat4);
+l->Add(h2_charge1_charge_2_one_CALIFA);
+l->Add(h2_charge1_charge_2_two_CALIFA);
+l->Add(h2_charge1_charge_2_three_CALIFA);
+l->Add(h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA);
+l->Add(h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA);
+l->Add(h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA);
+l->Add(h1_charge1_plus_charge2_one_CALIFA);
+l->Add(h1_charge1_plus_charge2_two_CALIFA);
+l->Add(h1_charge1_plus_charge2_three_CALIFA);
 
-char pic_name[500];
 
-for (Int_t i=0; i< 6; i++){
-l->Add(h2_charge1_vs_charge2_energy_cut[i]);
-sprintf(pic_name,"step_energy%i.pdf",i);
-h2_charge1_vs_charge2_energy_cut[i]->SaveAs(pic_name,"pdf");
-}
-for (Int_t i=0; i< 6; i++){
-l->Add(h2_charge1_vs_charge2_theta_cut[i]);
-sprintf(pic_name,"step_theta%i.pdf",i);
-h2_charge1_vs_charge2_theta_cut[i]->SaveAs(pic_name,"pdf");
-}
-for (Int_t i=0; i< 6; i++){
-l->Add(h2_charge1_vs_charge2_phi_cut[i]);
-sprintf(pic_name,"step_phi%i.pdf",i);
-h2_charge1_vs_charge2_phi_cut[i]->SaveAs(pic_name,"pdf");
-}
+
+//char pic_name[500];
+//
+//for (Int_t i=0; i< 6; i++){
+//l->Add(h2_charge1_vs_charge2_energy_cut[i]);
+//sprintf(pic_name,"step_energy%i.pdf",i);
+//h2_charge1_vs_charge2_energy_cut[i]->SaveAs(pic_name,"pdf");
+//}
+//for (Int_t i=0; i< 6; i++){
+//l->Add(h2_charge1_vs_charge2_theta_cut[i]);
+//sprintf(pic_name,"step_theta%i.pdf",i);
+//h2_charge1_vs_charge2_theta_cut[i]->SaveAs(pic_name,"pdf");
+//}
+//for (Int_t i=0; i< 6; i++){
+//l->Add(h2_charge1_vs_charge2_phi_cut[i]);
+//sprintf(pic_name,"step_phi%i.pdf",i);
+//h2_charge1_vs_charge2_phi_cut[i]->SaveAs(pic_name,"pdf");
+//}
 l->Write("histlist", TObject::kSingleKey);
 
 
@@ -1650,108 +1989,108 @@ cout << "Califa events no master trigger:\t" << events_califa_no_master << " " <
 cout << "Total number of Califa events:\t" << events_total_califa << endl;
 cout << "--------------------------------" << endl;
 
-cout << "Array values for Energy parameter change: --------------" << endl;
-cout<< "under the line\t" << "line\t" << "over the line\t" << endl;
-Double_t x[5] = {1,2,3,4,5};
-Double_t y_energy[5];
-Double_t y_theta[5];
-Double_t y_phi[5];
-Double_t y_rel_energy[5];
-Double_t y_rel_theta[5];
-Double_t y_rel_phi[5];
-
-for (Int_t i = 0; i< 6; i++){
-if (i+1 < 6){
-y_energy[i] = array_for_cuts_energy[i+1][0]-array_for_cuts_energy[i][0];
-y_rel_energy[i] = (array_for_cuts_energy[i+1][0]/array_for_cuts_energy[i][0])/(array_for_cuts_energy[i+1][1]/array_for_cuts_energy[i][1] );
-}
-cout << array_for_cuts_energy[i][0] << "\t" << array_for_cuts_energy[i][1] << "\t" << array_for_cuts_energy[i][2] << endl; 
-}
-cout << "Array values for theta parameter change: --------------" << endl;
-cout<< "under the line\t" << "line\t" << "over the line\t" << endl;
-for (Int_t i = 0; i< 6; i++){
-if (i+1 < 6){
-y_theta[i] = array_for_cuts_theta[i+1][0]-array_for_cuts_theta[i][0];
-y_rel_theta[i] = (array_for_cuts_theta[i+1][0]/array_for_cuts_theta[i][0])/(array_for_cuts_theta[i+1][1]/array_for_cuts_theta[i][1]);
-}
-cout << array_for_cuts_theta[i][0] << "\t" << array_for_cuts_theta[i][1] << "\t" << array_for_cuts_theta[i][2] << endl; 
-}
-
-cout << "Array values for phi parameter change: --------------" << endl;
-cout<< "under the line\t" << "line\t" << "over the line\t" << endl;
-for (Int_t i = 0; i< 6; i++){
-if (i+1 < 6){
-y_phi[i] = array_for_cuts_phi[i+1][0]-array_for_cuts_phi[i][0];
-y_rel_phi[i] = (array_for_cuts_phi[i+1][0]/array_for_cuts_phi[i][0])/(array_for_cuts_phi[i+1][1]/array_for_cuts_phi[i][1]);
-}
-cout << array_for_cuts_phi[i][0] << "\t" << array_for_cuts_phi[i][1] << "\t" << array_for_cuts_phi[i][2] << endl; 
-}
-auto c3 = new TCanvas("c3","c3",2400, 1600);
-TGraph* gr_energy = new TGraph(5,x,y_energy);
-gr_energy->SetTitle("Stepwise energy cuts from 50 < E_sum < 900 to 300 < E_sum < 650");
-gr_energy->SetLineColor(kBlue);
-gr_energy->SetLineWidth(3);
-gr_energy->SetMarkerStyle(21);
-
-TGraph* gr_theta = new TGraph(5,x,y_theta);
-gr_theta->SetTitle("Stepwise theta cus from 70 < Theta_sum < 90 to 75 < Theta_sum < 85");
-gr_theta->SetLineColor(kRed);
-gr_theta->SetLineWidth(3);
-gr_theta->SetMarkerStyle(22);
-
-TGraph* gr_phi = new TGraph(5,x,y_phi);
-gr_phi->SetTitle("Stepwise phi cuts from delta_phi = 180+-30 to 180+-5");
-gr_phi->SetLineColor(kGreen);
-gr_phi->SetLineWidth(3);
-gr_phi->SetMarkerStyle(23);
-
-auto mg = new TMultiGraph();
-mg->SetTitle("Parameter cut analysis in region Z_sum < 90.8; Stepnumber; Decrease of events after cut-step");
-mg->Add(gr_energy,"PL");
-mg->Add(gr_theta,"PL");
-//gr_phi->Draw("ALP");
-mg->Add(gr_phi,"PL");
-mg->Draw("A pmc plc");
-
-c3->BuildLegend();
-c3->Print("step_approach.png");
-
-TList *l1 = new TList();
-l1->Add(mg);
-l1->Write("cut_steps", TObject::kSingleKey);
-
-
-auto c4 = new TCanvas("c3","c3",2400, 1600);
-TGraph* gr_rel_energy = new TGraph(5,x,y_rel_energy);
-gr_rel_energy->SetTitle("Stepwise energy cuts from 50 < E_sum < 900 to 300 < E_sum < 650 relative decr.");
-gr_rel_energy->SetLineColor(kBlue);
-gr_rel_energy->SetLineWidth(3);
-gr_rel_energy->SetMarkerStyle(21);
-
-TGraph* gr_rel_theta = new TGraph(5,x,y_rel_theta);
-gr_rel_theta->SetTitle("Stepwise theta cus from 70 < Theta_sum < 90 to 75 < Theta_sum < 85 relative decr.");
-gr_rel_theta->SetLineColor(kRed);
-gr_rel_theta->SetLineWidth(3);
-gr_rel_theta->SetMarkerStyle(22);
-
-TGraph* gr_rel_phi = new TGraph(5,x,y_rel_phi);
-gr_rel_phi->SetTitle("Stepwise phi cuts from delta_phi = 180+-30 to 180+-5 relative decr.");
-gr_rel_phi->SetLineColor(kGreen);
-gr_rel_phi->SetLineWidth(3);
-gr_rel_phi->SetMarkerStyle(23);
-
-auto mg2 = new TMultiGraph();
-mg2->SetTitle("Relative decrease of events (lower triangle/correlation line) between step-cuts; Stepnumber; relative decrease lower triangle vs correlation line");
-mg2->Add(gr_rel_energy,"PL");
-mg2->Add(gr_rel_theta,"PL");
-mg2->Add(gr_rel_phi,"PL2");
-mg2->Draw("A pmc plc");
-
-c4->BuildLegend();
-c4->Print("rel_step_approach.png");
-
-TList* l2 = new TList();
-l2->Add(mg2);
-l2->Write("rel_step_numbers",TObject::kSingleKey);
+//cout << "Array values for Energy parameter change: --------------" << endl;
+//cout<< "under the line\t" << "line\t" << "over the line\t" << endl;
+//Double_t x[5] = {1,2,3,4,5};
+//Double_t y_energy[5];
+//Double_t y_theta[5];
+//Double_t y_phi[5];
+//Double_t y_rel_energy[5];
+//Double_t y_rel_theta[5];
+//Double_t y_rel_phi[5];
+//
+//for (Int_t i = 0; i< 6; i++){
+//if (i+1 < 6){
+//y_energy[i] = array_for_cuts_energy[i+1][0]-array_for_cuts_energy[i][0];
+//y_rel_energy[i] = (array_for_cuts_energy[i+1][0]/array_for_cuts_energy[i][0])/(array_for_cuts_energy[i+1][1]/array_for_cuts_energy[i][1] );
+//}
+//cout << array_for_cuts_energy[i][0] << "\t" << array_for_cuts_energy[i][1] << "\t" << array_for_cuts_energy[i][2] << endl; 
+//}
+//cout << "Array values for theta parameter change: --------------" << endl;
+//cout<< "under the line\t" << "line\t" << "over the line\t" << endl;
+//for (Int_t i = 0; i< 6; i++){
+//if (i+1 < 6){
+//y_theta[i] = array_for_cuts_theta[i+1][0]-array_for_cuts_theta[i][0];
+//y_rel_theta[i] = (array_for_cuts_theta[i+1][0]/array_for_cuts_theta[i][0])/(array_for_cuts_theta[i+1][1]/array_for_cuts_theta[i][1]);
+//}
+//cout << array_for_cuts_theta[i][0] << "\t" << array_for_cuts_theta[i][1] << "\t" << array_for_cuts_theta[i][2] << endl; 
+//}
+//
+//cout << "Array values for phi parameter change: --------------" << endl;
+//cout<< "under the line\t" << "line\t" << "over the line\t" << endl;
+//for (Int_t i = 0; i< 6; i++){
+//if (i+1 < 6){
+//y_phi[i] = array_for_cuts_phi[i+1][0]-array_for_cuts_phi[i][0];
+//y_rel_phi[i] = (array_for_cuts_phi[i+1][0]/array_for_cuts_phi[i][0])/(array_for_cuts_phi[i+1][1]/array_for_cuts_phi[i][1]);
+//}
+//cout << array_for_cuts_phi[i][0] << "\t" << array_for_cuts_phi[i][1] << "\t" << array_for_cuts_phi[i][2] << endl; 
+//}
+//auto c3 = new TCanvas("c3","c3",2400, 1600);
+//TGraph* gr_energy = new TGraph(5,x,y_energy);
+//gr_energy->SetTitle("Stepwise energy cuts from 50 < E_sum < 900 to 300 < E_sum < 650");
+//gr_energy->SetLineColor(kBlue);
+//gr_energy->SetLineWidth(3);
+//gr_energy->SetMarkerStyle(21);
+//
+//TGraph* gr_theta = new TGraph(5,x,y_theta);
+//gr_theta->SetTitle("Stepwise theta cus from 70 < Theta_sum < 90 to 75 < Theta_sum < 85");
+//gr_theta->SetLineColor(kRed);
+//gr_theta->SetLineWidth(3);
+//gr_theta->SetMarkerStyle(22);
+//
+//TGraph* gr_phi = new TGraph(5,x,y_phi);
+//gr_phi->SetTitle("Stepwise phi cuts from delta_phi = 180+-30 to 180+-5");
+//gr_phi->SetLineColor(kGreen);
+//gr_phi->SetLineWidth(3);
+//gr_phi->SetMarkerStyle(23);
+//
+//auto mg = new TMultiGraph();
+//mg->SetTitle("Parameter cut analysis in region Z_sum < 90.8; Stepnumber; Decrease of events after cut-step");
+//mg->Add(gr_energy,"PL");
+//mg->Add(gr_theta,"PL");
+////gr_phi->Draw("ALP");
+//mg->Add(gr_phi,"PL");
+//mg->Draw("A pmc plc");
+//
+//c3->BuildLegend();
+//c3->Print("step_approach.png");
+//
+//TList *l1 = new TList();
+//l1->Add(mg);
+//l1->Write("cut_steps", TObject::kSingleKey);
+//
+//
+//auto c4 = new TCanvas("c3","c3",2400, 1600);
+//TGraph* gr_rel_energy = new TGraph(5,x,y_rel_energy);
+//gr_rel_energy->SetTitle("Stepwise energy cuts from 50 < E_sum < 900 to 300 < E_sum < 650 relative decr.");
+//gr_rel_energy->SetLineColor(kBlue);
+//gr_rel_energy->SetLineWidth(3);
+//gr_rel_energy->SetMarkerStyle(21);
+//
+//TGraph* gr_rel_theta = new TGraph(5,x,y_rel_theta);
+//gr_rel_theta->SetTitle("Stepwise theta cus from 70 < Theta_sum < 90 to 75 < Theta_sum < 85 relative decr.");
+//gr_rel_theta->SetLineColor(kRed);
+//gr_rel_theta->SetLineWidth(3);
+//gr_rel_theta->SetMarkerStyle(22);
+//
+//TGraph* gr_rel_phi = new TGraph(5,x,y_rel_phi);
+//gr_rel_phi->SetTitle("Stepwise phi cuts from delta_phi = 180+-30 to 180+-5 relative decr.");
+//gr_rel_phi->SetLineColor(kGreen);
+//gr_rel_phi->SetLineWidth(3);
+//gr_rel_phi->SetMarkerStyle(23);
+//
+//auto mg2 = new TMultiGraph();
+//mg2->SetTitle("Relative decrease of events (lower triangle/correlation line) between step-cuts; Stepnumber; relative decrease lower triangle vs correlation line");
+//mg2->Add(gr_rel_energy,"PL");
+//mg2->Add(gr_rel_theta,"PL");
+//mg2->Add(gr_rel_phi,"PL2");
+//mg2->Draw("A pmc plc");
+//
+//c4->BuildLegend();
+//c4->Print("rel_step_approach.png");
+//
+//TList* l2 = new TList();
+//l2->Add(mg2);
+//l2->Write("rel_step_numbers",TObject::kSingleKey);
 
 }
