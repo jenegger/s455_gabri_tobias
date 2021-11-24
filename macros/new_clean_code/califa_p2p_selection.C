@@ -23,9 +23,13 @@ class Califa_p2p_selection {
 	public:
 
 		Califa_p2p_selection(TClonesArray* califa_tclone, Double_t e_cut, Double_t delta_phi_cut, Double_t delta_theta_cut);
+		~Califa_p2p_selection(){delete [] califahitdata;}
 		vector<double> best_comb_hits();
 		vector<double> hight_energy_comb();
 		int  multiplicity_energy_cut(double energy_cut);
+		vector<vector<double> >get_califa_array();
+		vector<double>get_highest_califa_gamma(double energy_cut_gamma);
+		vector<uint64_t> get_califa_time();
 
 	private:
 		vector<vector<double> > v_phi_diff;
@@ -121,6 +125,9 @@ vector<double> Califa_p2p_selection::best_comb_hits(){
 			indices_delta_phi={-1,-1,-1};
 			}
 		}
+	if ( v_phi_diff.size() == 1 && v_phi_diff[0][2] > d_phi){
+		indices_delta_phi={-1,-1,-1};
+		}
 	}
 	else	{
 		indices_delta_phi={-1,-1,-1};
@@ -150,6 +157,63 @@ int Califa_p2p_selection::multiplicity_energy_cut(double energy_cut){
 	}
 	return multiplicity_value;
 }
+
+vector<vector<double> > Califa_p2p_selection::get_califa_array(){
+	vector<vector<double> >califa_array;
+	Double_t gamma = (1+(637./938));
+	Double_t beta = sqrt(1-(1/(gamma*gamma)));
+	for (Int_t m = 0; m < entries_califa_hit; m++){
+		vector<double> m_array(4);
+		califahitdata[m] = (R3BCalifaHitData*)my_tclone->At(m);		
+		m_array[0] = ((califahitdata[m]->GetEnergy())/1000);		//Energy in MeV
+		m_array[1] = ((califahitdata[m]->GetTheta()/PI)*180.);		//Theta in degrees
+		m_array[2] = ((califahitdata[m]->GetPhi())/PI)*180;		//Phi in degrees
+		m_array[3] = m_array[0]*gamma*(1-beta*cos(m_array[1]*PI/180.));	//Doppler corrected energy in MeV
+		califa_array.push_back(m_array);
+		}
+	return califa_array;
+	}
+vector<uint64_t> Califa_p2p_selection::get_califa_time(){
+	vector <uint64_t> time_array_califa;
+	for (Int_t m = 0; m < entries_califa_hit; m++){
+		califahitdata[m] = (R3BCalifaHitData*)my_tclone->At(m);
+		uint64_t time_califa = (califahitdata[m]->GetTime());
+		time_array_califa.push_back(time_califa);
+		}
+	return time_array_califa;
+	}
+
+vector<double> Califa_p2p_selection::get_highest_califa_gamma(double energy_cut_gamma){
+	vector<vector<double> >califa_array;
+	Double_t gamma = (1+(637./938));
+	Double_t beta = sqrt(1-(1/(gamma*gamma)));
+	vector<double> high_gamma_hit={-1,-1,-1,-1};
+	for (Int_t m = 0; m < entries_califa_hit; m++){
+		vector<double> m_array(4);
+		califahitdata[m] = (R3BCalifaHitData*)my_tclone->At(m);		
+		m_array[0] = ((califahitdata[m]->GetEnergy())/1000);		//Energy in MeV
+		m_array[1] = ((califahitdata[m]->GetTheta()/PI)*180.);		//Theta in degrees
+		m_array[2] = ((califahitdata[m]->GetPhi())/PI)*180;		//Phi in degrees
+		m_array[3] = m_array[0]*gamma*(1-beta*cos(m_array[1]*PI/180.));	//Doppler corrected energy in MeV
+		if (m_array[0] < energy_cut_gamma){
+		califa_array.push_back(m_array);
+		}
+	}
+	if (califa_array.size() == 1){
+		for (Int_t i = 0; i < 4; i++){
+			high_gamma_hit[i] = califa_array[0][i];
+			}
+		}
+	if (califa_array.size() > 1){
+		sort(califa_array.begin(),califa_array.end(),sortcol);
+		for (Int_t i = 0; i < 4; i++){
+			high_gamma_hit[i] = califa_array[0][i];
+			}
+		}
+	
+	return high_gamma_hit;
+	}
+
 void califa_p2p_selection(){
 
 }

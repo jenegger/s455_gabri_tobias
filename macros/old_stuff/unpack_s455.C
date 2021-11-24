@@ -34,14 +34,15 @@ void unpack_s455()
     Int_t sofiaWR_ME = 0xf00;
 
     // Create input -----------------------------------------
-//    TString filename = "../../s455_03_273_10_stitched.lmd"; //input lmd file
-    TString filename = "../../s455_03_273_0001_stitched.lmd"; //input lmd file subrun 1
+//    TString filename = "../../s455_03_273_0001_stitched.lmd"; //input lmd file subrun 1
+    //next just for test
+    TString filename =  "/u/land/tobias_jenegger/s455_03_273_0012_stitched.lmd";
 
 
     // Define output-----------------------------------------
-//      TString outputFileName = "../file_src/s455_03_273_10_sq_w_cl_antia.root";
-//    TString outputFileName = "../file_src/s455_03_273_1_sq_w_cl_antia.root";
-      TString outputFileName = "../file_src/s455_03_273_1_sq_w_cl_antia.root";
+//      TString outputFileName = "../file_src/s455_03_273_1_sq_w_cl_antia.root";
+      //next just for test
+      TString outputFileName = "/u/land/tobias_jenegger/calibrated_s455_data/just_for_fun.root";
 
     Bool_t Cal_level = true;          // set true if there exists a file with the calibration parameters
     Bool_t NOTstoremappeddata = false; // if true, don't store mapped data in the root file

@@ -25,3 +25,10 @@ The calibration file dummy_sofia.par is the same as /u/land/r3broot/202106_testi
 For further data checking we look at following lmd files:
 -> main0208_0008.lmd (as it is one of the beginnings)
 -> main0220_0004.lmd (this was after the lxana01 crash, do we see some shifts in WRTS?? this has to be investigated....) 
+
+
+UPDATE:
+R3BRoot Version used: from Thu Nov 11 08:39:36 2021, commit: 25540c852c028ee3f16cb00f8d2f2f1422dee096
+
+Calibration for sofia: Antia's calibration file /u/land/antiagg/R3BRoot/sofia/macros/s455Up2p/parameters/CalibParam.par (you can also find it in the /parameters directory)
+

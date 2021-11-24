@@ -22,3 +22,8 @@ int t_pattern(R3BEventHeader* tpat_tclone){
 	}
 return trigger_pattern;
 }
+
+uint64_t wrt_ts (R3BEventHeader* tpat_tclone){
+	uint64_t timestamp = tpat_tclone->GetTimeStamp();
+	return timestamp;
+	}

@@ -66,6 +66,43 @@ TH1D* h1_opening_angle_two_other;
 TH1D* h1_opening_angle_proton;
 TH1D* h1_angle_check;
 TH1D* h1_angle_check_arzi;
+TH1D* h1_califa_energy_z50_z41;
+TH1D* h1_multiplicity_z50_z41;
+TH1D* h1_califa_energy_z50_z41_200;
+TH1D* h1_califa_energy_z50_z42;
+TH1D* h1_multiplicity_z50_z42;
+TH1D* h1_califa_energy_z50_z41_no_doppler;
+TH1D* h1_califa_energy_z50_z42_no_doppler;
+TH1D* h1_califa_energy_z50_z41_high_gamma;
+TH1D* h1_califa_energy_z50_z41_no_doppler_high_gamma;
+TH1D* h1_califa_energy_z50_z42_high_gamma;
+TH1D* h1_califa_energy_z50_z42_no_doppler_high_gamma;
+TH1D* h1_theta_sum_z_sum_905_915_30_30;
+TH1D* h1_wr_diff_905_915_30_30;
+TH1D* h1_theta_sum_z_sum_905_915_30_15;
+TH1D* h1_theta_sum_z_sum_905_915_30_15_wr;
+TH1D* h1_wr_diff_905_915_30_15;
+TH1D* h1_theta_sum_z_sum_905_915_100_30;
+TH1D* h1_wr_diff_905_915_100_30;
+TH1D* h1_theta_sum_z_sum_915_925_30_30;
+TH1D* h1_wr_diff_915_925_30_30;
+TH1D* h1_theta_sum_z_sum_915_925_30_15;
+TH1D* h1_wr_diff_915_925_30_15;
+TH1D* h1_theta_sum_z_sum_915_925_100_30;
+TH1D* h1_theta_sum_z_sum_915_925_100_30_wr;
+TH1D* h1_wr_diff_915_925_100_30;
+TH1D* h1_wr_diff_z_50_z41;
+TH1D* h1_wr_diff_z_50_z41_messel;
+TH1D* h1_wr_diff_z_50_z41_wix;
+TH1D* h1_wr_diff_z_50_z42;
+TH1D* h1_califa_energy_z50_z41_mult_wr;
+TH1D* h1_califa_energy_z50_z42_mult_wr;
+TH1D* h1_califa_energy_z50_z41_mult_wr_high_e;
+TH1D* h1_califa_energy_z50_z42_mult_wr_high_e;
+TH1D* h1_califa_energy_z50_addup_mult_wr;
+TH1D* h1_proton_mult_90;
+TH1D* h1_proton_mult_91;
+TH1D* h1_proton_mult_92;
 //End of Declaration of 1D histos
 
 //Declaration of 2D histos
@@ -104,6 +141,10 @@ TH2D* h2_e1_vs_e2_cluster_best_dphi;
 TH2D* h2_e1_vs_e2_cluster_two_highest;
 TH2D* h2_opening_angle_vs_esum;
 TH2D* h2_e_vs_phi;
+TH2D* h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_theta;
+TH2D* h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_theta;
+TH2D* h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_phi;
+TH2D* h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi;
 //End of Declaration of 2D histos
 
 
@@ -322,6 +363,137 @@ h1_theta_sum_p2p->GetXaxis()->CenterTitle(true);
 h1_theta_sum_p2p->GetYaxis()->CenterTitle(true);
 h1_theta_sum_p2p->GetYaxis()->SetLabelSize(0.045);
 h1_theta_sum_p2p->GetYaxis()->SetTitleSize(0.045);
+
+
+
+sprintf(hist_name, "Theta1 +  Theta 2 for 90.5 < Z_sum < 91.5, E > 30MeV and delta_phi = +- 30");
+h1_theta_sum_z_sum_905_915_30_30 = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_905_915_30_30->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_905_915_30_30->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_905_915_30_30->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_905_915_30_30->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_905_915_30_30->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_905_915_30_30->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "WR_M - WR_CALIFA for 90.5 < Z_sum < 91.5, E > 30MeV and delta_phi = +- 30 of the two protons");
+h1_wr_diff_905_915_30_30 = new TH1D(hist_name,hist_name,500,-5000,5000);
+h1_wr_diff_905_915_30_30->GetXaxis()->SetTitle("WR_M - WR_CALIFA [ns]");
+h1_wr_diff_905_915_30_30->GetYaxis()->SetTitle("Counts");
+h1_wr_diff_905_915_30_30->GetXaxis()->CenterTitle(true);
+h1_wr_diff_905_915_30_30->GetYaxis()->CenterTitle(true);
+h1_wr_diff_905_915_30_30->GetYaxis()->SetLabelSize(0.045);
+h1_wr_diff_905_915_30_30->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Theta1 +  Theta 2 for 90.5 < Z_sum < 91.5, E > 30MeV and delta_phi = +- 15");
+h1_theta_sum_z_sum_905_915_30_15 = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_905_915_30_15->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_905_915_30_15->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_905_915_30_15->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_905_915_30_15->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_905_915_30_15->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_905_915_30_15->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Theta1 +  Theta 2 for 90.5 < Z_sum < 91.5, E > 30MeV and delta_phi = +- 15 -1200<WR<-200");
+h1_theta_sum_z_sum_905_915_30_15_wr = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_905_915_30_15_wr->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_905_915_30_15_wr->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_905_915_30_15_wr->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_905_915_30_15_wr->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_905_915_30_15_wr->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_905_915_30_15_wr->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "WR_M - WR_CALIFA for 90.5 < Z_sum < 91.5, E > 30MeV and delta_phi = +- 15 of the two protons");
+h1_wr_diff_905_915_30_15 = new TH1D(hist_name,hist_name,500,-5000,5000);
+h1_wr_diff_905_915_30_15->GetXaxis()->SetTitle("WR_M - WR_CALIFA [ns]");
+h1_wr_diff_905_915_30_15->GetYaxis()->SetTitle("Counts");
+h1_wr_diff_905_915_30_15->GetXaxis()->CenterTitle(true);
+h1_wr_diff_905_915_30_15->GetYaxis()->CenterTitle(true);
+h1_wr_diff_905_915_30_15->GetYaxis()->SetLabelSize(0.045);
+h1_wr_diff_905_915_30_15->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Theta1 +  Theta 2 for 90.5 < Z_sum < 91.5, E > 100 MeV and delta_phi = +- 30");
+h1_theta_sum_z_sum_905_915_100_30 = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_905_915_100_30->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_905_915_100_30->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_905_915_100_30->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_905_915_100_30->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_905_915_100_30->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_905_915_100_30->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "WR_M - WR_CALIFA for 90.5 < Z_sum < 91.5, E > 100MeV and delta_phi = +- 30 of the two protons");
+h1_wr_diff_905_915_100_30 = new TH1D(hist_name,hist_name,500,-5000,5000);
+h1_wr_diff_905_915_100_30->GetXaxis()->SetTitle("WR_M - WR_CALIFA [ns]");
+h1_wr_diff_905_915_100_30->GetYaxis()->SetTitle("Counts");
+h1_wr_diff_905_915_100_30->GetXaxis()->CenterTitle(true);
+h1_wr_diff_905_915_100_30->GetYaxis()->CenterTitle(true);
+h1_wr_diff_905_915_100_30->GetYaxis()->SetLabelSize(0.045);
+h1_wr_diff_905_915_100_30->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Theta1 +  Theta 2 for 91.5 < Z_sum < 92.5, E > 30MeV and delta_phi = +- 30");
+h1_theta_sum_z_sum_915_925_30_30 = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_915_925_30_30->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_915_925_30_30->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_915_925_30_30->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_30_30->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_30_30->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_915_925_30_30->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "WR_M - WR_CALIFA for 91.5 < Z_sum < 92.5, E > 30MeV and delta_phi = +- 30 of the two protons");
+h1_wr_diff_915_925_30_30 = new TH1D(hist_name,hist_name,500,-5000,5000);
+h1_wr_diff_915_925_30_30->GetXaxis()->SetTitle("WR_M - WR_CALIFA [ns]");
+h1_wr_diff_915_925_30_30->GetYaxis()->SetTitle("Counts");
+h1_wr_diff_915_925_30_30->GetXaxis()->CenterTitle(true);
+h1_wr_diff_915_925_30_30->GetYaxis()->CenterTitle(true);
+h1_wr_diff_915_925_30_30->GetYaxis()->SetLabelSize(0.045);
+h1_wr_diff_915_925_30_30->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Theta1 +  Theta 2 for 91.5 < Z_sum < 92.5, E > 30MeV and delta_phi = +- 15");
+h1_theta_sum_z_sum_915_925_30_15 = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_915_925_30_15->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_915_925_30_15->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_915_925_30_15->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_30_15->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_30_15->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_915_925_30_15->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "WR_M - WR_CALIFA for 91.5 < Z_sum < 92.5, E > 30MeV and delta_phi = +- 15 of the two protons");
+h1_wr_diff_915_925_30_15 = new TH1D(hist_name,hist_name,500,-5000,5000);
+h1_wr_diff_915_925_30_15->GetXaxis()->SetTitle("WR_M - WR_CALIFA [ns]");
+h1_wr_diff_915_925_30_15->GetYaxis()->SetTitle("Counts");
+h1_wr_diff_915_925_30_15->GetXaxis()->CenterTitle(true);
+h1_wr_diff_915_925_30_15->GetYaxis()->CenterTitle(true);
+h1_wr_diff_915_925_30_15->GetYaxis()->SetLabelSize(0.045);
+h1_wr_diff_915_925_30_15->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Theta1 +  Theta 2 for 91.5 < Z_sum < 92.5, E > 100 MeV and delta_phi = +- 30");
+h1_theta_sum_z_sum_915_925_100_30 = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_915_925_100_30->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_915_925_100_30->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_915_925_100_30->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_100_30->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_100_30->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_915_925_100_30->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Theta1 +  Theta 2 for 91.5 < Z_sum < 92.5, E > 100 MeV and delta_phi = +- 30 -1200<WR<-200");
+h1_theta_sum_z_sum_915_925_100_30_wr = new TH1D(hist_name,hist_name,52,22.15,152.15);
+h1_theta_sum_z_sum_915_925_100_30_wr->GetXaxis()->SetTitle("Theta1 + Theta2 [degr]");
+h1_theta_sum_z_sum_915_925_100_30_wr->GetYaxis()->SetTitle("Counts");
+h1_theta_sum_z_sum_915_925_100_30_wr->GetXaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_100_30_wr->GetYaxis()->CenterTitle(true);
+h1_theta_sum_z_sum_915_925_100_30_wr->GetYaxis()->SetLabelSize(0.045);
+h1_theta_sum_z_sum_915_925_100_30_wr->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "WR_M - WR_CALIFA for 91.5 < Z_sum < 92.5, E > 100MeV and delta_phi = +- 30 of the two protons");
+h1_wr_diff_915_925_100_30 = new TH1D(hist_name,hist_name,500,-5000,5000);
+h1_wr_diff_915_925_100_30->GetXaxis()->SetTitle("WR_M - WR_CALIFA [ns]");
+h1_wr_diff_915_925_100_30->GetYaxis()->SetTitle("Counts");
+h1_wr_diff_915_925_100_30->GetXaxis()->CenterTitle(true);
+h1_wr_diff_915_925_100_30->GetYaxis()->CenterTitle(true);
+h1_wr_diff_915_925_100_30->GetYaxis()->SetLabelSize(0.045);
+h1_wr_diff_915_925_100_30->GetYaxis()->SetTitleSize(0.045);
 
 sprintf(hist_name, "Theta1 +  Theta 2 for 91.5 < Z_sum < 92.5");
 h1_theta_sum_z_sum_915_925 = new TH1D(hist_name,hist_name,52,22.15,152.15);
@@ -628,6 +800,226 @@ h1_trigger->GetYaxis()->SetLabelSize(0.04);
 h1_trigger->GetYaxis()->SetTitleSize(0.04);
 h1_trigger->SetFillColor(kBlue + 2);
 
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=41) ");
+h1_califa_energy_z50_z41 = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z41->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z41->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z41->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z41->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=41) mult. < 4 and -1200<wrm-wrc<-200  ");
+h1_califa_energy_z50_z41_mult_wr = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z41_mult_wr->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z41_mult_wr->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z41_mult_wr->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z41_mult_wr->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=41) mult. < 4 and -1200<wrm-wrc<-200 highest energy ");
+h1_califa_energy_z50_z41_mult_wr_high_e = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z41_mult_wr_high_e->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z41_mult_wr_high_e->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z41_mult_wr_high_e->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr_high_e->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr_high_e->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z41_mult_wr_high_e->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=42) mult. < 4 and -1200<wrm-wrc<-200  ");
+h1_califa_energy_z50_z42_mult_wr = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z42_mult_wr->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z42_mult_wr->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z42_mult_wr->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42_mult_wr->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42_mult_wr->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z42_mult_wr->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=42) mult. < 4 and -1200<wrm-wrc<-200 highest energy ");
+h1_califa_energy_z50_z42_mult_wr_high_e = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z42_mult_wr_high_e->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z42_mult_wr_high_e->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z42_mult_wr_high_e->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42_mult_wr_high_e->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42_mult_wr_high_e->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z42_mult_wr_high_e->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=41/42) mult. < 4 and -1200<wrm-wrc<-200 addup ");
+h1_califa_energy_z50_addup_mult_wr = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_addup_mult_wr->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_addup_mult_wr->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_addup_mult_wr->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_addup_mult_wr->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_addup_mult_wr->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_addup_mult_wr->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Multiplicity of gammas for (Z_1=50,Z_2=41) ");
+h1_multiplicity_z50_z41 = new TH1D(hist_name,hist_name,150,0,150);
+h1_multiplicity_z50_z41->GetXaxis()->SetTitle("Multiplicity Gammas");
+h1_multiplicity_z50_z41->GetYaxis()->SetTitle("Counts");
+h1_multiplicity_z50_z41->GetXaxis()->CenterTitle(true);
+h1_multiplicity_z50_z41->GetYaxis()->CenterTitle(true);
+h1_multiplicity_z50_z41->GetYaxis()->SetLabelSize(0.045);
+h1_multiplicity_z50_z41->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=41) with at least two hits > 200MeV ");
+h1_califa_energy_z50_z41_200 = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z41_200->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z41_200->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z41_200->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_200->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_200->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z41_200->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=41) highest Energy ");
+h1_califa_energy_z50_z41_high_gamma = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z41_high_gamma->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z41_high_gamma->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z41_high_gamma->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_high_gamma->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_high_gamma->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z41_high_gamma->GetYaxis()->SetTitleSize(0.045);
+
+
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=42) ");
+h1_califa_energy_z50_z42 = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z42->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z42->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z42->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z42->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Multiplicity of gammas for (Z_1=50,Z_2=42) ");
+h1_multiplicity_z50_z42 = new TH1D(hist_name,hist_name,150,0,150);
+h1_multiplicity_z50_z42->GetXaxis()->SetTitle("Multiplicity Gammas");
+h1_multiplicity_z50_z42->GetYaxis()->SetTitle("Counts");
+h1_multiplicity_z50_z42->GetXaxis()->CenterTitle(true);
+h1_multiplicity_z50_z42->GetYaxis()->CenterTitle(true);
+h1_multiplicity_z50_z42->GetYaxis()->SetLabelSize(0.045);
+h1_multiplicity_z50_z42->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=42) highest Energy ");
+h1_califa_energy_z50_z42_high_gamma = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z42_high_gamma->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z42_high_gamma->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z42_high_gamma->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42_high_gamma->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42_high_gamma->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z42_high_gamma->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Low Energy spectrum CALIFA NOT doppler corrected (Z_1=50,Z_2=41) ");
+h1_califa_energy_z50_z41_no_doppler = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z41_no_doppler->GetXaxis()->SetTitle("NOT Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z41_no_doppler->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z41_no_doppler->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_no_doppler->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_no_doppler->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z41_no_doppler->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Low Energy spectrum CALIFA NOT doppler corrected (Z_1=50,Z_2=41) highest Energy ");
+h1_califa_energy_z50_z41_no_doppler_high_gamma = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z41_no_doppler_high_gamma->GetXaxis()->SetTitle("NOT Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z41_no_doppler_high_gamma->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z41_no_doppler_high_gamma->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_no_doppler_high_gamma->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_no_doppler_high_gamma->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z41_no_doppler_high_gamma->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Low Energy spectrum CALIFA NOT doppler corrected (Z_1=50,Z_2=42) ");
+h1_califa_energy_z50_z42_no_doppler = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z42_no_doppler->GetXaxis()->SetTitle("NOT Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z42_no_doppler->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z42_no_doppler->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42_no_doppler->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42_no_doppler->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z42_no_doppler->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "Low Energy spectrum CALIFA NOT doppler corrected (Z_1=50,Z_2=42) highest Energy ");
+h1_califa_energy_z50_z42_no_doppler_high_gamma = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z42_no_doppler_high_gamma->GetXaxis()->SetTitle("NOT Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z42_no_doppler_high_gamma->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z42_no_doppler_high_gamma->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42_no_doppler_high_gamma->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z42_no_doppler_high_gamma->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z42_no_doppler_high_gamma->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "WR_M - WR_CALIFA for gammas (Z=50 & Z=41)");
+h1_wr_diff_z_50_z41 = new TH1D(hist_name,hist_name,500,-5000,5000);
+h1_wr_diff_z_50_z41->GetXaxis()->SetTitle("WR_M - WR_CALIFA [ns]");
+h1_wr_diff_z_50_z41->GetYaxis()->SetTitle("Counts");
+h1_wr_diff_z_50_z41->GetXaxis()->CenterTitle(true);
+h1_wr_diff_z_50_z41->GetYaxis()->CenterTitle(true);
+h1_wr_diff_z_50_z41->GetYaxis()->SetLabelSize(0.045);
+h1_wr_diff_z_50_z41->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "WR_M - WR_CALIFA for gammas (Z=50 & Z=41) for Messel");
+h1_wr_diff_z_50_z41_messel = new TH1D(hist_name,hist_name,500,-5000,5000);
+h1_wr_diff_z_50_z41_messel->GetXaxis()->SetTitle("WR_M - WR_CALIFA [ns]");
+h1_wr_diff_z_50_z41_messel->GetYaxis()->SetTitle("Counts");
+h1_wr_diff_z_50_z41_messel->GetXaxis()->CenterTitle(true);
+h1_wr_diff_z_50_z41_messel->GetYaxis()->CenterTitle(true);
+h1_wr_diff_z_50_z41_messel->GetYaxis()->SetLabelSize(0.045);
+h1_wr_diff_z_50_z41_messel->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "WR_M - WR_CALIFA for gammas (Z=50 & Z=41) for Wixhauxen");
+h1_wr_diff_z_50_z41_wix = new TH1D(hist_name,hist_name,500,-5000,5000);
+h1_wr_diff_z_50_z41_wix->GetXaxis()->SetTitle("WR_M - WR_CALIFA [ns]");
+h1_wr_diff_z_50_z41_wix->GetYaxis()->SetTitle("Counts");
+h1_wr_diff_z_50_z41_wix->GetXaxis()->CenterTitle(true);
+h1_wr_diff_z_50_z41_wix->GetYaxis()->CenterTitle(true);
+h1_wr_diff_z_50_z41_wix->GetYaxis()->SetLabelSize(0.045);
+h1_wr_diff_z_50_z41_wix->GetYaxis()->SetTitleSize(0.045);
+
+
+
+sprintf(hist_name, "WR_M - WR_CALIFA for gammas (Z=50 & Z=42)");
+h1_wr_diff_z_50_z42 = new TH1D(hist_name,hist_name,500,-5000,5000);
+h1_wr_diff_z_50_z42->GetXaxis()->SetTitle("WR_M - WR_CALIFA [ns]");
+h1_wr_diff_z_50_z42->GetYaxis()->SetTitle("Counts");
+h1_wr_diff_z_50_z42->GetXaxis()->CenterTitle(true);
+h1_wr_diff_z_50_z42->GetYaxis()->CenterTitle(true);
+h1_wr_diff_z_50_z42->GetYaxis()->SetLabelSize(0.045);
+h1_wr_diff_z_50_z42->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "Proton Multiplicity (E_hit > 100MeV) for Z_sum = 90");
+h1_proton_mult_90 = new TH1D(hist_name,hist_name,50,0,50);
+h1_proton_mult_90->GetXaxis()->SetTitle("Proton Multiplicity");
+h1_proton_mult_90->GetYaxis()->SetTitle("Counts");
+h1_proton_mult_90->GetXaxis()->CenterTitle(true);
+h1_proton_mult_90->GetYaxis()->CenterTitle(true);
+h1_proton_mult_90->GetYaxis()->SetLabelSize(0.045);
+h1_proton_mult_90->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "Proton Multiplicity (E_hit > 100MeV) for Z_sum = 91");
+h1_proton_mult_91 = new TH1D(hist_name,hist_name,50,0,50);
+h1_proton_mult_91->GetXaxis()->SetTitle("Proton Multiplicity");
+h1_proton_mult_91->GetYaxis()->SetTitle("Counts");
+h1_proton_mult_91->GetXaxis()->CenterTitle(true);
+h1_proton_mult_91->GetYaxis()->CenterTitle(true);
+h1_proton_mult_91->GetYaxis()->SetLabelSize(0.045);
+h1_proton_mult_91->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "Proton Multiplicity (E_hit > 100MeV) for Z_sum = 92");
+h1_proton_mult_92 = new TH1D(hist_name,hist_name,50,0,50);
+h1_proton_mult_92->GetXaxis()->SetTitle("Proton Multiplicity");
+h1_proton_mult_92->GetYaxis()->SetTitle("Counts");
+h1_proton_mult_92->GetXaxis()->CenterTitle(true);
+h1_proton_mult_92->GetYaxis()->CenterTitle(true);
+h1_proton_mult_92->GetYaxis()->SetLabelSize(0.045);
+h1_proton_mult_92->GetYaxis()->SetTitleSize(0.045);
+
 //end of 1D_histos-----------------
 
 
@@ -795,7 +1187,7 @@ h2_charge1_charge_2_diff_vs_z_sum_tpat4->GetYaxis()->CenterTitle(true);
 h2_charge1_charge_2_diff_vs_z_sum_tpat4->GetYaxis()->SetLabelSize(0.045);
 h2_charge1_charge_2_diff_vs_z_sum_tpat4->GetYaxis()->SetTitleSize(0.045);
 
-sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for one hit > 200MeV in CALIFA");
+sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for one hit > 100MeV in CALIFA");
 h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA = new TH2D(hist_name,hist_name,1400,-70,70,1000,0,100);
 h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->GetXaxis()->SetTitle("Charge 1 - Charge 2");
 h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->GetYaxis()->SetTitle("Charge 1 + Charge 2");
@@ -804,7 +1196,7 @@ h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->GetYaxis()->CenterTitle(true);
 h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->GetYaxis()->SetLabelSize(0.045);
 h2_charge1_charge_2_diff_vs_z_sum_one_CALIFA->GetYaxis()->SetTitleSize(0.045);
 
-sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for two hits > 200MeV in CALIFA");
+sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for two hits > 100MeV in CALIFA");
 h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA = new TH2D(hist_name,hist_name,1400,-70,70,1000,0,100);
 h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->GetXaxis()->SetTitle("Charge 1 - Charge 2");
 h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->GetYaxis()->SetTitle("Charge 1 + Charge 2");
@@ -813,7 +1205,7 @@ h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->GetYaxis()->CenterTitle(true);
 h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->GetYaxis()->SetLabelSize(0.045);
 h2_charge1_charge_2_diff_vs_z_sum_two_CALIFA->GetYaxis()->SetTitleSize(0.045);
 
-sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for three hits > 200MeV in CALIFA");
+sprintf(hist_name, "Charge 1 - Charge 2 vs Charge_sum(TWIM Music) for three hits > 100MeV in CALIFA");
 h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA = new TH2D(hist_name,hist_name,1400,-70,70,1000,0,100);
 h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA->GetXaxis()->SetTitle("Charge 1 - Charge 2");
 h2_charge1_charge_2_diff_vs_z_sum_three_CALIFA->GetYaxis()->SetTitle("Charge 1 + Charge 2");
@@ -967,6 +1359,44 @@ h2_e_vs_phi->GetXaxis()->CenterTitle(true);
 h2_e_vs_phi->GetYaxis()->CenterTitle(true);
 h2_e_vs_phi->GetYaxis()->SetLabelSize(0.045);
 h2_e_vs_phi->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Highest Energy Gamma Spectrum, NO Doppler, (Z_1=50,Z_2=41) vs theta ");
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_theta= new TH2D(hist_name,hist_name,1500,0,15,25,22.15,84.65);
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_theta->GetXaxis()->SetTitle("NOT Doppler corrected Energy [MeV]");
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_theta->GetYaxis()->SetTitle("Theta [degrees]");
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_theta->GetXaxis()->CenterTitle(true);
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_theta->GetYaxis()->CenterTitle(true);
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_theta->GetYaxis()->SetLabelSize(0.045);
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_theta->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Highest Energy Gamma Spectrum, NO Doppler, (Z_1=50,Z_2=41) vs phi ");
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_phi= new TH2D(hist_name,hist_name,1500,0,15,60,-180,180);
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_phi->GetXaxis()->SetTitle("NOT Doppler corrected Energy [MeV]");
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_phi->GetYaxis()->SetTitle("Phi [degrees]");
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_phi->GetXaxis()->CenterTitle(true);
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_phi->GetYaxis()->CenterTitle(true);
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_phi->GetYaxis()->SetLabelSize(0.045);
+h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_phi->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Highest Energy Gamma Spectrum, NO Doppler, (Z_1=50,Z_2=42) vs theta ");
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_theta= new TH2D(hist_name,hist_name,1500,0,15,25,22.15,84.65);
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_theta->GetXaxis()->SetTitle("NOT Doppler corrected Energy [MeV]");
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_theta->GetYaxis()->SetTitle("Theta [degrees]");
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_theta->GetXaxis()->CenterTitle(true);
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_theta->GetYaxis()->CenterTitle(true);
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_theta->GetYaxis()->SetLabelSize(0.045);
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_theta->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Highest Energy Gamma Spectrum, NO Doppler, (Z_1=50,Z_2=42) vs phi ");
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi= new TH2D(hist_name,hist_name,1500,0,15,60,-180,180);
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi->GetXaxis()->SetTitle("NOT Doppler corrected Energy [MeV]");
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi->GetYaxis()->SetTitle("Phi [degrees]");
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi->GetXaxis()->CenterTitle(true);
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi->GetYaxis()->CenterTitle(true);
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi->GetYaxis()->SetLabelSize(0.045);
+h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi->GetYaxis()->SetTitleSize(0.045);
+
+
 //end of 2D_histos-----------------
 //}
 //void write_to_file(char* output_file){
@@ -1024,6 +1454,44 @@ list_of_1D_histos.push_back(h1_opening_angle_two_other);
 list_of_1D_histos.push_back(h1_opening_angle_proton);
 list_of_1D_histos.push_back(h1_angle_check);
 list_of_1D_histos.push_back(h1_angle_check_arzi);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z41);
+list_of_1D_histos.push_back(h1_multiplicity_z50_z41);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z41_200);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z42);
+list_of_1D_histos.push_back(h1_multiplicity_z50_z42);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z41_no_doppler);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z42_no_doppler);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z41_high_gamma);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z41_no_doppler_high_gamma);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z42_high_gamma);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z42_no_doppler_high_gamma);
+list_of_1D_histos.push_back(h1_theta_sum_z_sum_905_915_30_30);
+list_of_1D_histos.push_back(h1_wr_diff_905_915_30_30);
+list_of_1D_histos.push_back(h1_theta_sum_z_sum_905_915_30_15);
+list_of_1D_histos.push_back(h1_theta_sum_z_sum_905_915_30_15_wr);
+list_of_1D_histos.push_back(h1_wr_diff_905_915_30_15);
+list_of_1D_histos.push_back(h1_theta_sum_z_sum_905_915_100_30);
+list_of_1D_histos.push_back(h1_wr_diff_905_915_100_30);
+list_of_1D_histos.push_back(h1_theta_sum_z_sum_915_925_30_30);
+list_of_1D_histos.push_back(h1_wr_diff_915_925_30_30);
+list_of_1D_histos.push_back(h1_theta_sum_z_sum_915_925_30_15);
+list_of_1D_histos.push_back(h1_wr_diff_915_925_30_15);
+list_of_1D_histos.push_back(h1_theta_sum_z_sum_915_925_100_30);
+list_of_1D_histos.push_back(h1_theta_sum_z_sum_915_925_100_30_wr);
+list_of_1D_histos.push_back(h1_wr_diff_915_925_100_30);
+list_of_1D_histos.push_back(h1_wr_diff_z_50_z41);
+list_of_1D_histos.push_back(h1_wr_diff_z_50_z41_messel);
+list_of_1D_histos.push_back(h1_wr_diff_z_50_z41_wix);
+list_of_1D_histos.push_back(h1_wr_diff_z_50_z42);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z41_mult_wr);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z42_mult_wr);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z41_mult_wr_high_e);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z42_mult_wr_high_e);
+list_of_1D_histos.push_back(h1_califa_energy_z50_addup_mult_wr);
+list_of_1D_histos.push_back(h1_proton_mult_90);
+list_of_1D_histos.push_back(h1_proton_mult_91);
+list_of_1D_histos.push_back(h1_proton_mult_92);
+
 
 
 
@@ -1064,12 +1532,16 @@ list_of_2D_histos.push_back(h2_e1_vs_e2_cluster_best_dphi);
 list_of_2D_histos.push_back(h2_e1_vs_e2_cluster_two_highest);
 list_of_2D_histos.push_back(h2_opening_angle_vs_esum);
 list_of_2D_histos.push_back(h2_e_vs_phi);
+list_of_2D_histos.push_back(h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_theta);
+list_of_2D_histos.push_back(h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_theta);
+list_of_2D_histos.push_back(h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_phi);
+list_of_2D_histos.push_back(h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi);
 
 }
-void write_to_file(char* output_file){
+void write_to_file(string& output_file){
+	const char* char_output_file = output_file.c_str();
 	cout << "number of events in histo:\t" << h2_charge1_charge_2->GetEntries() << endl;
-	h2_charge1_charge_2->Draw();
-	TFile *f = new TFile(output_file,"RECREATE");
+	TFile *f = new TFile(char_output_file,"RECREATE");
 	TList *l = new TList();
 	for (Int_t i = 0; i < list_of_1D_histos.size(); i++){
 		l->Add(list_of_1D_histos[i]);
