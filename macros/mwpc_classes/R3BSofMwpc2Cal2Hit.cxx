@@ -137,24 +137,18 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
     Int_t qmx_p1 = 0., qmx_p2 = 0.;
     Double_t qmx1 = 0., qmy1 = 0., qleft1 = 0., qright1 = 0., qdown1 = 0., qup1 = 0.;
     Double_t qmx2 = 0., qmy2 = 0., qleft2 = 0., qright2 = 0., qdown2 = 0., qup2 = 0.;
-    Double_t x1 = 0., y1 = 0., x2 = 0., y2 = 0.;
+    Double_t x1 = -1000, y1 = -1000, x2 = -1000, y2 = -1000;
     Int_t nx_p1 = 0, nx_p2 = 0, ny = 0;
 
     vector<pair<Double_t, Int_t>> QpadX_p1, QpadX_p2, QpadY;
     QpadX_p1.clear();
     QpadX_p2.clear();
     QpadY.clear();
-    Bool_t xexists_p1 = false;
-    Bool_t xexists_p2 = false;
-    Bool_t yexists = false;
     //Double_t fx[Mw2PadsX], fy[Mw2PadsY];
     //cout << "NUEVO EVENTO" << endl;
-    for (Int_t i = 0; i < Mw2PadsX; i++)
-      fx_p1[i] = 0;
-    for (Int_t i = 0; i < Mw2PadsX; i++)
-      fx_p2[i] = 0;
-    for (Int_t i = 0; i < Mw2PadsY; i++)
-      fy[i] = 0;
+    fx_p1[Mw2PadsX] = {0.};
+    fx_p2[Mw2PadsX] = {0.};
+    fy[Mw2PadsY] = {0.};
     for (Int_t i = 0; i < nHits; i++){
       calData[i] = (R3BSofMwpcCalData*)(fMwpcCalDataCA->At(i));
       planeId = calData[i]->GetPlane();
@@ -166,21 +160,18 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
       {
         fx_p1[padId] = q;
         QpadX_p1.push_back(hit_pair);
-        //xexists_p1 = true;
         nx_p1 = nx_p1 + 1;
       }
       if (planeId == 2)
       {
         fx_p2[padId] = q;
         QpadX_p2.push_back(hit_pair);
-        //xexists_p2 = true;
         nx_p2 = nx_p2 + 1;
       }
       if (planeId == 3)
       {
         fy[padId] = q;
         QpadY.push_back(hit_pair);
-        //yexists = true;
         ny = ny + 1 ;
       }
     }
@@ -217,16 +208,24 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
       /*cout << "1>2" << endl;
       cout << "qmx1 = " << qmx1 << ", padmx1 = " << padmx1 << endl;
       cout << "qmx2 = " << qmx2 << ", padmx2 = " << padmx2 << endl;*/
+      if ( qleft1 == 0){
+	qleft1 = 1;
+	}
+      if (qright1 == 0){
+	(qright1 = 1;
+	}
+      if (qleft2 == 0){
+	qleft2 = 1;
+	}
+      if (qright2 == 0){
+	qright2 = 1;
+	}
       if (qmx1 > 10 && qleft1 > 0 && qright1 > 0){
         x1 = GetPositionX(qmx1, padmx1, qleft1, qright1);
       }
-      else
-        x1 = 0.;
       if (qmx2 > 10 && qleft2 > 0 && qright2 > 0){
         x2 = GetPositionX(qmx2, padmx2, qleft2, qright2);
       }
-      else
-        x2 = 0.;
     }
 
     if (qmx_p2>qmx_p1 && padmx_p1 + 1 < Mw2PadsX && padmx_p2 + 1 < Mw2PadsX){
@@ -244,16 +243,24 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
       /*cout << "2>1" << endl;
       cout << "qmx1 = " << qmx1 << ", padmx1 = " << padmx1 << endl;
       cout << "qmx2 = " << qmx2 << ", padmx2 = " << padmx2 << endl;*/
+      if ( qleft1 == 0){
+	qleft1 = 1;
+	}
+      if (qright1 == 0){
+	(qright1 = 1;
+	}
+      if (qleft2 == 0){
+	qleft2 = 1;
+	}
+      if (qright2 == 0){
+	qright2 = 1;
+	}
       if (qmx1 > 10 && qleft1 > 0 && qright1 > 0){
         x1 = GetPositionX(qmx1, padmx1, qleft1, qright1);
       }
-      else
-        x1 = 0.;
       if (qmx2 > 10 && qleft2 > 0 && qright2 > 0){
         x2 = GetPositionX(qmx2, padmx2, qleft2, qright2);
       }
-      else
-        x2 = 0.;
     }
 
     if (ny>0){
@@ -268,11 +275,15 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
         // Obtain position Y for 1st charge ----
         qdown1 = fy[padmy1 - 1];
         qup1 = fy[padmy1 + 1];
+	if (qdown1 == 0){
+		qdown1 = 1;
+		}
+	if (qup1 == 0){
+		qup1 = 1;
+		}
         if (qmy1 > 10 && qdown1 > 0 && qup1 > 0){
           y1 = GetPositionY(qmy1, padmy1, qdown1, qup1);
         }
-        else
-          y1 = 0.;
       }
 
       for (Int_t i =0; i<ny; i++){
@@ -292,11 +303,15 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
         // Obtain position Y for 2nd charge ----
         qdown2 = fy[padmy2 - 1];
         qup2 = fy[padmy2 + 1];
+	if (qdown2 == 0){
+		qdown2 = 1;
+		}
+	if (qup2 == 0){
+		qup2 = 1;
+		}
         if (qmy2 > 10 && qdown2 > 0 && qup2 > 0){
           y2 = GetPositionY(qmy2, padmy2, qdown2, qup2);
         }
-        else
-          y2 = 0.;
       }
     } //if y
     //cout << "x1 = " << x1 << ", y1 = " << y1 << " ,planex1 = " << planex1 << ", x2 = " << x2 << ", y2 = " << y2 << " ,planex2 = " << planex2 << endl;

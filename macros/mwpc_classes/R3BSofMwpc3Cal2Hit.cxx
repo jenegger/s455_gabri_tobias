@@ -132,7 +132,7 @@ void R3BSofMwpc3Cal2Hit::Exec(Option_t* option)
           Int_t padmx1 = -1, padmy1 = -1, padmx2 = -1, padmy2 = -1;
           Double_t qmx1 = 0., qmy1 = 0., qleft1 = 0., qright1 = 0., qdown1 = 0., qup1 = 0.;
           Double_t qmx2 = 0., qmy2 = 0., qleft2 = 0., qright2 = 0., qdown2 = 0., qup2 = 0.;
-          Double_t x1 = 0., y1 = 0., x2 = 0., y2 = 0.;
+          Double_t x1 = -1000, y1 = -1000, x2 = -1000, y2 = -1000;
           Int_t nx = 0, ny = 0;
 
           vector<pair<Double_t, Int_t>> QpadX, QpadY;
@@ -141,11 +141,8 @@ void R3BSofMwpc3Cal2Hit::Exec(Option_t* option)
           Bool_t xexists = false;
           Bool_t yexists = false;
           //Double_t fx[Mw3PadsX], fy[Mw3PadsY];
-
-          for (Int_t i = 0; i < Mw3PadsX; i++)
-            fx[i] = 0;
-          for (Int_t i = 0; i < Mw3PadsY; i++)
-            fy[i] = 0;
+	  fx[Mw3PadsX] = {0.};
+	  fy[Mw3PadsY] = {0.};
           for (Int_t i = 0; i < nHits; i++){
             calData[i] = (R3BSofMwpcCalData*)(fMwpcCalDataCA->At(i));
             planeId = calData[i]->GetPlane();
@@ -185,20 +182,28 @@ void R3BSofMwpc3Cal2Hit::Exec(Option_t* option)
             // Obtain position X for 1st charge----
             qleft1 = fx[padmx1 - 1];
             qright1 = fx[padmx1 + 1];
+	    if (qleft1 == 0){
+		qleft1 = 1;
+		}
+	    if (qright1 == 0){
+		qright1 = 1;
+		}
             if (qmx1 > 10 && qleft1 > 0 && qright1 > 0){
               x1 = GetPositionX(qmx1, padmx1, qleft1, qright1);
             }
-            else
-              x1 = 0.;
 
             // Obtain position Y for 1st charge ----
             qdown1 = fy[padmy1 - 1];
             qup1 = fy[padmy1 + 1];
+	    if (qdown1 == 0){
+		qdown1 = 1;
+		}
+	    if (qup1 == 0){
+		qup1 = 1;
+		}
             if (qmy1 > 10 && qdown1 > 0 && qup1 > 0){
               y1 = GetPositionY(qmy1, padmy1, qdown1, qup1);
             }
-            else
-              y1 = 0.;
 
             //if (x1!=0 && y1!=0){
             AddHitData(x1, y1);
@@ -232,20 +237,28 @@ void R3BSofMwpc3Cal2Hit::Exec(Option_t* option)
             // Obtain position X for 2nd charge----
             qleft2 = fx[padmx2 - 1];
             qright2 = fx[padmx2 + 1];
+	    if (qleft2 == 0){
+		qleft2 = 1;
+		}
+	    if (qright2 == 0){
+		qright2 = 1;
+		}
             if (qmx2 > 10 && qleft2 > 0 && qright2 > 0){
               x2 = GetPositionX(qmx2, padmx2, qleft2, qright2);
             }
-            else
-              x2 = 0.;
 
             // Obtain position Y for 2nd charge ----
             qdown2 = fy[padmy2 - 1];
             qup2 = fy[padmy2 + 1];
+	    if (qdown2 == 0){
+		qdown2 = 1;
+		}
+	    if (qup2 == 0){
+		qup2 = 1;
+		}
             if (qmy2 > 10 && qdown2 > 0 && qup2 > 0){
               y2 = GetPositionY(qmy2, padmy2, qdown2, qup2);
             }
-            else
-              y2 = 0.;
             //if (x2!=0 && y2!=0){
             AddHitData(x2, y2);
             //}
