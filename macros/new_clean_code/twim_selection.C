@@ -8,7 +8,13 @@
 #include "TH2F.h"
 #include "TClonesArray.h"
 #include "TChain.h"
-
+//Assignment of the TWIM sections:
+////0: Messel Down
+////1: Messel Up
+////2: Wixhausen Up
+////3: Wixhausen Down
+//
+//TODO: add logic when just detecting one hit in TWIM...
 vector<double> twim_selection(TClonesArray* twim_tclone, TClonesArray* tof_tclone){
 	Double_t charge_1 = 0.;
 	Double_t charge_2 = 0.;
@@ -68,3 +74,26 @@ vector<double> twim_selection(TClonesArray* twim_tclone, TClonesArray* tof_tclon
 
 }
 
+
+vector<double> twim_calibrated(TClonesArray* twim_tclone){
+	Double_t charge_1 = 0.;
+	Double_t charge_2 = 0.;
+	vector<double> charge_vec = {charge_1,charge_2};
+	Long64_t nr_twim = twim_tclone->GetEntries();
+	if (nr_twim == 2){
+		R3BSofTwimHitData** softwimhitdata  = new R3BSofTwimHitData*[nr_twim];	
+		softwimhitdata = new R3BSofTwimHitData*[nr_twim];
+		softwimhitdata[0] = (R3BSofTwimHitData*)twim_tclone->At(0);
+		softwimhitdata[1] = (R3BSofTwimHitData*)twim_tclone->At(1);
+		charge_1 = softwimhitdata[0]->GetZcharge();
+		charge_2 = softwimhitdata[1]->GetZcharge();
+		Int_t fSection1 = softwimhitdata[0]->GetSecID();
+		Int_t fSection2 = softwimhitdata[1]->GetSecID();
+		if ((charge_1+charge_2 < 100 && ((fSection1 == 1 && fSection2 == 3) || (fSection1 == 3 && fSection2 == 1))) || (charge_1+charge_2 < 100 && ((fSection1 == 0 && fSection2 == 2) || (fSection1 == 2 && fSection2 == 0)))){
+			charge_vec[0] = charge_1;
+			charge_vec[1] = charge_2;
+			}
+		delete [] softwimhitdata;
+		}
+		return charge_vec;
+}

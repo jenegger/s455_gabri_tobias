@@ -19,7 +19,7 @@ void minimal_twim(){
 char fname[500];
 char hist_name[500];
 Long64_t entries_twim = 0;
-sprintf(fname,"/u/land/tobias_jenegger/s455_gabri_tobias/file_src/s455_03_273_10_sq_w_cl_antia_newest_parameters.root");
+sprintf(fname,"/u/land/tobias_jenegger/calibrated_s455_data/s455_03_273_0012_calibrated.root");
 
 
 //histogram
@@ -71,7 +71,7 @@ for(Long64_t i=0;i< nevents;i++){
 }
 
 char f_out_name[500];
-sprintf(f_out_name,"../file_output/twim_analysis_main0273_10_with_antia_par_and_unpacker.root");
+sprintf(f_out_name,"/u/land/tobias_jenegger/analysis_s455_data/test_analysis_s455_03_273_0012.root");
 TFile * f = new TFile(f_out_name,"RECREATE");
 TList *l = new TList();
 l->Add(h2_charge1_charge_2);
