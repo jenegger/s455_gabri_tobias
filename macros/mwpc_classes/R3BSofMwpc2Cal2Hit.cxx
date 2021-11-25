@@ -146,9 +146,9 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
     QpadY.clear();
     //Double_t fx[Mw2PadsX], fy[Mw2PadsY];
     //cout << "NUEVO EVENTO" << endl;
-    fx_p1[Mw2PadsX] = {0.};
-    fx_p2[Mw2PadsX] = {0.};
-    fy[Mw2PadsY] = {0.};
+    fx_p1[Mw2PadsX] = {0};
+    fx_p2[Mw2PadsX] = {0};
+    fy[Mw2PadsY] = {0};
     for (Int_t i = 0; i < nHits; i++){
       calData[i] = (R3BSofMwpcCalData*)(fMwpcCalDataCA->At(i));
       planeId = calData[i]->GetPlane();
@@ -212,7 +212,7 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
 	qleft1 = 1;
 	}
       if (qright1 == 0){
-	(qright1 = 1;
+	qright1 = 1;
 	}
       if (qleft2 == 0){
 	qleft2 = 1;
@@ -247,7 +247,7 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
 	qleft1 = 1;
 	}
       if (qright1 == 0){
-	(qright1 = 1;
+	qright1 = 1;
 	}
       if (qleft2 == 0){
 	qleft2 = 1;
