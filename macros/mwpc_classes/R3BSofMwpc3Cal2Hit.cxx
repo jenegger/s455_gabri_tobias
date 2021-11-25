@@ -141,8 +141,8 @@ void R3BSofMwpc3Cal2Hit::Exec(Option_t* option)
           Bool_t xexists = false;
           Bool_t yexists = false;
           //Double_t fx[Mw3PadsX], fy[Mw3PadsY];
-	  fx[Mw3PadsX] = {0.};
-	  fy[Mw3PadsY] = {0.};
+	  fx[Mw3PadsX] = {0};
+	  fy[Mw3PadsY] = {0};
           for (Int_t i = 0; i < nHits; i++){
             calData[i] = (R3BSofMwpcCalData*)(fMwpcCalDataCA->At(i));
             planeId = calData[i]->GetPlane();
