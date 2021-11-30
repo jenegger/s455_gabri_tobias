@@ -14,4 +14,4 @@ echo "HELLO"
 	  done < list_combined.txt
 	   
 	  wait
-	  echo "All files calibrated now"
+	  echo "ANALYSIS FINISHED!"

@@ -103,6 +103,7 @@ TH1D* h1_califa_energy_z50_addup_mult_wr;
 TH1D* h1_proton_mult_90;
 TH1D* h1_proton_mult_91;
 TH1D* h1_proton_mult_92;
+
 //End of Declaration of 1D histos
 
 //Declaration of 2D histos
@@ -145,6 +146,15 @@ TH2D* h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_theta;
 TH2D* h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_theta;
 TH2D* h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_phi;
 TH2D* h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi;
+TH2D* h2_mw2_x_vs_mw3_x_sn;
+TH2D* h2_mw2_x_vs_mw3_x_42;
+TH2D* h2_mw2_x_vs_mw3_x_41;
+TH2D* h2_mw23_diffx_vs_tof_sn;
+TH2D* h2_theta_vs_phi_90;
+TH2D* h2_theta_vs_phi_91;
+TH2D* h2_theta_vs_phi_92;
+TH2D* h2_thetasum_vs_tpat_91;
+TH2D* h2_thetasum_vs_tpat_92;
 //End of Declaration of 2D histos
 
 
@@ -1396,7 +1406,88 @@ h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi->GetYaxis()->CenterTitle(t
 h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi->GetYaxis()->SetLabelSize(0.045);
 h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi->GetYaxis()->SetTitleSize(0.045);
 
+sprintf(hist_name, "MW2_x vs MW3_x for Sn");
+h2_mw2_x_vs_mw3_x_sn= new TH2D(hist_name,hist_name,400,-400,400,400,-400,400);
+h2_mw2_x_vs_mw3_x_sn->GetXaxis()->SetTitle("MW2_x [mm]");
+h2_mw2_x_vs_mw3_x_sn->GetYaxis()->SetTitle("MW3_x [mm]");
+h2_mw2_x_vs_mw3_x_sn->GetXaxis()->CenterTitle(true);
+h2_mw2_x_vs_mw3_x_sn->GetYaxis()->CenterTitle(true);
+h2_mw2_x_vs_mw3_x_sn->GetYaxis()->SetLabelSize(0.045);
+h2_mw2_x_vs_mw3_x_sn->GetYaxis()->SetTitleSize(0.045);
 
+
+sprintf(hist_name, "MW2_x vs MW3_x for Z=42");
+h2_mw2_x_vs_mw3_x_42= new TH2D(hist_name,hist_name,400,-400,400,400,-400,400);
+h2_mw2_x_vs_mw3_x_42->GetXaxis()->SetTitle("MW2_x [mm]");
+h2_mw2_x_vs_mw3_x_42->GetYaxis()->SetTitle("MW3_x [mm]");
+h2_mw2_x_vs_mw3_x_42->GetXaxis()->CenterTitle(true);
+h2_mw2_x_vs_mw3_x_42->GetYaxis()->CenterTitle(true);
+h2_mw2_x_vs_mw3_x_42->GetYaxis()->SetLabelSize(0.045);
+h2_mw2_x_vs_mw3_x_42->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "MW2_x vs MW3_x for Z=41");
+h2_mw2_x_vs_mw3_x_41= new TH2D(hist_name,hist_name,400,-400,400,400,-400,400);
+h2_mw2_x_vs_mw3_x_41->GetXaxis()->SetTitle("MW2_x [mm]");
+h2_mw2_x_vs_mw3_x_41->GetYaxis()->SetTitle("MW3_x [mm]");
+h2_mw2_x_vs_mw3_x_41->GetXaxis()->CenterTitle(true);
+h2_mw2_x_vs_mw3_x_41->GetYaxis()->CenterTitle(true);
+h2_mw2_x_vs_mw3_x_41->GetYaxis()->SetLabelSize(0.045);
+h2_mw2_x_vs_mw3_x_41->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "MW3_x - MW2_x vs ToF for Sn");
+h2_mw23_diffx_vs_tof_sn= new TH2D(hist_name,hist_name,400,-400,400,1000,30,40);
+h2_mw23_diffx_vs_tof_sn->GetXaxis()->SetTitle("MW3_x -MW2_x]");
+h2_mw23_diffx_vs_tof_sn->GetYaxis()->SetTitle("Time of Flight [ns]");
+h2_mw23_diffx_vs_tof_sn->GetXaxis()->CenterTitle(true);
+h2_mw23_diffx_vs_tof_sn->GetYaxis()->CenterTitle(true);
+h2_mw23_diffx_vs_tof_sn->GetYaxis()->SetLabelSize(0.045);
+h2_mw23_diffx_vs_tof_sn->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Theta vs Phi for Z_sum = 90");
+h2_theta_vs_phi_90= new TH2D(hist_name,hist_name,25,22.15,84.65,60,-180,180);
+h2_theta_vs_phi_90->GetXaxis()->SetTitle("Theta");
+h2_theta_vs_phi_90->GetYaxis()->SetTitle("Phi");
+h2_theta_vs_phi_90->GetXaxis()->CenterTitle(true);
+h2_theta_vs_phi_90->GetYaxis()->CenterTitle(true);
+h2_theta_vs_phi_90->GetYaxis()->SetLabelSize(0.045);
+h2_theta_vs_phi_90->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Theta vs Phi for Z_sum = 91");
+h2_theta_vs_phi_91= new TH2D(hist_name,hist_name,25,22.15,84.65,60,-180,180);
+h2_theta_vs_phi_91->GetXaxis()->SetTitle("Theta");
+h2_theta_vs_phi_91->GetYaxis()->SetTitle("Phi");
+h2_theta_vs_phi_91->GetXaxis()->CenterTitle(true);
+h2_theta_vs_phi_91->GetYaxis()->CenterTitle(true);
+h2_theta_vs_phi_91->GetYaxis()->SetLabelSize(0.045);
+h2_theta_vs_phi_91->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "Theta vs Phi for Z_sum = 92");
+h2_theta_vs_phi_92= new TH2D(hist_name,hist_name,25,22.15,84.65,60,-180,180);
+h2_theta_vs_phi_92->GetXaxis()->SetTitle("Theta");
+h2_theta_vs_phi_92->GetYaxis()->SetTitle("Phi");
+h2_theta_vs_phi_92->GetXaxis()->CenterTitle(true);
+h2_theta_vs_phi_92->GetYaxis()->CenterTitle(true);
+h2_theta_vs_phi_92->GetYaxis()->SetLabelSize(0.045);
+h2_theta_vs_phi_92->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Theta_sum vs tpat  for Z_sum = 91");
+h2_thetasum_vs_tpat_91= new TH2D(hist_name,hist_name,52,22.15,152.15,17, -0.5, 16.5);
+h2_thetasum_vs_tpat_91->GetXaxis()->SetTitle("Theta");
+h2_thetasum_vs_tpat_91->GetYaxis()->SetTitle("Tpat");
+h2_thetasum_vs_tpat_91->GetXaxis()->CenterTitle(true);
+h2_thetasum_vs_tpat_91->GetYaxis()->CenterTitle(true);
+h2_thetasum_vs_tpat_91->GetYaxis()->SetLabelSize(0.045);
+h2_thetasum_vs_tpat_91->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Theta_sum vs tpat  for Z_sum = 92");
+h2_thetasum_vs_tpat_92= new TH2D(hist_name,hist_name,52,22.15,152.15,17, -0.5, 16.5);
+h2_thetasum_vs_tpat_92->GetXaxis()->SetTitle("Theta");
+h2_thetasum_vs_tpat_92->GetYaxis()->SetTitle("Tpat");
+h2_thetasum_vs_tpat_92->GetXaxis()->CenterTitle(true);
+h2_thetasum_vs_tpat_92->GetYaxis()->CenterTitle(true);
+h2_thetasum_vs_tpat_92->GetYaxis()->SetLabelSize(0.045);
+h2_thetasum_vs_tpat_92->GetYaxis()->SetTitleSize(0.045);
 //end of 2D_histos-----------------
 //}
 //void write_to_file(char* output_file){
@@ -1536,7 +1627,15 @@ list_of_2D_histos.push_back(h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_th
 list_of_2D_histos.push_back(h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_theta);
 list_of_2D_histos.push_back(h2_califa_energy_z50_z41_no_doppler_high_gamma_vs_phi);
 list_of_2D_histos.push_back(h2_califa_energy_z50_z42_no_doppler_high_gamma_vs_phi);
-
+list_of_2D_histos.push_back(h2_mw2_x_vs_mw3_x_sn);
+list_of_2D_histos.push_back(h2_mw2_x_vs_mw3_x_41);
+list_of_2D_histos.push_back(h2_mw2_x_vs_mw3_x_42);
+list_of_2D_histos.push_back(h2_mw23_diffx_vs_tof_sn);
+list_of_2D_histos.push_back(h2_theta_vs_phi_90);
+list_of_2D_histos.push_back(h2_theta_vs_phi_91);
+list_of_2D_histos.push_back(h2_theta_vs_phi_92);
+list_of_2D_histos.push_back(h2_thetasum_vs_tpat_91);
+list_of_2D_histos.push_back(h2_thetasum_vs_tpat_92);
 }
 void write_to_file(string& output_file){
 	const char* char_output_file = output_file.c_str();
