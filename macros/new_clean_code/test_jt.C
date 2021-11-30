@@ -12,6 +12,7 @@
 #include "califa_p2p_selection.C"
 #include "twim_selection.C"
 #include "t_pattern.C"
+#include "mwpcs.C"
 
 
 #include <stdlib.h>
@@ -49,7 +50,7 @@ Long64_t entries_mw2 = 0;
 Long64_t entries_mw3 = 0;
 Int_t entries_wr = 0;
 
-string fname = string("/u/land/tobias_jenegger/calibrated_s455_data/s455_03_273_") + input_str + string("_calibrated.root");
+string fname = string("/u/land/tobias_jenegger/calibrated_s455_data/with_mw/s455_03_273_") + input_str + string("_calibrated.root");
 const char* char_fname= fname.c_str();
 
 TChain* chain = new TChain("evt");
@@ -88,6 +89,11 @@ TClonesArray* SofMwpc3HitData = new TClonesArray("R3BSofMwpcHitData",5);
 R3BSofMwpcHitData** sofmwpc3hitdata;
 TBranch *branchSofMwpc3HitData = chain->GetBranch("Mwpc3HitData");
 branchSofMwpc3HitData->SetAddress(&SofMwpc3HitData);
+
+TClonesArray* SofSciTcalData = new TClonesArray("R3BSofSciTcalData",2);
+R3BSofSciTcalData** sofscitcaldata;
+TBranch *branchSofSciTcalData = chain->GetBranch("SofSciTcalData");
+branchSofSciTcalData->SetAddress(&SofSciTcalData);
 // END of TClonesArray
 
 const Double_t PI = 3.14159265358979323846;
@@ -120,7 +126,6 @@ for(Long64_t i=0;i < nevents;i++){
 //		}	
 
 	vector<double> charge_check = twim_calibrated(SofTwimHitData);
-//	vector<double> charge_check = twim_selection(SofTwimHitData,SofToFWHitData);
 	h1_trigger->Fill(trigger_pattern);
 	if (trigger_pattern == 1){  // Sofstart
 		h1_charge1_plus_charge2_tpat1->Fill(charge_check[0]+charge_check[1]);
@@ -190,6 +195,9 @@ for(Long64_t i=0;i < nevents;i++){
 			if (time_diff_proton1 > -1200 && time_diff_proton1 < -200 && time_diff_proton2 > -1200 && time_diff_proton2 < -200){
 				h1_theta_sum_z_sum_905_915_30_15_wr->Fill(array_v_sel_30_15[first_index_30_15][1]+array_v_sel_30_15[second_index_30_15][1]);
 				}
+			h2_theta_vs_phi_91->Fill(array_v_sel_30_15[second_index_30_15][1],array_v_sel_30_15[second_index_30_15][2]);
+			h2_theta_vs_phi_91->Fill(array_v_sel_30_15[first_index_30_15][1],array_v_sel_30_15[first_index_30_15][2]);
+			h2_thetasum_vs_tpat_91->Fill(array_v_sel_30_15[first_index_30_15][1]+array_v_sel_30_15[second_index_30_15][1],trigger_pattern);
 			}
 			}
 		if (v_sel_100_30 != v_3_false){
@@ -198,6 +206,10 @@ for(Long64_t i=0;i < nevents;i++){
 			int64_t time_diff_proton1 = wr_master_ts - wrts_califa_vec[first_index_100_30];
 			int64_t time_diff_proton2 = wr_master_ts - wrts_califa_vec[second_index_100_30];
 		h1_theta_sum_z_sum_905_915_100_30->Fill(array_v_sel_100_30[first_index_100_30][1]+array_v_sel_100_30[second_index_100_30][1]);
+		if ((array_v_sel_100_30[first_index_100_30][2] >50 && array_v_sel_100_30[first_index_100_30][2] < 120) || ( array_v_sel_100_30[second_index_100_30][2] > 50 && array_v_sel_100_30[second_index_100_30][2] < 120 )){
+
+			cout << "this is event with high_e hit in gamma range:\t" << evtnr << endl;
+				}
 		h1_wr_diff_905_915_100_30->Fill(time_diff_proton1);
 		h1_wr_diff_905_915_100_30->Fill(time_diff_proton2);
 			}
@@ -248,6 +260,10 @@ for(Long64_t i=0;i < nevents;i++){
 		h1_wr_diff_915_925_30_15->Fill(time_diff_proton1);
 		h1_wr_diff_915_925_30_15->Fill(time_diff_proton2);
 			}
+
+		h2_theta_vs_phi_92->Fill(array_v_sel_30_15[v_sel_30_15[0]][1],array_v_sel_30_15[v_sel_30_15[0]][2]);
+		h2_theta_vs_phi_92->Fill(array_v_sel_30_15[v_sel_30_15[1]][1],array_v_sel_30_15[v_sel_30_15[1]][2]);
+		h2_thetasum_vs_tpat_92->Fill(array_v_sel_30_15[v_sel_30_15[0]][1]+array_v_sel_30_15[v_sel_30_15[1]][1],trigger_pattern);
 			}
 		if (v_sel_100_30 != v_3_false){
 		if ((array_v_sel_100_30[v_sel_100_30[0]][0]+array_v_sel_100_30[v_sel_100_30[1]][0]) > 400 && (array_v_sel_100_30[v_sel_100_30[0]][0]+array_v_sel_100_30[v_sel_100_30[1]][0]) < 700){
@@ -294,6 +310,17 @@ for(Long64_t i=0;i < nevents;i++){
 	if ((charge_check[0] <41.5 && charge_check[0]>40.5 && charge_check[1]<50.5 && charge_check[1]>49.5) || 
 	    (charge_check[1] <41.5 && charge_check[1]>40.5 && charge_check[0]<50.5 && charge_check[0]>49.5))  {
 		events_50_41++;
+		vector<vector<double> > v_mwpc = mwpcs(SofTwimHitData,SofMwpc2HitData,SofMwpc3HitData,SofToFWHitData,SofSciTcalData);
+		if (v_mwpc[0][0] <50.5 && v_mwpc[0][0] > 49.5){
+			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[0][1],v_mwpc[0][2]);	
+			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[0][2]-v_mwpc[0][1],v_mwpc[0][3]);
+			h2_mw2_x_vs_mw3_x_41->Fill(v_mwpc[1][1],v_mwpc[1][2]);
+			}
+		else if (v_mwpc[1][0] <50.5 && v_mwpc[1][0] > 49.5){
+			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[1][1],v_mwpc[1][2]);
+			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[1][2]-v_mwpc[1][1],v_mwpc[1][3]);
+			h2_mw2_x_vs_mw3_x_41->Fill(v_mwpc[0][1],v_mwpc[0][2]);
+			}
 		if (entries_califa_hit >= 1){
 			Califa_p2p_selection select_100_30(CalifaHitData,100,30,10); //the parameter values are here arbitrary...
 			vector<vector<double> > califa_array_doppler = select_100_30.get_califa_array();
@@ -354,6 +381,18 @@ for(Long64_t i=0;i < nevents;i++){
 	if ((charge_check[0] <42.5 && charge_check[0]>41.5 && charge_check[1]<50.5 && charge_check[1]>49.5) || 
 	    (charge_check[1] <42.5 && charge_check[1]>41.5 && charge_check[0]<50.5 && charge_check[0]>49.5))  {
 		events_50_42++;
+		vector<vector<double> > v_mwpc = mwpcs(SofTwimHitData,SofMwpc2HitData,SofMwpc3HitData,SofToFWHitData,SofSciTcalData);
+		if (v_mwpc[0][0] <50.5 && v_mwpc[0][0] > 49.5){
+			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[0][1],v_mwpc[0][2]);	
+			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[0][2]-v_mwpc[0][1],v_mwpc[0][3]);
+			h2_mw2_x_vs_mw3_x_42->Fill(v_mwpc[1][1],v_mwpc[1][2]);
+			}
+		else if (v_mwpc[1][0] <50.5 && v_mwpc[1][0] > 49.5){
+			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[1][1],v_mwpc[1][2]);
+			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[1][2]-v_mwpc[1][1],v_mwpc[1][3]);
+			h2_mw2_x_vs_mw3_x_42->Fill(v_mwpc[0][1],v_mwpc[0][2]);
+			}
+		
 		if (entries_califa_hit >= 1){
 			Califa_p2p_selection select_100_30(CalifaHitData,100,30,10); //the parameter values are here arbitrary...
 			vector<vector<double> > califa_array_doppler = select_100_30.get_califa_array();
