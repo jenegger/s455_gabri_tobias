@@ -141,8 +141,10 @@ void R3BSofMwpc3Cal2Hit::Exec(Option_t* option)
           Bool_t xexists = false;
           Bool_t yexists = false;
           //Double_t fx[Mw3PadsX], fy[Mw3PadsY];
-	  fx[Mw3PadsX] = {0};
-	  fy[Mw3PadsY] = {0};
+          for (Int_t i = 0; i < Mw3PadsX; i++)
+	  		fx[i] = 0;
+		  for (Int_t i = 0; i < Mw3PadsY; i++)
+	  		fy[i] = 0;
           for (Int_t i = 0; i < nHits; i++){
             calData[i] = (R3BSofMwpcCalData*)(fMwpcCalDataCA->At(i));
             planeId = calData[i]->GetPlane();
@@ -155,14 +157,14 @@ void R3BSofMwpc3Cal2Hit::Exec(Option_t* option)
               fx[padId] = q;
               QpadX.push_back(hit_pair);
               xexists = true;
-              nx = nx + 1;
+              nx += 1;
             }
             else
             {
               fy[padId] = q;
               QpadY.push_back(hit_pair);
               yexists = true;
-              ny = ny + 1 ;
+              ny += 1 ;
             }
           }
 
@@ -183,10 +185,10 @@ void R3BSofMwpc3Cal2Hit::Exec(Option_t* option)
             qleft1 = fx[padmx1 - 1];
             qright1 = fx[padmx1 + 1];
 	    if (qleft1 == 0){
-		qleft1 = 1;
+		qleft1 = 0.5*qmx1;
 		}
 	    if (qright1 == 0){
-		qright1 = 1;
+		qright1 = 0.5*qmx1;
 		}
             if (qmx1 > 10 && qleft1 > 0 && qright1 > 0){
               x1 = GetPositionX(qmx1, padmx1, qleft1, qright1);
@@ -196,10 +198,10 @@ void R3BSofMwpc3Cal2Hit::Exec(Option_t* option)
             qdown1 = fy[padmy1 - 1];
             qup1 = fy[padmy1 + 1];
 	    if (qdown1 == 0){
-		qdown1 = 1;
+		qdown1 = 0.5*qmy1;
 		}
 	    if (qup1 == 0){
-		qup1 = 1;
+		qup1 = 0.5*qmy1;
 		}
             if (qmy1 > 10 && qdown1 > 0 && qup1 > 0){
               y1 = GetPositionY(qmy1, padmy1, qdown1, qup1);
@@ -238,10 +240,10 @@ void R3BSofMwpc3Cal2Hit::Exec(Option_t* option)
             qleft2 = fx[padmx2 - 1];
             qright2 = fx[padmx2 + 1];
 	    if (qleft2 == 0){
-		qleft2 = 1;
+		qleft2 = 0.5*qmx2;
 		}
 	    if (qright2 == 0){
-		qright2 = 1;
+		qright2 = 0.5*qmx2;
 		}
             if (qmx2 > 10 && qleft2 > 0 && qright2 > 0){
               x2 = GetPositionX(qmx2, padmx2, qleft2, qright2);
@@ -251,10 +253,10 @@ void R3BSofMwpc3Cal2Hit::Exec(Option_t* option)
             qdown2 = fy[padmy2 - 1];
             qup2 = fy[padmy2 + 1];
 	    if (qdown2 == 0){
-		qdown2 = 1;
+		qdown2 = 0.5*qmy2;
 		}
 	    if (qup2 == 0){
-		qup2 = 1;
+		qup2 = 0.5*qmy2;
 		}
             if (qmy2 > 10 && qdown2 > 0 && qup2 > 0){
               y2 = GetPositionY(qmy2, padmy2, qdown2, qup2);

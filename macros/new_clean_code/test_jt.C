@@ -50,7 +50,7 @@ Long64_t entries_mw2 = 0;
 Long64_t entries_mw3 = 0;
 Int_t entries_wr = 0;
 
-string fname = string("/u/land/tobias_jenegger/calibrated_s455_data/with_mw/s455_03_273_") + input_str + string("_calibrated.root");
+string fname = string("/u/land/tobias_jenegger/calibrated_s455_data/with_mw_reco/s455_03_273_") + input_str + string("_calibrated.root");
 const char* char_fname= fname.c_str();
 
 TChain* chain = new TChain("evt");
@@ -153,7 +153,19 @@ for(Long64_t i=0;i < nevents;i++){
 		}
 	//Z_sum = 91 ---------------------------
 	if (trigger_pattern >= 1 && entries_califa_hit >= 2 && entries_twim == 2 && entries_tof > 1 && (charge_check[0]+charge_check[1]) < 91.5 && (charge_check[0]+charge_check[1]) > 90.5 ){
-		
+		//this is just quick test, I will remove it soon
+		//Int_t nr_mw3 = SofMwpc3HitData->GetEntries();
+		//if (nr_mw3 == 2){
+		//R3BSofMwpcHitData** sofmwpc3hitdata = new R3BSofMwpcHitData*[nr_mw3];
+		//sofmwpc3hitdata[0] = (R3BSofMwpcHitData*)SofMwpc3HitData->At(0);
+		//sofmwpc3hitdata[1] = (R3BSofMwpcHitData*)SofMwpc3HitData->At(1);
+		//if (isnan(sofmwpc3hitdata[0]->GetY()) || isnan(sofmwpc3hitdata[1]->GetY())){
+		//	cout << "This is eventnr. wit nan in mw3:\t" << evtnr << endl;
+		//}
+		//}
+		//---------------------------------------------
+			
+
 		Califa_p2p_selection select_30_30(CalifaHitData,30,30,10);
 		Califa_p2p_selection select_30_15(CalifaHitData,30,15,10);
 		Califa_p2p_selection select_100_30(CalifaHitData,100,30,10);
@@ -185,7 +197,7 @@ for(Long64_t i=0;i < nevents;i++){
 			}
 		if (v_sel_30_15 != v_3_false){
 
-		if ((array_v_sel_30_15[first_index_30_15][0]+array_v_sel_30_15[second_index_30_15][0]) > 400 && (array_v_sel_30_15[first_index_30_15][0]+array_v_sel_30_15[second_index_30_15][0]) < 700){
+		//if ((array_v_sel_30_15[first_index_30_15][0]+array_v_sel_30_15[second_index_30_15][0]) > 400 && (array_v_sel_30_15[first_index_30_15][0]+array_v_sel_30_15[second_index_30_15][0]) < 700){
 			vector<uint64_t>wrts_califa_vec = select_30_15.get_califa_time();
 			int64_t time_diff_proton1 = wr_master_ts - wrts_califa_vec[first_index_30_15];
 			int64_t time_diff_proton2 = wr_master_ts - wrts_califa_vec[second_index_30_15];
@@ -198,7 +210,7 @@ for(Long64_t i=0;i < nevents;i++){
 			h2_theta_vs_phi_91->Fill(array_v_sel_30_15[second_index_30_15][1],array_v_sel_30_15[second_index_30_15][2]);
 			h2_theta_vs_phi_91->Fill(array_v_sel_30_15[first_index_30_15][1],array_v_sel_30_15[first_index_30_15][2]);
 			h2_thetasum_vs_tpat_91->Fill(array_v_sel_30_15[first_index_30_15][1]+array_v_sel_30_15[second_index_30_15][1],trigger_pattern);
-			}
+			//}
 			}
 		if (v_sel_100_30 != v_3_false){
 		if ((array_v_sel_100_30[first_index_100_30][0]+array_v_sel_100_30[second_index_100_30][0]) > 400 && (array_v_sel_100_30[first_index_100_30][0]+array_v_sel_100_30[second_index_100_30][0]) < 700){
@@ -208,7 +220,7 @@ for(Long64_t i=0;i < nevents;i++){
 		h1_theta_sum_z_sum_905_915_100_30->Fill(array_v_sel_100_30[first_index_100_30][1]+array_v_sel_100_30[second_index_100_30][1]);
 		if ((array_v_sel_100_30[first_index_100_30][2] >50 && array_v_sel_100_30[first_index_100_30][2] < 120) || ( array_v_sel_100_30[second_index_100_30][2] > 50 && array_v_sel_100_30[second_index_100_30][2] < 120 )){
 
-			cout << "this is event with high_e hit in gamma range:\t" << evtnr << endl;
+			//cout << "this is event with high_e hit in gamma range:\t" << evtnr << endl;
 				}
 		h1_wr_diff_905_915_100_30->Fill(time_diff_proton1);
 		h1_wr_diff_905_915_100_30->Fill(time_diff_proton2);
@@ -310,22 +322,35 @@ for(Long64_t i=0;i < nevents;i++){
 	if ((charge_check[0] <41.5 && charge_check[0]>40.5 && charge_check[1]<50.5 && charge_check[1]>49.5) || 
 	    (charge_check[1] <41.5 && charge_check[1]>40.5 && charge_check[0]<50.5 && charge_check[0]>49.5))  {
 		events_50_41++;
+		Double_t tin_nr = 0;
 		vector<vector<double> > v_mwpc = mwpcs(SofTwimHitData,SofMwpc2HitData,SofMwpc3HitData,SofToFWHitData,SofSciTcalData);
 		if (v_mwpc[0][0] <50.5 && v_mwpc[0][0] > 49.5){
-			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[0][1],v_mwpc[0][2]);	
-			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[0][2]-v_mwpc[0][1],v_mwpc[0][3]);
-			h2_mw2_x_vs_mw3_x_41->Fill(v_mwpc[1][1],v_mwpc[1][2]);
+			tin_nr = 1;
+			cout << "this is interesting event:\t" << evtnr << endl;
+			//cout << "this is the x component in MW2, particle1:\t" << v_mwpc[0][1] << endl;
+			//cout << "this is the x component in MW2, particle2:\t" << v_mwpc[1][1] << endl;
+			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[0][1],v_mwpc[0][3]);	
+			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[0][3]-v_mwpc[0][1],v_mwpc[0][5]);
+			h2_mw2_x_vs_mw3_x_41->Fill(v_mwpc[1][1],v_mwpc[1][3]);
+			if (v_mwpc[0][1] > 12 && v_mwpc[0][3] < 7){
+				cout << "critical eventnr:\t" << evtnr << endl;
+				}
 			}
 		else if (v_mwpc[1][0] <50.5 && v_mwpc[1][0] > 49.5){
-			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[1][1],v_mwpc[1][2]);
-			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[1][2]-v_mwpc[1][1],v_mwpc[1][3]);
-			h2_mw2_x_vs_mw3_x_41->Fill(v_mwpc[0][1],v_mwpc[0][2]);
+			tin_nr = 2;
+			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[1][1],v_mwpc[1][3]);
+			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[1][3]-v_mwpc[1][1],v_mwpc[1][5]);
+			h2_mw2_x_vs_mw3_x_41->Fill(v_mwpc[0][1],v_mwpc[0][3]);
+			if (v_mwpc[1][1] > 12 && v_mwpc[1][3] < 7){
+				cout << "critical eventnr:\t" << evtnr << endl;
+				}
 			}
 		if (entries_califa_hit >= 1){
 			Califa_p2p_selection select_100_30(CalifaHitData,100,30,10); //the parameter values are here arbitrary...
 			vector<vector<double> > califa_array_doppler = select_100_30.get_califa_array();
-			vector<double> califa_array_high_gamma = select_100_30.get_highest_califa_gamma(15);  //vector with highest energy gamma
+			vector<double> califa_array_high_gamma = select_100_30.get_highest_califa_gamma(20);  //vector with highest energy gamma
 			vector<uint64_t>califa_times_vec = select_100_30.get_califa_time();
+			h1_mult_with_M->Fill(entries_califa_hit);
 			if (califa_array_high_gamma != v_false){
 			h1_califa_energy_z50_z41_high_gamma->Fill(califa_array_high_gamma[3]);
 			h1_califa_energy_z50_z41_no_doppler_high_gamma->Fill(califa_array_high_gamma[0]);
@@ -334,7 +359,7 @@ for(Long64_t i=0;i < nevents;i++){
 			}
 			Int_t multiplicity_gammas = 0;
 			for (int n = 0; n< califa_array_doppler.size();n++){
-				if (califa_array_doppler[n][0] < 15){
+				if (califa_array_doppler[n][0] < 20){
 					//fill histo for energies in low regime...
 					uint64_t time_califa = califa_times_vec[n];
 					int64_t time_diff_wrm_wrc= wr_master_ts - time_califa;
@@ -354,17 +379,71 @@ for(Long64_t i=0;i < nevents;i++){
 					multiplicity_gammas++;
 					}
 				}
-			//now select only events with multiplicity <= 5 && -1200 < wrm -wr_califa < -200 ns
+			//now select only events with multiplicity < 4 && -1200 < wrm -wr_califa < -200 ns
 			if (multiplicity_gammas < 4){
 				vector<double> califa_low_energies_wr_constraint;
 				for (int n = 0; n< califa_array_doppler.size();n++){
-					if (califa_array_doppler[n][0] < 15){
+					if (califa_array_doppler[n][0] < 20){
 						uint64_t time_califa = califa_times_vec[n];
 						int64_t wr_time_diff = wr_master_ts - time_califa;
 						if (wr_time_diff > -1200 && wr_time_diff < -200){
 							h1_califa_energy_z50_z41_mult_wr->Fill(califa_array_doppler[n][3]);
 							h1_califa_energy_z50_addup_mult_wr->Fill(califa_array_doppler[n][3]);
 							califa_low_energies_wr_constraint.push_back(califa_array_doppler[n][3]);
+							//check regions when plotting mw2 mw3/tof:
+							//down right
+							if (v_mwpc[0][0] <50.5 && v_mwpc[0][0] > 49.5 && v_mwpc[0][1] > 12 && v_mwpc[0][3] < 7){
+								h1_califa_energy_z50_z41_mult_wr_rd->Fill(califa_array_doppler[n][3]);
+								}
+							else if (v_mwpc[1][0] <50.5 && v_mwpc[1][0] > 49.5 && v_mwpc[1][1] > 12 && v_mwpc[1][3] < 7){
+								h1_califa_energy_z50_z41_mult_wr_rd->Fill(califa_array_doppler[n][3]);
+								}
+
+							//down left
+							if (v_mwpc[0][0] <50.5 && v_mwpc[0][0] > 49.5 && v_mwpc[0][1] < 3 && v_mwpc[0][3] < 7){
+								h1_califa_energy_z50_z41_mult_wr_ld->Fill(califa_array_doppler[n][3]);	
+								}
+							else if (v_mwpc[1][0] <50.5 && v_mwpc[1][0] > 49.5 && v_mwpc[1][1] < 3 && v_mwpc[1][3] < 7){
+								h1_califa_energy_z50_z41_mult_wr_ld->Fill(califa_array_doppler[n][3]);
+								}
+							//up right
+							if (v_mwpc[0][0] <50.5 && v_mwpc[0][0] > 49.5 && v_mwpc[0][1] > 12 && v_mwpc[0][3] < 50){
+								h1_califa_energy_z50_z41_mult_wr_ru->Fill(califa_array_doppler[n][3]);
+								}
+							else if (v_mwpc[1][0] <50.5 && v_mwpc[1][0] > 49.5 && v_mwpc[1][1] > 12 && v_mwpc[1][3] < 50){
+								h1_califa_energy_z50_z41_mult_wr_ru->Fill(califa_array_doppler[n][3]);
+								}
+							//up left
+							if (v_mwpc[0][0] <50.5 && v_mwpc[0][0] > 49.5 && v_mwpc[0][1] < 3 && v_mwpc[0][3] > 50){
+								h1_califa_energy_z50_z41_mult_wr_lu->Fill(califa_array_doppler[n][3]);
+								}
+							else if (v_mwpc[1][0] <50.5 && v_mwpc[1][0] > 49.5 && v_mwpc[1][1] < 3 && v_mwpc[1][3] < 50){
+								h1_califa_energy_z50_z41_mult_wr_lu->Fill(califa_array_doppler[n][3]);
+								}
+							//this here is a check if I see different isotopes of thin
+							if(tin_nr == 1){
+							if ((v_mwpc[0][3]-v_mwpc[0][1])*(-0.0095976)+37.5814 < v_mwpc[0][5]){
+								//fill histogram for values above...
+								h1_califa_energy_tin_above->Fill(califa_array_doppler[n][3]);
+								}
+							else {
+								//fill histogram for values below...
+								h1_califa_energy_tin_below->Fill(califa_array_doppler[n][3]);
+								}
+
+							}
+							else if (tin_nr == 2){
+
+							if ((v_mwpc[1][3]-v_mwpc[1][1])*(-0.0095976)+37.5814 < v_mwpc[1][5]){
+								//fill histogram for values above...
+								h1_califa_energy_tin_above->Fill(califa_array_doppler[n][3]);
+								}
+							else {
+								//fill histogram for values below...
+								h1_califa_energy_tin_above->Fill(califa_array_doppler[n][3]);
+								}
+							}
+							//--------------------------------------------------------
 							}
 						}
 					}
@@ -381,22 +460,31 @@ for(Long64_t i=0;i < nevents;i++){
 	if ((charge_check[0] <42.5 && charge_check[0]>41.5 && charge_check[1]<50.5 && charge_check[1]>49.5) || 
 	    (charge_check[1] <42.5 && charge_check[1]>41.5 && charge_check[0]<50.5 && charge_check[0]>49.5))  {
 		events_50_42++;
+		Double_t tin_nr = 0;
 		vector<vector<double> > v_mwpc = mwpcs(SofTwimHitData,SofMwpc2HitData,SofMwpc3HitData,SofToFWHitData,SofSciTcalData);
 		if (v_mwpc[0][0] <50.5 && v_mwpc[0][0] > 49.5){
-			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[0][1],v_mwpc[0][2]);	
-			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[0][2]-v_mwpc[0][1],v_mwpc[0][3]);
-			h2_mw2_x_vs_mw3_x_42->Fill(v_mwpc[1][1],v_mwpc[1][2]);
+			tin_nr = 1;
+			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[0][1],v_mwpc[0][3]);	
+			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[0][3]-v_mwpc[0][1],v_mwpc[0][5]);
+			h2_mw2_x_vs_mw3_x_42->Fill(v_mwpc[1][1],v_mwpc[1][3]);
+			if (v_mwpc[0][1] > 12 && v_mwpc[0][3] < 7){
+				cout << "critical eventnr:\t" << evtnr << endl;
+				}
 			}
 		else if (v_mwpc[1][0] <50.5 && v_mwpc[1][0] > 49.5){
-			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[1][1],v_mwpc[1][2]);
-			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[1][2]-v_mwpc[1][1],v_mwpc[1][3]);
-			h2_mw2_x_vs_mw3_x_42->Fill(v_mwpc[0][1],v_mwpc[0][2]);
+			tin_nr = 2;
+			h2_mw2_x_vs_mw3_x_sn->Fill(v_mwpc[1][1],v_mwpc[1][3]);
+			h2_mw23_diffx_vs_tof_sn->Fill(v_mwpc[1][3]-v_mwpc[1][1],v_mwpc[1][5]);
+			h2_mw2_x_vs_mw3_x_42->Fill(v_mwpc[0][1],v_mwpc[0][3]);
+			if (v_mwpc[1][1] > 12 && v_mwpc[1][3] < 7){
+				cout << "critical eventnr:\t" << evtnr << endl;
+				}
 			}
 		
 		if (entries_califa_hit >= 1){
 			Califa_p2p_selection select_100_30(CalifaHitData,100,30,10); //the parameter values are here arbitrary...
 			vector<vector<double> > califa_array_doppler = select_100_30.get_califa_array();
-			vector<double> califa_array_high_gamma = select_100_30.get_highest_califa_gamma(15); //vector with highest energy gamma
+			vector<double> califa_array_high_gamma = select_100_30.get_highest_califa_gamma(20); //vector with highest energy gamma
 			vector<uint64_t>califa_times_vec = select_100_30.get_califa_time();
 			if (califa_array_high_gamma != v_false){
 			h1_califa_energy_z50_z42_high_gamma->Fill(califa_array_high_gamma[3]);
@@ -406,7 +494,7 @@ for(Long64_t i=0;i < nevents;i++){
 			}
 			Int_t multiplicity_gammas = 0;
 			for (int n = 0; n< califa_array_doppler.size();n++){
-				if (califa_array_doppler[n][0] < 15){
+				if (califa_array_doppler[n][0] < 20){
 					//fill histo for energies in low regime...
 					uint64_t time_califa = califa_times_vec[n];
 					int64_t time_diff_wrm_wrc= wr_master_ts - time_califa;
@@ -420,13 +508,37 @@ for(Long64_t i=0;i < nevents;i++){
 			if (multiplicity_gammas < 4){
 				vector<double> califa_low_energies_wr_constraint;
 				for (int n = 0; n< califa_array_doppler.size();n++){
-					if (califa_array_doppler[n][0] < 15){
+					if (califa_array_doppler[n][0] < 20){
 						uint64_t time_califa = califa_times_vec[n];
 						int64_t wr_time_diff = wr_master_ts - time_califa;
 						if (wr_time_diff > -1200 && wr_time_diff < -200){
 							h1_califa_energy_z50_z42_mult_wr->Fill(califa_array_doppler[n][3]);
 							h1_califa_energy_z50_addup_mult_wr->Fill(califa_array_doppler[n][3]);
 							califa_low_energies_wr_constraint.push_back(califa_array_doppler[n][3]);
+							//this here is a check if I see different isotopes of thin
+							if(tin_nr == 1){
+							if ((v_mwpc[0][3]-v_mwpc[0][1])*(-0.0095976)+37.5814 < v_mwpc[0][5]){
+								//fill histogram for values above...
+								h1_califa_energy_tin_above->Fill(califa_array_doppler[n][3]);
+								}
+							else {
+								//fill histogram for values below...
+								h1_califa_energy_tin_below->Fill(califa_array_doppler[n][3]);
+								}
+
+							}
+							else if (tin_nr == 2){
+
+							if ((v_mwpc[1][3]-v_mwpc[1][1])*(-0.0095976)+37.5814 < v_mwpc[1][5]){
+								//fill histogram for values above...
+								h1_califa_energy_tin_above->Fill(califa_array_doppler[n][3]);
+								}
+							else {
+								//fill histogram for values below...
+								h1_califa_energy_tin_above->Fill(califa_array_doppler[n][3]);
+								}
+							}
+							//--------------------------------------------------------
 							}
 						}
 					}

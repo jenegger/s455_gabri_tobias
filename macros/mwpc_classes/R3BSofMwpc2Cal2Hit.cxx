@@ -160,19 +160,19 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
       {
         fx_p1[padId] = q;
         QpadX_p1.push_back(hit_pair);
-        nx_p1 = nx_p1 + 1;
+        nx_p1 += 1;
       }
       if (planeId == 2)
       {
         fx_p2[padId] = q;
         QpadX_p2.push_back(hit_pair);
-        nx_p2 = nx_p2 + 1;
+        nx_p2 += 1;
       }
       if (planeId == 3)
       {
         fy[padId] = q;
         QpadY.push_back(hit_pair);
-        ny = ny + 1 ;
+        ny += 1 ;
       }
     }
 
@@ -205,20 +205,17 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
       qright2 = fx_p2[padmx2 + 1];
       planex1 = 1;
       planex2 = 2;
-      /*cout << "1>2" << endl;
-      cout << "qmx1 = " << qmx1 << ", padmx1 = " << padmx1 << endl;
-      cout << "qmx2 = " << qmx2 << ", padmx2 = " << padmx2 << endl;*/
       if ( qleft1 == 0){
-	qleft1 = 1;
+	qleft1 = 0.5*qmx1;
 	}
       if (qright1 == 0){
-	qright1 = 1;
+	qright1 = 0.5*qmx1;
 	}
       if (qleft2 == 0){
-	qleft2 = 1;
+	qleft2 = 0.5*qmx2;
 	}
       if (qright2 == 0){
-	qright2 = 1;
+	qright2 = 0.5*qmx2;
 	}
       if (qmx1 > 10 && qleft1 > 0 && qright1 > 0){
         x1 = GetPositionX(qmx1, padmx1, qleft1, qright1);
@@ -244,16 +241,16 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
       cout << "qmx1 = " << qmx1 << ", padmx1 = " << padmx1 << endl;
       cout << "qmx2 = " << qmx2 << ", padmx2 = " << padmx2 << endl;*/
       if ( qleft1 == 0){
-	qleft1 = 1;
+	qleft1 = 0.5*qmx1;
 	}
       if (qright1 == 0){
-	qright1 = 1;
+	qright1 = 0.5*qmx1;
 	}
       if (qleft2 == 0){
-	qleft2 = 1;
+	qleft2 = 0.5*qmx2;
 	}
       if (qright2 == 0){
-	qright2 = 1;
+	qright2 = 0.5*qmx2;
 	}
       if (qmx1 > 10 && qleft1 > 0 && qright1 > 0){
         x1 = GetPositionX(qmx1, padmx1, qleft1, qright1);
@@ -276,10 +273,11 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
         qdown1 = fy[padmy1 - 1];
         qup1 = fy[padmy1 + 1];
 	if (qdown1 == 0){
-		qdown1 = 1;
+		qdown1 = 0.5*qmy1;
 		}
 	if (qup1 == 0){
-		qup1 = 1;
+		Double_t rand_num = (rand() % 201)/200.;
+		qup1 = 0.5*qmy1;
 		}
         if (qmy1 > 10 && qdown1 > 0 && qup1 > 0){
           y1 = GetPositionY(qmy1, padmy1, qdown1, qup1);
@@ -304,10 +302,10 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
         qdown2 = fy[padmy2 - 1];
         qup2 = fy[padmy2 + 1];
 	if (qdown2 == 0){
-		qdown2 = 1;
+		qdown2 = 0.5*qmy2;
 		}
 	if (qup2 == 0){
-		qup2 = 1;
+		qup2 = 0.5*qmy2;
 		}
         if (qmy2 > 10 && qdown2 > 0 && qup2 > 0){
           y2 = GetPositionY(qmy2, padmy2, qdown2, qup2);
@@ -315,8 +313,29 @@ void R3BSofMwpc2Cal2Hit::Exec(Option_t* option)
       }
     } //if y
     //cout << "x1 = " << x1 << ", y1 = " << y1 << " ,planex1 = " << planex1 << ", x2 = " << x2 << ", y2 = " << y2 << " ,planex2 = " << planex2 << endl;
-    AddHitData(x1, y1, planex1);
-    AddHitData(x2, y2, planex2);
+    if (x1 != -1000 && x2 != -1000 && y1 != -1000 && y2 != -1000){
+	if (planex1 == 1 && y1 > y2){
+		AddHitData(x1, y2, planex1);
+		AddHitData(x2, y1, planex2);
+		}
+	if (planex1 == 1 && y2 > y1){
+		AddHitData(x1, y1, planex1);
+		AddHitData(x2, y2, planex2);
+		}
+	if (planex1 == 2 && y1 > y2){
+		AddHitData(x1, y1, planex1);
+		AddHitData(x2, y2, planex2);
+		}
+	if (planex1 == 2 && y2 > y1){
+		AddHitData(x1, y2, planex1);
+		AddHitData(x2, y1, planex2);
+		}
+
+	}
+    else{
+	AddHitData(x1, y1, planex1);
+	AddHitData(x2, y2, planex2);
+	}
   } // if all
 
     if (calData)

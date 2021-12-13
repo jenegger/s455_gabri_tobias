@@ -103,6 +103,12 @@ TH1D* h1_califa_energy_z50_addup_mult_wr;
 TH1D* h1_proton_mult_90;
 TH1D* h1_proton_mult_91;
 TH1D* h1_proton_mult_92;
+TH1D* h1_califa_energy_z50_z41_mult_wr_rd;
+TH1D* h1_califa_energy_z50_z41_mult_wr_ld;
+TH1D* h1_califa_energy_z50_z41_mult_wr_ru;
+TH1D* h1_califa_energy_z50_z41_mult_wr_lu;
+TH1D* h1_califa_energy_tin_above;
+TH1D* h1_califa_energy_tin_below;
 
 //End of Declaration of 1D histos
 
@@ -213,7 +219,7 @@ h1_wr_ts_califa_vs_E_noM->GetYaxis()->SetTitleSize(0.045);
 
 //Multiplicity for events with wr master
 
-sprintf(hist_name, "Multiplicity for events with master trigger");
+sprintf(hist_name, "Multiplicity CALIFA hits for events with master trigger");
 h1_mult_with_M = new TH1D(hist_name,hist_name,2500,0,2500);
 h1_mult_with_M->GetXaxis()->SetTitle("Multiplicity");
 h1_mult_with_M->GetYaxis()->SetTitle("Counts");
@@ -828,6 +834,42 @@ h1_califa_energy_z50_z41_mult_wr->GetYaxis()->CenterTitle(true);
 h1_califa_energy_z50_z41_mult_wr->GetYaxis()->SetLabelSize(0.045);
 h1_califa_energy_z50_z41_mult_wr->GetYaxis()->SetTitleSize(0.045);
 
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=41) mult. < 4 and -1200<wrm-wrc<-200 right down  ");
+h1_califa_energy_z50_z41_mult_wr_rd = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z41_mult_wr_rd->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z41_mult_wr_rd->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z41_mult_wr_rd->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr_rd->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr_rd->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z41_mult_wr_rd->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=41) mult. < 4 and -1200<wrm-wrc<-200 left down  ");
+h1_califa_energy_z50_z41_mult_wr_ld = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z41_mult_wr_ld->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z41_mult_wr_ld->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z41_mult_wr_ld->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr_ld->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr_ld->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z41_mult_wr_ld->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=41) mult. < 4 and -1200<wrm-wrc<-200 right up  ");
+h1_califa_energy_z50_z41_mult_wr_ru = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z41_mult_wr_ru->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z41_mult_wr_ru->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z41_mult_wr_ru->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr_ru->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr_ru->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z41_mult_wr_ru->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=41) mult. < 4 and -1200<wrm-wrc<-200 left up  ");
+h1_califa_energy_z50_z41_mult_wr_lu = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_z50_z41_mult_wr_lu->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_z50_z41_mult_wr_lu->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_z50_z41_mult_wr_lu->GetXaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr_lu->GetYaxis()->CenterTitle(true);
+h1_califa_energy_z50_z41_mult_wr_lu->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_z50_z41_mult_wr_lu->GetYaxis()->SetTitleSize(0.045);
+
 sprintf(hist_name, "Low Energy spectrum CALIFA doppler corrected (Z_1=50,Z_2=41) mult. < 4 and -1200<wrm-wrc<-200 highest energy ");
 h1_califa_energy_z50_z41_mult_wr_high_e = new TH1D(hist_name,hist_name,1500,0,15);
 h1_califa_energy_z50_z41_mult_wr_high_e->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
@@ -865,6 +907,26 @@ h1_califa_energy_z50_addup_mult_wr->GetXaxis()->CenterTitle(true);
 h1_califa_energy_z50_addup_mult_wr->GetYaxis()->CenterTitle(true);
 h1_califa_energy_z50_addup_mult_wr->GetYaxis()->SetLabelSize(0.045);
 h1_califa_energy_z50_addup_mult_wr->GetYaxis()->SetTitleSize(0.045);
+
+
+sprintf(hist_name, "CALIFA Gamma Spectrum for Tin, above ");
+h1_califa_energy_tin_above = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_tin_above->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_tin_above->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_tin_above->GetXaxis()->CenterTitle(true);
+h1_califa_energy_tin_above->GetYaxis()->CenterTitle(true);
+h1_califa_energy_tin_above->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_tin_above->GetYaxis()->SetTitleSize(0.045);
+
+sprintf(hist_name, "CALIFA Gamma Spectrum for Tin, below ");
+h1_califa_energy_tin_below = new TH1D(hist_name,hist_name,1500,0,15);
+h1_califa_energy_tin_below->GetXaxis()->SetTitle("Doppler corrected Energy [MeV]");
+h1_califa_energy_tin_below->GetYaxis()->SetTitle("Counts");
+h1_califa_energy_tin_below->GetXaxis()->CenterTitle(true);
+h1_califa_energy_tin_below->GetYaxis()->CenterTitle(true);
+h1_califa_energy_tin_below->GetYaxis()->SetLabelSize(0.045);
+h1_califa_energy_tin_below->GetYaxis()->SetTitleSize(0.045);
+
 
 sprintf(hist_name, "Multiplicity of gammas for (Z_1=50,Z_2=41) ");
 h1_multiplicity_z50_z41 = new TH1D(hist_name,hist_name,150,0,150);
@@ -1582,6 +1644,12 @@ list_of_1D_histos.push_back(h1_califa_energy_z50_addup_mult_wr);
 list_of_1D_histos.push_back(h1_proton_mult_90);
 list_of_1D_histos.push_back(h1_proton_mult_91);
 list_of_1D_histos.push_back(h1_proton_mult_92);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z41_mult_wr_rd);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z41_mult_wr_ld);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z41_mult_wr_ru);
+list_of_1D_histos.push_back(h1_califa_energy_z50_z41_mult_wr_lu);
+list_of_1D_histos.push_back(h1_califa_energy_tin_above);
+list_of_1D_histos.push_back(h1_califa_energy_tin_below);
 
 
 
